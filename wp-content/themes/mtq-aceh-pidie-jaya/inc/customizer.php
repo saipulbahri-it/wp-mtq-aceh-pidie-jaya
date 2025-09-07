@@ -56,6 +56,6 @@ function mtq_aceh_pidie_jaya_customize_partial_blogdescription() {
  * Binds JS handlers to make Theme Customizer preview reload changes asynchronously.
  */
 function mtq_aceh_pidie_jaya_customize_preview_js() {
-	wp_enqueue_script( 'mtq-aceh-pidie-jaya-customizer', get_template_directory_uri() . '/js/customizer.js', array( 'customize-preview' ), _S_VERSION, true );
+	wp_enqueue_script( 'mtq-aceh-pidie-jaya-customizer', get_template_directory_uri() . '/js/customizer.js', array( 'customize-preview' ), '1.0.0', true );
 }
 add_action( 'customize_preview_init', 'mtq_aceh_pidie_jaya_customize_preview_js' );
