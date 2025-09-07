@@ -1,0 +1,14 @@
+{
+    "name": "mtq-aceh-pidie-jaya-theme",
+    "private": true,
+    "version": "1.0.0",
+    "scripts": {
+        "dev": "tailwindcss -c tailwind.config.js -i ./wp-content/themes/mtq-aceh-pidie-jaya/assets/css/app.css -o ./wp-content/themes/mtq-aceh-pidie-jaya/dist/app.css --watch",
+        "build": "NODE_ENV=production tailwindcss -c tailwind.config.js -i ./wp-content/themes/mtq-aceh-pidie-jaya/assets/css/app.css -o ./wp-content/themes/mtq-aceh-pidie-jaya/dist/app.css --minify"
+    },
+    "devDependencies": {
+        "tailwindcss": "^3.4.10",
+        "postcss": "^8.4.41",
+        "autoprefixer": "^10.4.20"
+    }
+}

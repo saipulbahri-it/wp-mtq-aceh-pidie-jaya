@@ -1,20 +1,21 @@
 <?php
+
 /**
  * MTQ Aceh Pidie Jaya functions and definitions
  *
  * @package MTQ_Aceh_Pidie_Jaya
  */
 
-if ( ! defined( 'ABSPATH' ) ) {
+if (! defined('ABSPATH')) {
 	exit; // Exit if accessed directly.
 }
 
 // Define theme version
-if ( ! defined( '_S_VERSION' ) ) {
-	define( '_S_VERSION', '1.0.0' );
+if (! defined('_S_VERSION')) {
+	define('_S_VERSION', '1.0.0');
 }
 
-if ( ! function_exists( 'mtq_aceh_pidie_jaya_setup' ) ) :
+if (! function_exists('mtq_aceh_pidie_jaya_setup')) :
 	/**
 	 * Sets up theme defaults and registers support for various WordPress features.
 	 *
@@ -22,15 +23,16 @@ if ( ! function_exists( 'mtq_aceh_pidie_jaya_setup' ) ) :
 	 * runs before the init hook. The init hook is too late for some features, such
 	 * as indicating support for post thumbnails.
 	 */
-	function mtq_aceh_pidie_jaya_setup() {
+	function mtq_aceh_pidie_jaya_setup()
+	{
 		/*
 		 * Make theme available for translation.
 		 * Translations can be filed in the /languages/ directory.
 		 */
-		load_theme_textdomain( 'mtq-aceh-pidie-jaya', get_template_directory() . '/languages' );
+		load_theme_textdomain('mtq-aceh-pidie-jaya', get_template_directory() . '/languages');
 
 		// Add default posts and comments RSS feed links to head.
-		add_theme_support( 'automatic-feed-links' );
+		add_theme_support('automatic-feed-links');
 
 		/*
 		 * Let WordPress manage the document title.
@@ -38,19 +40,19 @@ if ( ! function_exists( 'mtq_aceh_pidie_jaya_setup' ) ) :
 		 * hard-coded <title> tag in the document head, and expect WordPress to
 		 * provide it for us.
 		 */
-		add_theme_support( 'title-tag' );
+		add_theme_support('title-tag');
 
 		/*
 		 * Enable support for Post Thumbnails on posts and pages.
 		 *
 		 * @link https://developer.wordpress.org/themes/functionality/featured-images-post-thumbnails/
 		 */
-		add_theme_support( 'post-thumbnails' );
+		add_theme_support('post-thumbnails');
 
 		// This theme uses wp_nav_menu() in one location.
 		register_nav_menus(
 			array(
-				'menu-1' => esc_html__( 'Primary', 'mtq-aceh-pidie-jaya' ),
+				'menu-1' => esc_html__('Primary', 'mtq-aceh-pidie-jaya'),
 			)
 		);
 
@@ -84,7 +86,7 @@ if ( ! function_exists( 'mtq_aceh_pidie_jaya_setup' ) ) :
 		);
 
 		// Add theme support for selective refresh for widgets.
-		add_theme_support( 'customize-selective-refresh-widgets' );
+		add_theme_support('customize-selective-refresh-widgets');
 
 		/**
 		 * Add support for core custom logo.
@@ -102,7 +104,7 @@ if ( ! function_exists( 'mtq_aceh_pidie_jaya_setup' ) ) :
 		);
 	}
 endif;
-add_action( 'after_setup_theme', 'mtq_aceh_pidie_jaya_setup' );
+add_action('after_setup_theme', 'mtq_aceh_pidie_jaya_setup');
 
 /**
  * Set the content width in pixels, based on the theme's design and stylesheet.
@@ -111,22 +113,24 @@ add_action( 'after_setup_theme', 'mtq_aceh_pidie_jaya_setup' );
  *
  * @global int $content_width
  */
-function mtq_aceh_pidie_jaya_content_width() {
-	$GLOBALS['content_width'] = apply_filters( 'mtq_aceh_pidie_jaya_content_width', 640 );
+function mtq_aceh_pidie_jaya_content_width()
+{
+	$GLOBALS['content_width'] = apply_filters('mtq_aceh_pidie_jaya_content_width', 640);
 }
-add_action( 'after_setup_theme', 'mtq_aceh_pidie_jaya_content_width', 0 );
+add_action('after_setup_theme', 'mtq_aceh_pidie_jaya_content_width', 0);
 
 /**
  * Register widget area.
  *
  * @link https://developer.wordpress.org/themes/functionality/sidebars/#registering-a-sidebar
  */
-function mtq_aceh_pidie_jaya_widgets_init() {
+function mtq_aceh_pidie_jaya_widgets_init()
+{
 	register_sidebar(
 		array(
-			'name'          => esc_html__( 'Sidebar', 'mtq-aceh-pidie-jaya' ),
+			'name'          => esc_html__('Sidebar', 'mtq-aceh-pidie-jaya'),
 			'id'            => 'sidebar-1',
-			'description'   => esc_html__( 'Add widgets here.', 'mtq-aceh-pidie-jaya' ),
+			'description'   => esc_html__('Add widgets here.', 'mtq-aceh-pidie-jaya'),
 			'before_widget' => '<section id="%1$s" class="widget %2$s">',
 			'after_widget'  => '</section>',
 			'before_title'  => '<h2 class="widget-title">',
@@ -134,33 +138,40 @@ function mtq_aceh_pidie_jaya_widgets_init() {
 		)
 	);
 }
-add_action( 'widgets_init', 'mtq_aceh_pidie_jaya_widgets_init' );
+add_action('widgets_init', 'mtq_aceh_pidie_jaya_widgets_init');
 
 /**
  * Enqueue scripts and styles.
  */
-function mtq_aceh_pidie_jaya_scripts() {
+function mtq_aceh_pidie_jaya_scripts()
+{
 	// Enqueue Google Fonts
-	wp_enqueue_style( 'mtq-aceh-pidie-jaya-fonts', 'https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap', array(), null );
-	
-	// Enqueue main theme stylesheet
-	wp_enqueue_style( 'mtq-aceh-pidie-jaya-style', get_stylesheet_uri(), array(), _S_VERSION );
-	wp_style_add_data( 'mtq-aceh-pidie-jaya-style', 'rtl', 'replace' );
+	wp_enqueue_style('mtq-aceh-pidie-jaya-fonts', 'https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap', array(), null);
 
-	// Enqueue prototype CSS
-	wp_enqueue_style( 'mtq-aceh-pidie-jaya-prototype-css', get_template_directory_uri() . '/prototype/css/index.css', array(), _S_VERSION );
-	
+	// Enqueue built Tailwind CSS if exists, otherwise fallback to theme style and prototype CSS
+	$dist_css = get_template_directory() . '/dist/app.css';
+	if (file_exists($dist_css)) {
+		wp_enqueue_style('mtq-aceh-pidie-jaya-app', get_template_directory_uri() . '/dist/app.css', array(), filemtime($dist_css));
+	} else {
+		// Fallback: enqueue theme stylesheet and prototype css
+		wp_enqueue_style('mtq-aceh-pidie-jaya-style', get_stylesheet_uri(), array(), _S_VERSION);
+		wp_style_add_data('mtq-aceh-pidie-jaya-style', 'rtl', 'replace');
+		wp_enqueue_style('mtq-aceh-pidie-jaya-prototype-css', get_template_directory_uri() . '/prototype/css/index.css', array(), _S_VERSION);
+	}
+
 	// Enqueue main JavaScript
-	wp_enqueue_script( 'mtq-aceh-pidie-jaya-navigation', get_template_directory_uri() . '/js/navigation.js', array(), _S_VERSION, true );
-	
-	// Enqueue prototype JavaScript
-	wp_enqueue_script( 'mtq-aceh-pidie-jaya-prototype-js', get_template_directory_uri() . '/prototype/js/index.js', array(), _S_VERSION, true );
+	wp_enqueue_script('mtq-aceh-pidie-jaya-navigation', get_template_directory_uri() . '/js/navigation.js', array(), _S_VERSION, true);
 
-	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
-		wp_enqueue_script( 'comment-reply' );
+	// Enqueue prototype JavaScript (UI interactions)
+	wp_enqueue_script('mtq-aceh-pidie-jaya-prototype-js', get_template_directory_uri() . '/prototype/js/index.js', array(), _S_VERSION, true);
+	// Countdown
+	wp_enqueue_script('mtq-aceh-pidie-jaya-countdown', get_template_directory_uri() . '/prototype/js/countdown.js', array(), _S_VERSION, true);
+
+	if (is_singular() && comments_open() && get_option('thread_comments')) {
+		wp_enqueue_script('comment-reply');
 	}
 }
-add_action( 'wp_enqueue_scripts', 'mtq_aceh_pidie_jaya_scripts' );
+add_action('wp_enqueue_scripts', 'mtq_aceh_pidie_jaya_scripts');
 
 /**
  * Implement the Custom Header feature.
@@ -185,6 +196,6 @@ require get_template_directory() . '/inc/customizer.php';
 /**
  * Load Jetpack compatibility file.
  */
-if ( defined( 'JETPACK__VERSION' ) ) {
+if (defined('JETPACK__VERSION')) {
 	require get_template_directory() . '/inc/jetpack.php';
 }
