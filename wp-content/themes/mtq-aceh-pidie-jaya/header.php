@@ -45,6 +45,15 @@
 		</div>
 	</div>
 
+	<script>
+		// Loading Screen
+		window.addEventListener('load', () => {
+			setTimeout(() => {
+				document.getElementById('loading-screen').classList.add('hidden');
+			}, 300);
+		});
+	</script>
+
 	<!-- Share Modal -->
 	<div id="share-modal" class="share-modal">
 		<div class="share-content">
@@ -90,7 +99,7 @@
 		<div class="max-w-7xl mx-auto header-padding px-4 py-4">
 			<div class="flex justify-between items-center">
 				<div class="flex items-center space-x-3">
-					<img src="<?php echo get_template_directory_uri(); ?>/dist/images/logo.png" alt="Logo MTQ Aceh XXXVII" class="logo-img h-16 transition-all duration-300" decoding="async" fetchpriority="high">
+					<img src="<?php echo get_template_directory_uri(); ?>/prototype/images/logo.png" alt="Logo MTQ Aceh XXXVII" class="logo-img h-16 transition-all duration-300" decoding="async" fetchpriority="high">
 					<div class="hidden sm:block">
 						<h1 class="text-xl font-bold text-blue-600"><?php bloginfo( 'name' ); ?></h1>
 						<p class="text-sm text-slate-600"><?php bloginfo( 'description' ); ?></p>
