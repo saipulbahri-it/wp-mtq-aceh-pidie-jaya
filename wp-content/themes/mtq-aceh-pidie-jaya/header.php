@@ -106,23 +106,26 @@
 					</div>
 				</div>
 
-				<!-- Desktop Navigation -->
+				<!-- Desktop Navigation (Dynamic) -->
 				<nav class="hidden md:flex space-x-2">
-					<a href="#beranda" class="nav-link">Beranda</a>
-					<a href="#tentang" class="nav-link">Tentang</a>
-					<a href="#cabang" class="nav-link">Cabang Lomba</a>
-					<a href="<?php echo get_permalink( get_page_by_path( 'lokasi' ) ); ?>" class="nav-link">Arena & Lokasi</a>
-					<a href="#jadwal" class="nav-link">Jadwal</a>
-					<a href="#berita" class="nav-link">Berita</a>
-					<a href="#live" class="nav-link text-orange-600 font-bold flex items-center gap-1">
-						<span class="relative flex items-center">
-							<span class="live-dot animate-pulse"></span>
-							<svg class="w-4 h-4 ml-1 text-orange-500" fill="currentColor" viewBox="0 0 20 20">
-								<circle cx="10" cy="10" r="6" fill="currentColor"></circle>
-							</svg>
-						</span>
-						Live
-					</a>
+					<?php
+					wp_nav_menu([
+						'theme_location' => 'top-header-menu',
+						'container' => false,
+						'menu_class' => 'nav-list flex space-x-2',
+						'fallback_cb' => function() {
+							echo '<a href="' . esc_url( get_home_url() ) . '" class="nav-link">Beranda</a>';
+							echo '<a href="' . esc_url( get_home_url() ) . '#tentang" class="nav-link">Tentang</a>';
+							echo '<a href="' . esc_url( get_home_url() ) . '#cabang" class="nav-link">Cabang Lomba</a>';
+							echo '<a href="' . get_permalink( get_page_by_path( 'arena-dan-lokasi' ) ) . '" class="nav-link">Arena & Lokasi</a>';
+							echo '<a href="' . esc_url( get_home_url() ) . '#jadwal" class="nav-link">Jadwal</a>';
+							echo '<a href="' . esc_url( get_home_url() ) . '#berita" class="nav-link">Berita</a>';
+							echo '<a href="' . esc_url( get_home_url() ) . '#live" class="nav-link text-orange-600 font-bold flex items-center gap-1"><span class="relative flex items-center"><span class="live-dot animate-pulse"></span><svg class="w-4 h-4 ml-1 text-orange-500" fill="currentColor" viewBox="0 0 20 20"><circle cx="10" cy="10" r="6" fill="currentColor"></circle></svg></span>Live</a>';
+						},
+						'link_before' => '<span class="nav-link">',
+						'link_after' => '</span>',
+					]);
+					?>
 				</nav>
 
 				<!-- Mobile Menu Button -->
@@ -136,21 +139,24 @@
 			<!-- Mobile Navigation -->
 			<nav id="mobile-menu" class="hidden md:hidden mt-4 pb-4 border-t border-slate-200">
 				<div class="flex flex-col space-y-2 pt-4">
-					<a href="#beranda" class="nav-link">Beranda</a>
-					<a href="#tentang" class="nav-link">Tentang</a>
-					<a href="#cabang" class="nav-link">Cabang Lomba</a>
-					<a href="<?php echo get_permalink( get_page_by_path( 'lokasi' ) ); ?>" class="nav-link">Arena & Lokasi</a>
-					<a href="#jadwal" class="nav-link">Jadwal</a>
-					<a href="#berita" class="nav-link">Berita</a>
-					<a href="#live" class="nav-link text-orange-600 font-bold flex items-center gap-1">
-						<span class="relative flex items-center">
-							<span class="live-dot animate-pulse"></span>
-							<svg class="w-4 h-4 ml-1 text-orange-500" fill="currentColor" viewBox="0 0 20 20">
-								<circle cx="10" cy="10" r="6" fill="currentColor"></circle>
-							</svg>
-						</span>
-						Live
-					</a>
+					<?php
+					wp_nav_menu([
+						'theme_location' => 'top-header-menu',
+						'container' => false,
+						'menu_class' => 'nav-list-mobile flex flex-col space-y-2',
+						'fallback_cb' => function() {
+							echo '<a href="' . esc_url( get_home_url() ) . '" class="nav-link">Beranda</a>';
+							echo '<a href="' . esc_url( get_home_url() ) . '#tentang" class="nav-link">Tentang</a>';
+							echo '<a href="' . esc_url( get_home_url() ) . '#cabang" class="nav-link">Cabang Lomba</a>';
+							echo '<a href="' . get_permalink( get_page_by_path( 'arena-dan-lokasi' ) ) . '" class="nav-link">Arena & Lokasi</a>';
+							echo '<a href="' . esc_url( get_home_url() ) . '#jadwal" class="nav-link">Jadwal</a>';
+							echo '<a href="' . esc_url( get_home_url() ) . '#berita" class="nav-link">Berita</a>';
+							echo '<a href="' . esc_url( get_home_url() ) . '#live" class="nav-link text-orange-600 font-bold flex items-center gap-1"><span class="relative flex items-center"><span class="live-dot animate-pulse"></span><svg class="w-4 h-4 ml-1 text-orange-500" fill="currentColor" viewBox="0 0 20 20"><circle cx="10" cy="10" r="6" fill="currentColor"></circle></svg></span>Live</a>';
+						},
+						'link_before' => '<span class="nav-link">',
+						'link_after' => '</span>',
+					]);
+					?>
 				</div>
 			</nav>
 		</div>
