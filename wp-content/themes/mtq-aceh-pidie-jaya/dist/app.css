@@ -1542,6 +1542,10 @@ h1,
   border-color: rgb(254 226 226 / 0.5);
 }
 
+.border-gray-200\/50 {
+  border-color: rgb(229 231 235 / 0.5);
+}
+
 .border-t-transparent {
   border-top-color: transparent;
 }
@@ -1812,6 +1816,10 @@ h1,
 
 .bg-black\/10 {
   background-color: rgb(0 0 0 / 0.1);
+}
+
+.bg-gray-50\/80 {
+  background-color: rgb(249 250 251 / 0.8);
 }
 
 .bg-opacity-75 {
@@ -3698,6 +3706,11 @@ h6 {
 .hover\:text-teal-700:hover {
   --tw-text-opacity: 1;
   color: rgb(15 118 110 / var(--tw-text-opacity, 1));
+}
+
+.hover\:text-blue-800:hover {
+  --tw-text-opacity: 1;
+  color: rgb(30 64 175 / var(--tw-text-opacity, 1));
 }
 
 .hover\:underline:hover {

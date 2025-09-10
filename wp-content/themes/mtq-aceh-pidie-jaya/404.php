@@ -10,6 +10,8 @@
 get_header();
 ?>
 
+<?php get_template_part('template-parts/breadcrumbs'); ?>
+
 <main id="primary" class="site-main min-h-screen">
 	<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-16">
 		
