@@ -1810,6 +1810,10 @@ h1,
   background-color: rgb(229 231 235 / var(--tw-bg-opacity, 1));
 }
 
+.bg-black\/10 {
+  background-color: rgb(0 0 0 / 0.1);
+}
+
 .bg-opacity-75 {
   --tw-bg-opacity: 0.75;
 }
@@ -2007,6 +2011,12 @@ h1,
 .from-red-500 {
   --tw-gradient-from: #ef4444 var(--tw-gradient-from-position);
   --tw-gradient-to: rgb(239 68 68 / 0) var(--tw-gradient-to-position);
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+}
+
+.from-black\/60 {
+  --tw-gradient-from: rgb(0 0 0 / 0.6) var(--tw-gradient-from-position);
+  --tw-gradient-to: rgb(0 0 0 / 0) var(--tw-gradient-to-position);
   --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
 }
 
@@ -2754,6 +2764,10 @@ h1,
 .text-teal-200 {
   --tw-text-opacity: 1;
   color: rgb(153 246 228 / var(--tw-text-opacity, 1));
+}
+
+.text-white\/90 {
+  color: rgb(255 255 255 / 0.9);
 }
 
 .no-underline {
@@ -4033,6 +4047,10 @@ h6 {
     height: 8rem;
   }
 
+  .md\:h-80 {
+    height: 20rem;
+  }
+
   .md\:min-h-\[480px\] {
     min-height: 480px;
   }
@@ -4087,6 +4105,16 @@ h6 {
   .md\:py-16 {
     padding-top: 4rem;
     padding-bottom: 4rem;
+  }
+
+  .md\:px-8 {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+
+  .md\:py-12 {
+    padding-top: 3rem;
+    padding-bottom: 3rem;
   }
 
   .md\:pb-32 {
@@ -4147,6 +4175,10 @@ h6 {
     margin-right: 0px;
   }
 
+  .lg\:h-96 {
+    height: 24rem;
+  }
+
   .lg\:w-64 {
     width: 16rem;
   }
@@ -4203,6 +4235,10 @@ h6 {
     padding: 2rem;
   }
 
+  .lg\:p-12 {
+    padding: 3rem;
+  }
+
   .lg\:px-8 {
     padding-left: 2rem;
     padding-right: 2rem;
@@ -4216,6 +4252,11 @@ h6 {
   .lg\:py-24 {
     padding-top: 6rem;
     padding-bottom: 6rem;
+  }
+
+  .lg\:px-12 {
+    padding-left: 3rem;
+    padding-right: 3rem;
   }
 
   .lg\:text-left {
