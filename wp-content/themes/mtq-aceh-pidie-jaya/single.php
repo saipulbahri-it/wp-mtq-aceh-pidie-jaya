@@ -175,6 +175,11 @@ get_header();
                         </div>
                     </div>
                     <?php endif; ?>
+                    
+                    <!-- Social Sharing Buttons -->
+                    <div class="mt-12 fade-in-delay-4">
+                        <?php get_template_part('template-parts/social-sharing'); ?>
+                    </div>
                 </div>
                 
                 <!-- Sidebar -->

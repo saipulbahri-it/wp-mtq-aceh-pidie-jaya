@@ -131,5 +131,10 @@
 			</footer>
 		<?php endif; ?>
 		
+		<!-- Social Sharing for Pages -->
+		<div class="border-t border-slate-100 bg-slate-50/50">
+			<?php get_template_part('template-parts/social-sharing'); ?>
+		</div>
+		
 	</article><!-- #post-<?php the_ID(); ?> -->
 </div>
