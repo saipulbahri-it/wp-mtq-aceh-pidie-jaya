@@ -3,6 +3,17 @@
 ## [Unreleased]
 
 ### Added
+- **Kustomisasi Footer**
+  - Implementasi fitur kustomisasi footer melalui WordPress Customizer
+  - Logo footer yang dapat disesuaikan
+  - Teks footer yang dapat diedit
+  - Pengaturan alamat, email, dan nomor telepon
+  - Link media sosial (Facebook, Instagram, YouTube, Twitter)
+  - Template part baru untuk footer dengan tampilan yang lebih terorganisir
+  - Dukungan live preview untuk pengaturan footer di Customizer
+  - Tampilan footer yang responsif dengan grid system
+
+### Added
 - **Kategori Lomba**
   - Menambahkan kategori baru: Qiraah Sab'ah, KTIQ, dan Tartil
   - Membuat fungsi helper `mtq_get_cabang_lomba()` untuk mengelola data kategori
