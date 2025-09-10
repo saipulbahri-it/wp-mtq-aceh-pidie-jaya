@@ -27,14 +27,6 @@
 			$map_url = 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4852.693491674251!2d96.24198147580853!3d5.230074394747693!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3040b100162f57eb%3A0xf5697ff0a3aa42fe!2sGEDUNG%20MTQ%20PIDIE%20JAYA!5e1!3m2!1sid!2sid!4v1757497686875!5m2!1sid!2sid';
 		}
 		?>
-		<!-- Debug Info -->
-		<?php if (current_user_can('administrator')): ?>
-		<div class="bg-yellow-100 p-4 mb-4 rounded">
-			<p class="text-sm">Debug Info (hanya terlihat admin):</p>
-			<p class="text-xs">Map URL from theme_mod: <?php echo esc_html($map_url); ?></p>
-		</div>
-		<?php endif; ?>
-		
 		<div class="rounded-lg overflow-hidden shadow-lg">
 			<iframe
 				src="<?php echo esc_url($map_url); ?>"
