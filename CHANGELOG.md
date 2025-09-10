@@ -42,6 +42,14 @@
   - Memperbaiki error "Cannot redeclare mtq_aceh_pidie_jaya_customize_register()"
   - Mengoptimalkan loading theme files
 
+## update-menu (2025-09-10)
+
+- Register menu `top-header-menu` di functions.php untuk navigasi dinamis.
+- Update fallback menu di header.php: semua link menggunakan home URL + hash, kecuali "Arena & Lokasi" ke permalink.
+- Tambah pengaturan Customizer untuk Link Terkait di footer (label & URL bisa diedit dari admin).
+- Default link Link Terkait tetap muncul jika Customizer belum diisi.
+- Footer otomatis menampilkan link dari Customizer atau default.
+
 ### Technical Details
 
 #### Struktur File Baru

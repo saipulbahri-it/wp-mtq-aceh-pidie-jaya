@@ -1,4 +1,10 @@
 <?php
+// Register navigation menus
+add_action('after_setup_theme', function() {
+	register_nav_menus([
+		'top-header-menu' => __('Top Header Menu', 'mtq-aceh-pidie-jaya'),
+	]);
+});
 
 /**
  * MTQ Aceh Pidie Jaya functions and definitions
