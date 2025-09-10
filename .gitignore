@@ -9,6 +9,7 @@ wp-content/themes/*
 !wp-content/themes/twentytwentyfive/
 !wp-content/themes/twentytwentyfour/
 !wp-content/themes/twentytwentythree/
+!wp-content/themes/mtq-aceh-pidie-jaya/
 wp-content/plugins/*
 !wp-content/plugins/akismet/
 !wp-content/plugins/hello.php

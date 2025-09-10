@@ -114,7 +114,6 @@
 					<a href="<?php echo get_permalink( get_page_by_path( 'lokasi' ) ); ?>" class="nav-link">Arena & Lokasi</a>
 					<a href="#jadwal" class="nav-link">Jadwal</a>
 					<a href="#berita" class="nav-link">Berita</a>
-					<a href="#fitur" class="nav-link">Fitur</a>
 					<a href="#live" class="nav-link text-orange-600 font-bold flex items-center gap-1">
 						<span class="relative flex items-center">
 							<span class="live-dot animate-pulse"></span>
@@ -143,7 +142,6 @@
 					<a href="<?php echo get_permalink( get_page_by_path( 'lokasi' ) ); ?>" class="nav-link">Arena & Lokasi</a>
 					<a href="#jadwal" class="nav-link">Jadwal</a>
 					<a href="#berita" class="nav-link">Berita</a>
-					<a href="#fitur" class="nav-link">Fitur</a>
 					<a href="#live" class="nav-link text-orange-600 font-bold flex items-center gap-1">
 						<span class="relative flex items-center">
 							<span class="live-dot animate-pulse"></span>
