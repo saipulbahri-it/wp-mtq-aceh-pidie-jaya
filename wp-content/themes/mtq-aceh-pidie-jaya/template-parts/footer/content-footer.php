@@ -80,10 +80,27 @@
             <div class="footer-widget">
                 <h3 class="text-xl font-bold mb-4"><?php esc_html_e( 'Link Terkait', 'mtq-aceh-pidie-jaya' ); ?></h3>
                 <ul class="space-y-2 text-slate-300">
-                    <li><a href="https://acehprov.go.id" class="hover:text-white transition"><?php esc_html_e( 'Pemerintah Aceh', 'mtq-aceh-pidie-jaya' ); ?></a></li>
-                    <li><a href="https://pidiejayakab.go.id" class="hover:text-white transition"><?php esc_html_e( 'Pemerintah Pidie Jaya', 'mtq-aceh-pidie-jaya' ); ?></a></li>
-                    <li><a href="https://kemenag.go.id" class="hover:text-white transition"><?php esc_html_e( 'Kementerian Agama RI', 'mtq-aceh-pidie-jaya' ); ?></a></li>
-                    <li><a href="https://lptqnasional.com" class="hover:text-white transition"><?php esc_html_e( 'MTQ Nasional', 'mtq-aceh-pidie-jaya' ); ?></a></li>
+                    <?php
+                    $default_labels = [
+                        1 => __('Pemerintah Aceh', 'mtq-aceh-pidie-jaya'),
+                        2 => __('Pemerintah Pidie Jaya', 'mtq-aceh-pidie-jaya'),
+                        3 => __('Kementerian Agama RI', 'mtq-aceh-pidie-jaya'),
+                        4 => __('MTQ Nasional', 'mtq-aceh-pidie-jaya'),
+                    ];
+                    $default_urls = [
+                        1 => 'https://acehprov.go.id',
+                        2 => 'https://pidiejayakab.go.id',
+                        3 => 'https://kemenag.go.id',
+                        4 => 'https://lptqnasional.com',
+                    ];
+                    for ($i = 1; $i <= 4; $i++) {
+                        $label = get_theme_mod("footer_related_link_label_$i", $default_labels[$i]);
+                        $url = get_theme_mod("footer_related_link_url_$i", $default_urls[$i]);
+                        if ($label && $url) {
+                            echo '<li><a href="' . esc_url($url) . '" class="hover:text-white transition">' . esc_html($label) . '</a></li>';
+                        }
+                    }
+                    ?>
                 </ul>
             </div>
         </div>
