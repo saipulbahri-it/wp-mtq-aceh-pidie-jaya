@@ -471,7 +471,7 @@ get_header();
 
 			<div class="text-center mt-12 fade-in">
 				<a
-					href="<?php echo get_permalink(get_option('page_for_posts')); ?>"
+					href="<?php echo get_page_link(get_page_by_title('Berita')->ID); ?>"
 					class="inline-flex items-center gap-2 bg-orange-600 hover:bg-orange-700 text-white px-6 py-3 rounded-full font-medium transition-colors transform hover:scale-105">
 					<svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
 						<path

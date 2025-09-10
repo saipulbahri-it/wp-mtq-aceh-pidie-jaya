@@ -213,3 +213,76 @@ require get_template_directory() . '/inc/customizer.php';
 if (defined('JETPACK__VERSION')) {
 	require get_template_directory() . '/inc/jetpack.php';
 }
+
+/**
+ * Force HTTPS for all URLs
+ */
+function mtq_force_https_urls() {
+	if (!is_ssl() && !is_admin()) {
+		if (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https') {
+			$_SERVER['HTTPS'] = 'on';
+		}
+	}
+}
+add_action('init', 'mtq_force_https_urls');
+
+/**
+ * Replace HTTP with HTTPS in content
+ */
+function mtq_replace_http_with_https($content) {
+	$content = str_replace('http://mtq.pidiejayakab.go.id', 'https://mtq.pidiejayakab.go.id', $content);
+	return $content;
+}
+add_filter('the_content', 'mtq_replace_http_with_https');
+add_filter('widget_text', 'mtq_replace_http_with_https');
+
+/**
+ * Secure headers for better security
+ */
+function mtq_add_security_headers() {
+	if (!headers_sent()) {
+		header('X-Frame-Options: SAMEORIGIN');
+		header('X-XSS-Protection: 1; mode=block');
+		header('X-Content-Type-Options: nosniff');
+		header('Referrer-Policy: strict-origin-when-cross-origin');
+		
+		if (is_ssl()) {
+			header('Strict-Transport-Security: max-age=31536000; includeSubDomains; preload');
+		}
+	}
+}
+add_action('send_headers', 'mtq_add_security_headers');
+
+/**
+ * Reading time shortcode
+ */
+function mtq_reading_time_shortcode($atts) {
+	global $post;
+	
+	if (!$post) {
+		return '5';
+	}
+	
+	$content = get_post_field('post_content', $post->ID);
+	$word_count = str_word_count(strip_tags($content));
+	$reading_time = ceil($word_count / 200); // Average reading speed 200 words per minute
+	
+	return max(1, $reading_time); // Minimum 1 minute
+}
+add_shortcode('reading_time', 'mtq_reading_time_shortcode');
+
+/**
+ * Estimated reading time function
+ */
+function mtq_get_reading_time($post_id = null) {
+	if (!$post_id) {
+		global $post;
+		$post_id = $post->ID;
+	}
+	
+	$content = get_post_field('post_content', $post_id);
+	$word_count = str_word_count(strip_tags($content));
+	$reading_time = ceil($word_count / 200);
+	
+	return max(1, $reading_time);
+}
