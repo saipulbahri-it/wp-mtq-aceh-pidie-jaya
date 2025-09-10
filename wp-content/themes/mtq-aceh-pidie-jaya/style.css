@@ -331,3 +331,43 @@ html {
 		font-size: 1.25rem;
 	}
 }
+
+/* Category page pagination styling */
+.pagination .page-numbers {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding: 0.5rem 1rem;
+	font-size: 0.875rem;
+	font-weight: 500;
+	color: #374151;
+	background-color: #ffffff;
+	border: 1px solid #d1d5db;
+	border-radius: 0.5rem;
+	min-width: 44px;
+	height: 44px;
+	text-decoration: none;
+	transition: all 0.2s ease;
+}
+
+.pagination .page-numbers:hover {
+	background-color: #f9fafb;
+	color: #2563eb;
+}
+
+.pagination .page-numbers.current {
+	background-color: #2563eb;
+	color: #ffffff;
+	border-color: #2563eb;
+}
+
+.pagination .page-numbers.current:hover {
+	background-color: #1d4ed8;
+}
+
+.pagination .page-numbers.dots {
+	background: none;
+	border: none;
+	color: #9ca3af;
+	padding: 0.5rem;
+}
