@@ -150,21 +150,22 @@ add_action('widgets_init', 'mtq_aceh_pidie_jaya_widgets_init');
 /**
  * Enqueue scripts and styles.
  */
-function mtq_aceh_pidie_jaya_scripts()
-{
-	// Enqueue Google Fonts
-	wp_enqueue_style('mtq-aceh-pidie-jaya-fonts', 'https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap', array(), null);
+function mtq_aceh_pidie_jaya_scripts() {
 
-	// Enqueue built Tailwind CSS if exists, otherwise fallback to theme style and prototype CSS
-	$dist_css = get_template_directory() . '/dist/app.css';
-	if (file_exists($dist_css)) {
-		wp_enqueue_style('mtq-aceh-pidie-jaya-app', get_template_directory_uri() . '/dist/app.css', array(), filemtime($dist_css));
-	} else {
-		// Fallback: enqueue theme stylesheet and prototype css
-		wp_enqueue_style('mtq-aceh-pidie-jaya-style', get_stylesheet_uri(), array(), _S_VERSION);
-		wp_style_add_data('mtq-aceh-pidie-jaya-style', 'rtl', 'replace');
-		wp_enqueue_style('mtq-aceh-pidie-jaya-prototype-css', get_template_directory_uri() . '/prototype/css/index.css', array(), _S_VERSION);
-	}
+   // Always enqueue theme style.css
+   wp_enqueue_style('mtq-aceh-pidie-jaya-style', get_stylesheet_uri(), array(), _S_VERSION);
+   wp_style_add_data('mtq-aceh-pidie-jaya-style', 'rtl', 'replace');
+
+   // Enqueue Google Fonts
+   wp_enqueue_style('mtq-aceh-pidie-jaya-fonts', 'https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap', array(), null);
+
+   // Enqueue built Tailwind CSS if exists, otherwise fallback to prototype CSS
+   $dist_css = get_template_directory() . '/dist/app.css';
+   if (file_exists($dist_css)) {
+	   wp_enqueue_style('mtq-aceh-pidie-jaya-app', get_template_directory_uri() . '/dist/app.css', array(), filemtime($dist_css));
+   }
+   // Always enqueue prototype CSS
+   wp_enqueue_style('mtq-aceh-pidie-jaya-prototype-css', get_template_directory_uri() . '/prototype/css/index.css', array(), _S_VERSION);
 
 	// Enqueue main JavaScript
 	wp_enqueue_script('mtq-aceh-pidie-jaya-navigation', get_template_directory_uri() . '/js/navigation.js', array(), _S_VERSION, true);
