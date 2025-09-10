@@ -286,3 +286,5 @@ function mtq_get_reading_time($post_id = null) {
 	
 	return max(1, $reading_time);
 }
+
+// Categories and tags setup completed - function removed
