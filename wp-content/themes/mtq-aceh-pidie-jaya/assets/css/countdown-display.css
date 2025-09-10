@@ -7,6 +7,9 @@
 .countdown-section {
     position: relative;
     transition: all 0.3s ease;
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
 }
 
 /* Title styling */
@@ -41,11 +44,21 @@
     grid-template-columns: repeat(4, 1fr);
     gap: 0.75rem;
     margin: 1.5rem 0;
+    width: 100%;
+    max-width: 100%;
 }
 
 @media (min-width: 768px) {
     .countdown-grid {
         gap: 1rem;
+    }
+}
+
+/* Ensure grid doesn't break on very small screens */
+@media (max-width: 320px) {
+    .countdown-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.25rem;
     }
 }
 
@@ -142,6 +155,58 @@
     color: #b45309;
 }
 
+/* Mobile responsive for completed/paused states */
+@media (max-width: 640px) {
+    .countdown-completed,
+    .countdown-paused {
+        padding: 1.5rem 1rem;
+        border-radius: 0.75rem;
+        margin: 1rem 0;
+    }
+    
+    .countdown-completed h4,
+    .countdown-paused h4 {
+        font-size: 1.25rem !important;
+        margin-bottom: 0.375rem;
+    }
+    
+    .countdown-completed p,
+    .countdown-paused p {
+        font-size: 0.875rem;
+        line-height: 1.5;
+        margin-bottom: 0.75rem;
+    }
+    
+    .countdown-completed div:first-child,
+    .countdown-paused div:first-child {
+        font-size: 2.5rem !important;
+        margin-bottom: 0.75rem !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .countdown-completed,
+    .countdown-paused {
+        padding: 1.25rem 0.75rem;
+    }
+    
+    .countdown-completed h4,
+    .countdown-paused h4 {
+        font-size: 1.125rem !important;
+    }
+    
+    .countdown-completed p,
+    .countdown-paused p {
+        font-size: 0.8125rem;
+    }
+    
+    .countdown-completed div:first-child,
+    .countdown-paused div:first-child {
+        font-size: 2rem !important;
+        margin-bottom: 0.5rem !important;
+    }
+}
+
 /* Progress bar */
 .countdown-progress {
     background: linear-gradient(90deg, #3b82f6 0%, #1d4ed8 100%);
@@ -210,17 +275,123 @@
 
 /* Responsive adjustments */
 @media (max-width: 640px) {
+    /* Countdown section spacing */
+    .countdown-section {
+        margin-bottom: 1.5rem;
+    }
+    
+    /* Title responsive */
+    .countdown-title {
+        font-size: 1.25rem !important;
+        line-height: 1.4;
+        margin-bottom: 0.75rem !important;
+    }
+    
+    /* Location/date info responsive */
+    .countdown-location {
+        font-size: 0.875rem;
+        line-height: 1.5;
+        margin-bottom: 1rem !important;
+        gap: 0.25rem;
+        text-align: center;
+    }
+    
+    /* Grid layout - 2x2 on very small screens, 4x1 on slightly larger */
     .countdown-grid {
         grid-template-columns: repeat(2, 1fr);
         grid-template-rows: repeat(2, 1fr);
+        gap: 0.5rem;
+        margin: 1rem 0;
     }
     
+    /* Countdown items mobile optimization */
+    .countdown-item {
+        padding: 0.75rem 0.5rem;
+        border-radius: 0.75rem;
+        min-height: 70px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+    
+    /* Numbers size for mobile */
     .countdown-number {
-        font-size: 1.5rem;
+        font-size: 1.25rem !important;
+        margin-bottom: 0.125rem;
+        font-weight: 800;
+    }
+    
+    /* Labels size for mobile */
+    .countdown-label {
+        font-size: 0.625rem !important;
+        letter-spacing: 0.05em;
+        line-height: 1;
+    }
+    
+    /* Social sharing mobile */
+    .countdown-section + div {
+        flex-direction: column;
+        align-items: center;
+        gap: 0.75rem;
+    }
+    
+    .countdown-section + div > div {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 1rem;
+    }
+}
+
+/* Extra small screens (phones in portrait) */
+@media (max-width: 480px) {
+    .countdown-title {
+        font-size: 1.125rem !important;
+    }
+    
+    .countdown-location {
+        font-size: 0.8125rem;
+        flex-direction: column;
+        gap: 0.25rem;
+    }
+    
+    .countdown-grid {
+        gap: 0.375rem;
+        margin: 0.75rem 0;
     }
     
     .countdown-item {
-        padding: 0.75rem;
+        padding: 0.625rem 0.375rem;
+        min-height: 60px;
+    }
+    
+    .countdown-number {
+        font-size: 1.125rem !important;
+    }
+    
+    .countdown-label {
+        font-size: 0.5625rem !important;
+    }
+}
+
+/* Landscape mobile phones */
+@media (max-width: 768px) and (orientation: landscape) {
+    .countdown-grid {
+        grid-template-columns: repeat(4, 1fr);
+        grid-template-rows: 1fr;
+        gap: 0.5rem;
+    }
+    
+    .countdown-item {
+        padding: 0.5rem 0.25rem;
+        min-height: 50px;
+    }
+    
+    .countdown-number {
+        font-size: 1rem !important;
+    }
+    
+    .countdown-label {
+        font-size: 0.5rem !important;
     }
 }
 
@@ -237,6 +408,73 @@
     
     .countdown-label {
         color: #94a3b8;
+    }
+}
+
+/* Override Tailwind classes to ensure our responsive design works */
+.countdown-section .countdown-grid {
+    display: grid !important;
+}
+
+.countdown-section .countdown-item {
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    align-items: center !important;
+}
+
+.countdown-section .countdown-number {
+    display: block !important;
+    text-align: center !important;
+}
+
+.countdown-section .countdown-label {
+    display: block !important;
+    text-align: center !important;
+}
+
+/* Ensure proper spacing on mobile */
+@media (max-width: 640px) {
+    .countdown-section .countdown-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 0.5rem !important;
+    }
+    
+    .countdown-section .countdown-item {
+        padding: 0.75rem 0.5rem !important;
+        min-height: 70px !important;
+    }
+    
+    .countdown-section .countdown-number {
+        font-size: 1.25rem !important;
+        line-height: 1.2 !important;
+        margin-bottom: 0.25rem !important;
+    }
+    
+    .countdown-section .countdown-label {
+        font-size: 0.625rem !important;
+        line-height: 1.3 !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .countdown-section .countdown-number {
+        font-size: 1.125rem !important;
+    }
+    
+    .countdown-section .countdown-label {
+        font-size: 0.5625rem !important;
+    }
+}
+
+@media (max-width: 320px) {
+    .countdown-section .countdown-grid {
+        gap: 0.25rem !important;
+    }
+    
+    .countdown-section .countdown-item {
+        padding: 0.625rem 0.375rem !important;
+        min-height: 60px !important;
     }
 }
 

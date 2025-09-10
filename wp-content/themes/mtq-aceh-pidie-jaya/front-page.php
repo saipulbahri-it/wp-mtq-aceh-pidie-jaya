@@ -111,46 +111,46 @@ get_header();
 							
 							<?php if ($countdown_status === 'completed' || $is_event_passed): ?>
 								<!-- Event Completed State -->
-								<div class="countdown-completed bg-gradient-to-r from-green-50 to-emerald-50 border-2 border-green-200 rounded-2xl p-6 text-center">
-									<div class="text-6xl mb-4">🎉</div>
-									<h4 class="text-2xl font-bold text-green-700 mb-2">Acara Telah Dimulai!</h4>
-									<p class="text-green-600 mb-4">Terima kasih atas partisipasi dan dukungan Anda dalam MTQ Aceh XXXVII</p>
-									<div class="flex justify-center gap-4 text-sm text-green-600">
-										<div class="flex items-center gap-1">
-											<span>✅</span> Pembukaan Selesai
+								<div class="countdown-completed bg-gradient-to-r from-green-50 to-emerald-50 border-2 border-green-200 rounded-xl sm:rounded-2xl p-4 sm:p-6 text-center">
+									<div class="text-4xl sm:text-5xl md:text-6xl mb-3 sm:mb-4">🎉</div>
+									<h4 class="text-lg sm:text-xl md:text-2xl font-bold text-green-700 mb-2">Acara Telah Dimulai!</h4>
+									<p class="text-sm sm:text-base text-green-600 mb-3 sm:mb-4 leading-relaxed">Terima kasih atas partisipasi dan dukungan Anda dalam MTQ Aceh XXXVII</p>
+									<div class="flex flex-col sm:flex-row justify-center gap-2 sm:gap-4 text-xs sm:text-sm text-green-600">
+										<div class="flex items-center justify-center gap-1">
+											<span>✅</span> <span>Pembukaan Selesai</span>
 										</div>
-										<div class="flex items-center gap-1">
-											<span>🎯</span> Perlombaan Berlangsung
+										<div class="flex items-center justify-center gap-1">
+											<span>🎯</span> <span>Perlombaan Berlangsung</span>
 										</div>
 									</div>
 								</div>
 								
 							<?php elseif ($countdown_status === 'paused'): ?>
 								<!-- Paused State -->
-								<div class="countdown-paused bg-gradient-to-r from-yellow-50 to-orange-50 border-2 border-yellow-200 rounded-2xl p-6 text-center">
-									<div class="text-6xl mb-4">⏸️</div>
-									<h4 class="text-2xl font-bold text-yellow-700 mb-2">Countdown Dijeda</h4>
-									<p class="text-yellow-600">Countdown sementara tidak aktif. Pantau terus untuk update terbaru!</p>
+								<div class="countdown-paused bg-gradient-to-r from-yellow-50 to-orange-50 border-2 border-yellow-200 rounded-xl sm:rounded-2xl p-4 sm:p-6 text-center">
+									<div class="text-4xl sm:text-5xl md:text-6xl mb-3 sm:mb-4">⏸️</div>
+									<h4 class="text-lg sm:text-xl md:text-2xl font-bold text-yellow-700 mb-2">Countdown Dijeda</h4>
+									<p class="text-sm sm:text-base text-yellow-600 leading-relaxed">Countdown sementara tidak aktif. Pantau terus untuk update terbaru!</p>
 								</div>
 								
 							<?php else: ?>
 								<!-- Active Countdown State -->
-								<div class="countdown-grid grid grid-cols-4 gap-3 md:gap-4">
-									<div class="countdown-item">
-										<div class="countdown-number" id="days">000</div>
-										<div class="countdown-label">Hari</div>
+								<div class="countdown-grid grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3 md:gap-4">
+									<div class="countdown-item bg-white/80 backdrop-blur-sm border-2 border-gray-200/60 rounded-xl p-3 sm:p-4 text-center transition-all duration-300 hover:shadow-lg hover:border-blue-300">
+										<div class="countdown-number text-xl sm:text-2xl md:text-3xl font-bold text-slate-800 font-mono leading-none mb-1" id="days">000</div>
+										<div class="countdown-label text-xs sm:text-sm text-gray-600 font-medium uppercase tracking-wide">Hari</div>
 									</div>
-									<div class="countdown-item">
-										<div class="countdown-number" id="hours">00</div>
-										<div class="countdown-label">Jam</div>
+									<div class="countdown-item bg-white/80 backdrop-blur-sm border-2 border-gray-200/60 rounded-xl p-3 sm:p-4 text-center transition-all duration-300 hover:shadow-lg hover:border-blue-300">
+										<div class="countdown-number text-xl sm:text-2xl md:text-3xl font-bold text-slate-800 font-mono leading-none mb-1" id="hours">00</div>
+										<div class="countdown-label text-xs sm:text-sm text-gray-600 font-medium uppercase tracking-wide">Jam</div>
 									</div>
-									<div class="countdown-item">
-										<div class="countdown-number" id="minutes">00</div>
-										<div class="countdown-label">Menit</div>
+									<div class="countdown-item bg-white/80 backdrop-blur-sm border-2 border-gray-200/60 rounded-xl p-3 sm:p-4 text-center transition-all duration-300 hover:shadow-lg hover:border-blue-300">
+										<div class="countdown-number text-xl sm:text-2xl md:text-3xl font-bold text-slate-800 font-mono leading-none mb-1" id="minutes">00</div>
+										<div class="countdown-label text-xs sm:text-sm text-gray-600 font-medium uppercase tracking-wide">Menit</div>
 									</div>
-									<div class="countdown-item">
-										<div class="countdown-number" id="seconds">00</div>
-										<div class="countdown-label">Detik</div>
+									<div class="countdown-item bg-white/80 backdrop-blur-sm border-2 border-gray-200/60 rounded-xl p-3 sm:p-4 text-center transition-all duration-300 hover:shadow-lg hover:border-blue-300">
+										<div class="countdown-number text-xl sm:text-2xl md:text-3xl font-bold text-slate-800 font-mono leading-none mb-1" id="seconds">00</div>
+										<div class="countdown-label text-xs sm:text-sm text-gray-600 font-medium uppercase tracking-wide">Detik</div>
 									</div>
 								</div>
 								
@@ -169,21 +169,23 @@ get_header();
 						</div>
 
 						<!-- Social Sharing for Countdown -->
-						<div class="mt-6 flex justify-center lg:justify-start">
-							<div class="flex items-center gap-3 text-sm text-gray-600">
-								<span>Bagikan:</span>
-								<a href="https://www.facebook.com/sharer/sharer.php?u=<?php echo urlencode(home_url()); ?>" target="_blank" 
-								   class="text-blue-600 hover:text-blue-700 transition-colors">
-									Facebook
-								</a>
-								<a href="https://wa.me/?text=<?php echo urlencode($event_title . ' - ' . home_url()); ?>" target="_blank"
-								   class="text-green-600 hover:text-green-700 transition-colors">
-									WhatsApp
-								</a>
-								<a href="https://twitter.com/intent/tweet?text=<?php echo urlencode($event_title); ?>&url=<?php echo urlencode(home_url()); ?>" target="_blank"
-								   class="text-sky-600 hover:text-sky-700 transition-colors">
-									Twitter
-								</a>
+						<div class="mt-4 sm:mt-6 flex justify-center lg:justify-start">
+							<div class="flex flex-col sm:flex-row items-center gap-2 sm:gap-3 text-xs sm:text-sm text-gray-600">
+								<span class="font-medium">Bagikan:</span>
+								<div class="flex items-center gap-3 sm:gap-3">
+									<a href="https://www.facebook.com/sharer/sharer.php?u=<?php echo urlencode(home_url()); ?>" target="_blank" 
+									   class="text-blue-600 hover:text-blue-700 transition-colors px-2 py-1 rounded hover:bg-blue-50">
+										Facebook
+									</a>
+									<a href="https://wa.me/?text=<?php echo urlencode($event_title . ' - ' . home_url()); ?>" target="_blank"
+									   class="text-green-600 hover:text-green-700 transition-colors px-2 py-1 rounded hover:bg-green-50">
+										WhatsApp
+									</a>
+									<a href="https://twitter.com/intent/tweet?text=<?php echo urlencode($event_title); ?>&url=<?php echo urlencode(home_url()); ?>" target="_blank"
+									   class="text-sky-600 hover:text-sky-700 transition-colors px-2 py-1 rounded hover:bg-sky-50">
+										Twitter
+									</a>
+								</div>
 							</div>
 						</div>
 					</div>
