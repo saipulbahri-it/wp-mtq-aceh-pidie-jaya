@@ -28,6 +28,7 @@ require get_template_directory() . '/inc/widgets.php';
 require get_template_directory() . '/inc/shortcodes.php';
 require get_template_directory() . '/inc/cabang-lomba.php';
 require get_template_directory() . '/inc/social-analytics-dashboard.php';
+require get_template_directory() . '/inc/countdown-admin.php';
 
 if (! function_exists('mtq_aceh_pidie_jaya_setup')) :
 	/**
@@ -175,16 +176,32 @@ function mtq_aceh_pidie_jaya_scripts() {
    // Enqueue social sharing CSS
    wp_enqueue_style('mtq-social-sharing-css', get_template_directory_uri() . '/assets/css/social-sharing.css', array(), _S_VERSION);
 
-   // Enqueue sticky header CSS
+   // Enqueue sticky header styles
    wp_enqueue_style('mtq-sticky-header-css', get_template_directory_uri() . '/assets/css/sticky-header.css', array(), _S_VERSION);
-
-	// Enqueue main JavaScript
+   
+   // Enqueue countdown enhanced styles
+   wp_enqueue_style('mtq-countdown-enhanced-css', get_template_directory_uri() . '/assets/css/countdown-enhanced.css', array(), _S_VERSION);
+   
+   // Countdown display styles for show/hide functionality
+   wp_enqueue_style('mtq-countdown-display-css', get_template_directory_uri() . '/assets/css/countdown-display.css', array(), _S_VERSION);
+   
+   // Enqueue main JavaScript
 	wp_enqueue_script('mtq-aceh-pidie-jaya-navigation', get_template_directory_uri() . '/js/navigation.js', array(), _S_VERSION, true);
 
 	// Enqueue prototype JavaScript (UI interactions)
 	wp_enqueue_script('mtq-aceh-pidie-jaya-prototype-js', get_template_directory_uri() . '/prototype/js/index.js', array(), _S_VERSION, true);
-	// Countdown
+	// Countdown with dynamic configuration
 	wp_enqueue_script('mtq-aceh-pidie-jaya-countdown', get_template_directory_uri() . '/prototype/js/countdown.js', array(), _S_VERSION, true);
+	
+	// Localize countdown configuration for JavaScript
+	wp_localize_script('mtq-aceh-pidie-jaya-countdown', 'mtqCountdownConfig', array(
+		'targetDate' => get_option('mtq_event_date', '2025-11-01T07:00:00'),
+		'eventTitle' => get_option('mtq_event_title', 'MTQ Aceh XXXVII Pidie Jaya 2025'),
+		'eventLocation' => get_option('mtq_event_location', 'Kabupaten Pidie Jaya, Aceh'),
+		'status' => get_option('mtq_countdown_status', 'active'),
+		'ajaxUrl' => admin_url('admin-ajax.php'),
+		'nonce' => wp_create_nonce('mtq_countdown_nonce')
+	));
 	
 	// Enqueue sticky header JavaScript
 	wp_enqueue_script('mtq-sticky-header-js', get_template_directory_uri() . '/assets/js/sticky-header.js', array(), _S_VERSION, true);
@@ -194,6 +211,32 @@ function mtq_aceh_pidie_jaya_scripts() {
 	}
 }
 add_action('wp_enqueue_scripts', 'mtq_aceh_pidie_jaya_scripts');
+
+/**
+ * Add countdown display classes to body
+ */
+function mtq_countdown_body_classes($classes) {
+	// Get countdown display settings
+	$show_title = get_option('mtq_show_title', true);
+	$show_date = get_option('mtq_show_date', true);
+	$show_location = get_option('mtq_show_location', true);
+	
+	// Add classes based on settings
+	if (!$show_title) {
+		$classes[] = 'hide-countdown-title';
+	}
+	
+	if (!$show_date) {
+		$classes[] = 'hide-countdown-date';
+	}
+	
+	if (!$show_location) {
+		$classes[] = 'hide-countdown-location';
+	}
+	
+	return $classes;
+}
+add_filter('body_class', 'mtq_countdown_body_classes');
 
 /**
  * Add admin bar compatibility for sticky header

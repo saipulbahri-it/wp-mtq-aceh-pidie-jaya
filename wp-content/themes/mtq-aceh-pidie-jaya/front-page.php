@@ -3,18 +3,7 @@
 /**
  * The front page template file
  *
- * This is the most generic template file in a					<div class="flex flex-col sm:flex-row gap-4 mt-8">
-						<a
-							href="#tentang"
-							class="px-8 py-3 bg-gradient-to-r from-blue-600 to-blue-500 text-white font-semibold rounded-full hover:from-blue-500 hover:to-blue-400 transition-all duration-300 transform hover:scale-105">
-							Tentang MTQ
-						</a>
-						<a
-							href="#berita"
-							class="px-8 py-3 border-2 border-blue-600 text-blue-600 font-semibold rounded-full hover:bg-blue-600 hover:text-white transition-all duration-300">
-							Lihat Berita
-						</a>
-					</div>heme
+ * This is the most generic template file in a WordPress theme
  * and one of the two required files for a theme (the other being style.css).
  * It is used to display the front page of the site.
  *
@@ -26,24 +15,23 @@
 get_header();
 ?>
 
-<main id="primary" class="site-main">
+<main id="primary" class="site-main" role="main">
 
 	<!-- Hero Section -->
 	<section
 		id="beranda"
-		class="min-h-screen hero-pattern flex items-center justify-center relative overflow-hidden pt-20 md:pt-24 section-animate">
+		class="min-h-screen hero-pattern flex items-center justify-center relative overflow-hidden pt-10 md:pt-8 section-animate">
 		<!-- Decorative Elements -->
 		<div class="absolute inset-0 opacity-20">
 			<div
 				class="absolute top-20 left-10 w-32 h-32 border border-blue-400/30 rounded-full"></div>
 			<div
 				class="absolute bottom-20 right-10 w-24 h-24 bg-amber-400/20 rounded-full"></div>
-			<div
-				class="absolute top-1/2 left-1/4 w-16 h-16 border-2 border-blue-400/40 rotate-45"></div>
+			<div class="absolute top-1/2 left-1/4 w-16 h-16 border-2 border-blue-400/40 rotate-45"></div>
 		</div>
 
 		<div class="max-w-7xl mx-auto px-4 relative z-10">
-			<div class="grid lg:grid-cols-2 gap-12 items-center">
+			<div class="grid lg:grid-cols-2 gap-10 items-center">
 				<!-- Left Content -->
 				<div class="text-center lg:text-left fade-in">
 					<h1 class="text-5xl md:text-6xl lg:text-7xl font-bold mb-6">
@@ -65,39 +53,141 @@ get_header();
 							style="background: linear-gradient(90deg, #fbbf24 0%, #f59e42 100%);
                        -webkit-background-clip: text;
                        -webkit-text-fill-color: transparent;
-                       background-clip: text;
-                       text-fill-color: transparent;">
+                       background-clip: text;">
 							"Mari Tingkatkan SDM Qur'ani yang Unggul Menuju Aceh Maju Pidie
 							Jaya Meusyuhu"
 						</p>
 					</div>
 
-					<!-- Countdown Timer -->
-					<div class="mb-8">
-						<h3
-							class="text-xl font-semibold mb-6 text-blue-600"
-							style="font-family: 'Playfair Display', serif;">
-							Hitung Mundur Menuju MTQ
-						</h3>
-						<div class="countdown-container justify-center lg:justify-start">
-							<div class="countdown-item">
-								<div class="countdown-number" id="days">000</div>
-								<div class="countdown-label">Hari</div>
-							</div>
-							<div class="countdown-item">
-								<div class="countdown-number" id="hours">00</div>
-								<div class="countdown-label">Jam</div>
-							</div>
-							<div class="countdown-item">
-								<div class="countdown-number" id="minutes">00</div>
-								<div class="countdown-label">Menit</div>
-							</div>
-							<div class="countdown-item">
-								<div class="countdown-number" id="seconds">00</div>
-								<div class="countdown-label">Detik</div>
+					<!-- Countdown Timer with Dynamic States -->
+					<?php 
+					// Get countdown configuration from WordPress options
+					$countdown_status = get_option('mtq_countdown_status', 'active');
+					$event_date = get_option('mtq_event_date', '2025-11-01T07:00:00');
+					$event_title = get_option('mtq_event_title', 'MTQ Aceh XXXVII Pidie Jaya 2025');
+					$event_location = get_option('mtq_event_location', 'Kabupaten Pidie Jaya, Aceh');
+					$show_title = get_option('mtq_show_title', false);
+					$show_date = get_option('mtq_show_date', false);
+					$show_location = get_option('mtq_show_location', false);
+					
+					// Check if event has passed (for auto-completion)
+					$current_time = current_time('timestamp');
+					$event_timestamp = strtotime($event_date);
+					$is_event_passed = $current_time >= $event_timestamp;
+					
+					if ($countdown_status !== 'hidden'): ?>
+					<div class="mb-8 countdown-section">
+						<!-- Event Title & Details -->
+						<?php if ($show_title || $show_date || $show_location): ?>
+						<div class="text-center lg:text-left mb-6">
+							<?php if ($show_title): ?>
+							<h3 class="text-xl md:text-2xl font-semibold mb-2 text-blue-600 countdown-title" style="font-family: 'Playfair Display', serif;">
+								<?php echo esc_html($event_title); ?>
+							</h3>
+							<?php endif; ?>
+							
+							<?php if ($show_date || $show_location): ?>
+							<p class="text-sm md:text-base text-gray-600 countdown-location flex items-center justify-center lg:justify-start gap-2">
+								<?php if ($show_date): ?>
+								<span class="text-blue-500">📅</span>
+								<?php echo date('d F Y, H:i', $event_timestamp); ?>
+								<?php endif; ?>
+								
+								<?php if ($show_date && $show_location): ?>
+								<span class="mx-2">•</span>
+								<?php endif; ?>
+								
+								<?php if ($show_location): ?>
+								<span class="text-blue-500">📍</span>
+								<?php echo esc_html($event_location); ?>
+								<?php endif; ?>
+							</p>
+							<?php endif; ?>
+						</div>
+						<?php endif; ?>
+
+						<!-- Countdown Container -->
+						<div class="countdown-container justify-center lg:justify-start" data-status="<?php echo esc_attr($countdown_status); ?>">
+							
+							<?php if ($countdown_status === 'completed' || $is_event_passed): ?>
+								<!-- Event Completed State -->
+								<div class="countdown-completed bg-gradient-to-r from-green-50 to-emerald-50 border-2 border-green-200 rounded-2xl p-6 text-center">
+									<div class="text-6xl mb-4">🎉</div>
+									<h4 class="text-2xl font-bold text-green-700 mb-2">Acara Telah Dimulai!</h4>
+									<p class="text-green-600 mb-4">Terima kasih atas partisipasi dan dukungan Anda dalam MTQ Aceh XXXVII</p>
+									<div class="flex justify-center gap-4 text-sm text-green-600">
+										<div class="flex items-center gap-1">
+											<span>✅</span> Pembukaan Selesai
+										</div>
+										<div class="flex items-center gap-1">
+											<span>🎯</span> Perlombaan Berlangsung
+										</div>
+									</div>
+								</div>
+								
+							<?php elseif ($countdown_status === 'paused'): ?>
+								<!-- Paused State -->
+								<div class="countdown-paused bg-gradient-to-r from-yellow-50 to-orange-50 border-2 border-yellow-200 rounded-2xl p-6 text-center">
+									<div class="text-6xl mb-4">⏸️</div>
+									<h4 class="text-2xl font-bold text-yellow-700 mb-2">Countdown Dijeda</h4>
+									<p class="text-yellow-600">Countdown sementara tidak aktif. Pantau terus untuk update terbaru!</p>
+								</div>
+								
+							<?php else: ?>
+								<!-- Active Countdown State -->
+								<div class="countdown-grid grid grid-cols-4 gap-3 md:gap-4">
+									<div class="countdown-item">
+										<div class="countdown-number" id="days">000</div>
+										<div class="countdown-label">Hari</div>
+									</div>
+									<div class="countdown-item">
+										<div class="countdown-number" id="hours">00</div>
+										<div class="countdown-label">Jam</div>
+									</div>
+									<div class="countdown-item">
+										<div class="countdown-number" id="minutes">00</div>
+										<div class="countdown-label">Menit</div>
+									</div>
+									<div class="countdown-item">
+										<div class="countdown-number" id="seconds">00</div>
+										<div class="countdown-label">Detik</div>
+									</div>
+								</div>
+								
+								<!-- Countdown Progress Indicator -->
+								<div class="mt-6 hidden md:block">
+									<div class="flex items-center justify-between text-xs text-gray-500 mb-2">
+										<span>Pengumuman</span>
+										<span>Persiapan</span>
+										<span>Pelaksanaan</span>
+									</div>
+									<div class="w-full bg-gray-200 rounded-full h-2">
+										<div class="countdown-progress bg-gradient-to-r from-blue-500 to-blue-600 h-2 rounded-full transition-all duration-1000" style="width: 75%"></div>
+									</div>
+								</div>
+							<?php endif; ?>
+						</div>
+
+						<!-- Social Sharing for Countdown -->
+						<div class="mt-6 flex justify-center lg:justify-start">
+							<div class="flex items-center gap-3 text-sm text-gray-600">
+								<span>Bagikan:</span>
+								<a href="https://www.facebook.com/sharer/sharer.php?u=<?php echo urlencode(home_url()); ?>" target="_blank" 
+								   class="text-blue-600 hover:text-blue-700 transition-colors">
+									Facebook
+								</a>
+								<a href="https://wa.me/?text=<?php echo urlencode($event_title . ' - ' . home_url()); ?>" target="_blank"
+								   class="text-green-600 hover:text-green-700 transition-colors">
+									WhatsApp
+								</a>
+								<a href="https://twitter.com/intent/tweet?text=<?php echo urlencode($event_title); ?>&url=<?php echo urlencode(home_url()); ?>" target="_blank"
+								   class="text-sky-600 hover:text-sky-700 transition-colors">
+									Twitter
+								</a>
 							</div>
 						</div>
 					</div>
+					<?php endif; ?>
 
 					<!-- CTA Buttons -->
 					<div
@@ -108,9 +198,9 @@ get_header();
 							Tentang MTQ
 						</a>
 						<a
-							href="#jadwal"
+							href="#berita"
 							class="px-8 py-3 border-2 border-blue-600 text-blue-600 font-semibold rounded-full hover:bg-blue-600 hover:text-white transition-all duration-300">
-							Lihat Jadwal
+							Lihat Berita
 						</a>
 					</div>
 				</div>

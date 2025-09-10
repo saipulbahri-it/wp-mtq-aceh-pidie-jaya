@@ -1,0 +1,257 @@
+/**
+ * MTQ Countdown Display Styles
+ * Dynamic CSS for countdown show/hide functionality
+ */
+
+/* Base countdown styles */
+.countdown-section {
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+/* Title styling */
+.countdown-title {
+    font-family: 'Playfair Display', serif;
+    background: linear-gradient(135deg, #2563eb 0%, #3b82f6 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    transition: all 0.3s ease;
+}
+
+/* Location and date styling */
+.countdown-location {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    transition: all 0.3s ease;
+}
+
+@media (min-width: 1024px) {
+    .countdown-location {
+        justify-content: flex-start;
+    }
+}
+
+/* Grid container for countdown numbers */
+.countdown-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.75rem;
+    margin: 1.5rem 0;
+}
+
+@media (min-width: 768px) {
+    .countdown-grid {
+        gap: 1rem;
+    }
+}
+
+/* Individual countdown items */
+.countdown-item {
+    background: rgba(248, 250, 252, 0.8);
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(226, 232, 240, 0.6);
+    border-radius: 1rem;
+    padding: 1rem;
+    text-align: center;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.countdown-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px -8px rgba(37, 99, 235, 0.3);
+    border-color: rgba(37, 99, 235, 0.4);
+}
+
+/* Countdown numbers */
+.countdown-number {
+    font-size: 1.875rem;
+    font-weight: 700;
+    color: #1e293b;
+    font-family: 'JetBrains Mono', monospace;
+    line-height: 1;
+    margin-bottom: 0.25rem;
+    transition: all 0.3s ease;
+}
+
+@media (min-width: 768px) {
+    .countdown-number {
+        font-size: 2.25rem;
+    }
+}
+
+/* Countdown labels */
+.countdown-label {
+    font-size: 0.75rem;
+    color: #64748b;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.025em;
+}
+
+@media (min-width: 768px) {
+    .countdown-label {
+        font-size: 0.875rem;
+    }
+}
+
+/* Completed state */
+.countdown-completed {
+    background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+    border: 2px solid #10b981;
+    border-radius: 1rem;
+    padding: 2rem;
+    text-align: center;
+    animation: completedPulse 3s ease-in-out infinite;
+}
+
+.countdown-completed h4 {
+    color: #065f46;
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.countdown-completed p {
+    color: #047857;
+    margin-bottom: 1rem;
+}
+
+/* Paused state */
+.countdown-paused {
+    background: linear-gradient(135deg, #fef3c7 0%, #fed7aa 100%);
+    border: 2px solid #f59e0b;
+    border-radius: 1rem;
+    padding: 2rem;
+    text-align: center;
+    animation: pausedBlink 2s ease-in-out infinite;
+}
+
+.countdown-paused h4 {
+    color: #92400e;
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.countdown-paused p {
+    color: #b45309;
+}
+
+/* Progress bar */
+.countdown-progress {
+    background: linear-gradient(90deg, #3b82f6 0%, #1d4ed8 100%);
+    height: 0.5rem;
+    border-radius: 9999px;
+    transition: width 1s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.countdown-progress::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+    animation: progressShimmer 2s infinite;
+}
+
+/* Animations */
+@keyframes completedPulse {
+    0%, 100% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4);
+    }
+    50% {
+        transform: scale(1.02);
+        box-shadow: 0 0 0 10px rgba(16, 185, 129, 0);
+    }
+}
+
+@keyframes pausedBlink {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.8;
+    }
+}
+
+@keyframes progressShimmer {
+    0% {
+        left: -100%;
+    }
+    100% {
+        left: 100%;
+    }
+}
+
+/* Dynamic visibility classes - akan diatur oleh PHP */
+.hide-countdown-title .countdown-title {
+    display: none;
+}
+
+.hide-countdown-date .countdown-location .countdown-date,
+.hide-countdown-date .countdown-location span[title*="tanggal"] {
+    display: none;
+}
+
+.hide-countdown-location .countdown-location .countdown-loc,
+.hide-countdown-location .countdown-location span[title*="lokasi"] {
+    display: none;
+}
+
+/* Responsive adjustments */
+@media (max-width: 640px) {
+    .countdown-grid {
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(2, 1fr);
+    }
+    
+    .countdown-number {
+        font-size: 1.5rem;
+    }
+    
+    .countdown-item {
+        padding: 0.75rem;
+    }
+}
+
+/* Dark mode support (jika theme mendukung) */
+@media (prefers-color-scheme: dark) {
+    .countdown-item {
+        background: rgba(15, 23, 42, 0.8);
+        border-color: rgba(51, 65, 85, 0.6);
+    }
+    
+    .countdown-number {
+        color: #e2e8f0;
+    }
+    
+    .countdown-label {
+        color: #94a3b8;
+    }
+}
+
+/* Print styles */
+@media print {
+    .countdown-section {
+        page-break-inside: avoid;
+    }
+    
+    .countdown-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+    
+    .countdown-item {
+        border: 1px solid #ccc;
+        box-shadow: none;
+    }
+}
