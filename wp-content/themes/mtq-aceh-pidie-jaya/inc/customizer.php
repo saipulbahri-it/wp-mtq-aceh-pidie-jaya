@@ -20,6 +20,104 @@ function mtq_aceh_pidie_jaya_customize_register( $wp_customize ) {
 	$wp_customize->get_setting( 'blogdescription' )->transport = 'postMessage';
 	$wp_customize->get_setting( 'header_textcolor' )->transport = 'postMessage';
 
+	// Location Map Section
+	$wp_customize->add_section(
+		'mtq_location_section',
+		array(
+			'title'       => __( 'Peta Lokasi', 'mtq-aceh-pidie-jaya' ),
+			'priority'    => 115,
+			'description' => __( 'Pengaturan peta dan lokasi event MTQ', 'mtq-aceh-pidie-jaya' ),
+		)
+	);
+
+	// Map Embed URL
+	$default_map_url = 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4852.693491674251!2d96.24198147580853!3d5.230074394747693!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3040b100162f57eb%3A0xf5697ff0a3aa42fe!2sGEDUNG%20MTQ%20PIDIE%20JAYA!5e1!3m2!1sid!2sid!4v1757497686875!5m2!1sid!2sid';
+	
+	$wp_customize->add_setting(
+		'location_map_url',
+		array(
+			'default'           => $default_map_url,
+			'sanitize_callback' => function($url) use ($default_map_url) {
+				$cleaned_url = esc_url_raw($url);
+				return !empty($cleaned_url) ? $cleaned_url : $default_map_url;
+			},
+			'transport'         => 'refresh',
+		)
+	);
+
+	$wp_customize->add_control(
+		'location_map_url',
+		array(
+			'label'       => __( 'URL Google Maps', 'mtq-aceh-pidie-jaya' ),
+			'description' => __( 'Masukkan URL embed Google Maps (https://www.google.com/maps/embed?...)', 'mtq-aceh-pidie-jaya' ),
+			'section'     => 'mtq_location_section',
+			'type'        => 'url',
+		)
+	);
+
+	// Map Height
+	$wp_customize->add_setting(
+		'location_map_height',
+		array(
+			'default'           => '400',
+			'sanitize_callback' => 'absint',
+			'transport'         => 'postMessage',
+		)
+	);
+
+	$wp_customize->add_control(
+		'location_map_height',
+		array(
+			'label'       => __( 'Tinggi Peta (px)', 'mtq-aceh-pidie-jaya' ),
+			'description' => __( 'Atur tinggi peta dalam pixel', 'mtq-aceh-pidie-jaya' ),
+			'section'     => 'mtq_location_section',
+			'type'        => 'number',
+			'input_attrs' => array(
+				'min'  => 200,
+				'max'  => 800,
+				'step' => 10,
+			),
+		)
+	);
+
+	// Location Title
+	$wp_customize->add_setting(
+		'location_title',
+		array(
+			'default'           => __( 'Lokasi Penyelenggaraan MTQ XXXVII Aceh', 'mtq-aceh-pidie-jaya' ),
+			'sanitize_callback' => 'sanitize_text_field',
+			'transport'         => 'postMessage',
+		)
+	);
+
+	$wp_customize->add_control(
+		'location_title',
+		array(
+			'label'    => __( 'Judul Lokasi', 'mtq-aceh-pidie-jaya' ),
+			'section'  => 'mtq_location_section',
+			'type'     => 'text',
+		)
+	);
+
+	// Location Description
+	$wp_customize->add_setting(
+		'location_description',
+		array(
+			'default'           => __( 'MTQ XXXVII Aceh akan diselenggarakan di Kompleks Perkantoran Bupati Pidie Jaya, yang berlokasi di Jalan Banda Aceh-Medan KM. 156.5, Kecamatan Meureudu, Kabupaten Pidie Jaya.', 'mtq-aceh-pidie-jaya' ),
+			'sanitize_callback' => 'wp_kses_post',
+			'transport'         => 'postMessage',
+		)
+	);
+
+	$wp_customize->add_control(
+		'location_description',
+		array(
+			'label'    => __( 'Deskripsi Lokasi', 'mtq-aceh-pidie-jaya' ),
+			'section'  => 'mtq_location_section',
+			'type'     => 'textarea',
+		)
+	);
+
 	// Footer Section
 	$wp_customize->add_section(
 		'mtq_footer_section',
