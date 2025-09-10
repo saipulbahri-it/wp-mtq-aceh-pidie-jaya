@@ -41,6 +41,25 @@
 		} );
 	} );
 
+	// Location settings
+	wp.customize( 'location_title', function( value ) {
+		value.bind( function( to ) {
+			$( '#location-map h2' ).text( to );
+		} );
+	} );
+
+	wp.customize( 'location_description', function( value ) {
+		value.bind( function( to ) {
+			$( '#location-map .text-gray-600' ).html( to );
+		} );
+	} );
+
+	wp.customize( 'location_map_height', function( value ) {
+		value.bind( function( to ) {
+			$( '#location-map iframe' ).css( 'height', to + 'px' );
+		} );
+	} );
+
 	// Footer text
 	wp.customize( 'footer_text', function( value ) {
 		value.bind( function( to ) {

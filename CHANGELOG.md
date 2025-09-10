@@ -13,6 +13,15 @@
   - Dukungan live preview untuk pengaturan footer di Customizer
   - Tampilan footer yang responsif dengan grid system
 
+- **Peta Lokasi**
+  - Menambahkan customizer untuk peta lokasi event MTQ
+  - Pengaturan URL embed Google Maps
+  - Pengaturan tinggi peta yang dapat disesuaikan
+  - Judul dan deskripsi lokasi yang dapat diedit
+  - Template part baru untuk menampilkan peta
+  - Live preview untuk semua pengaturan peta
+  - Tampilan responsif dengan desain modern
+
 ### Added
 - **Kategori Lomba**
   - Menambahkan kategori baru: Qiraah Sab'ah, KTIQ, dan Tartil
