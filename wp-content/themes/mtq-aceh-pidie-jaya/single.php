@@ -16,7 +16,8 @@ get_header();
     <?php while (have_posts()) : the_post(); ?>
     
     <!-- Hero Section with Featured Image -->
-    <section class="relative pt-28 pb-20 sm:pb-24 md:pb-32 bg-gradient-to-br from-blue-50 via-white to-slate-50 overflow-hidden">
+        <!-- Hero Section with Optimized Layout -->
+    <section class="relative pt-24 pb-20 sm:pb-24 md:pb-32 bg-gradient-to-br from-blue-50 via-white to-slate-50 overflow-hidden">
         <?php if (has_post_thumbnail()) : ?>
         <!-- Background Image with Blur Effect -->
         <div class="absolute inset-0">
@@ -184,7 +185,7 @@ get_header();
                 
                 <!-- Sidebar -->
                 <div class="lg:col-span-1">
-                    <div class="sticky top-8">
+                    <div class="sticky top-24">
                         <!-- Popular Posts -->
                         <div class="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl p-6 mb-8">
                             <h3 class="text-xl font-bold text-slate-800 mb-6 flex items-center">

@@ -177,6 +177,9 @@ function mtq_aceh_pidie_jaya_scripts() {
    // Enqueue social sharing CSS
    wp_enqueue_style('mtq-social-sharing-css', get_template_directory_uri() . '/assets/css/social-sharing.css', array(), _S_VERSION);
 
+   // Enqueue sticky header CSS
+   wp_enqueue_style('mtq-sticky-header-css', get_template_directory_uri() . '/assets/css/sticky-header.css', array(), _S_VERSION);
+
 	// Enqueue main JavaScript
 	wp_enqueue_script('mtq-aceh-pidie-jaya-navigation', get_template_directory_uri() . '/js/navigation.js', array(), _S_VERSION, true);
 
@@ -184,12 +187,53 @@ function mtq_aceh_pidie_jaya_scripts() {
 	wp_enqueue_script('mtq-aceh-pidie-jaya-prototype-js', get_template_directory_uri() . '/prototype/js/index.js', array(), _S_VERSION, true);
 	// Countdown
 	wp_enqueue_script('mtq-aceh-pidie-jaya-countdown', get_template_directory_uri() . '/prototype/js/countdown.js', array(), _S_VERSION, true);
+	
+	// Enqueue sticky header JavaScript
+	wp_enqueue_script('mtq-sticky-header-js', get_template_directory_uri() . '/assets/js/sticky-header.js', array(), _S_VERSION, true);
 
 	if (is_singular() && comments_open() && get_option('thread_comments')) {
 		wp_enqueue_script('comment-reply');
 	}
 }
 add_action('wp_enqueue_scripts', 'mtq_aceh_pidie_jaya_scripts');
+
+/**
+ * Add admin bar compatibility for sticky header
+ */
+function mtq_admin_bar_compatibility() {
+	// Add body class for admin bar compatibility
+	if (is_admin_bar_showing()) {
+		add_filter('body_class', function($classes) {
+			$classes[] = 'has-admin-bar';
+			return $classes;
+		});
+	}
+}
+add_action('wp_head', 'mtq_admin_bar_compatibility');
+
+/**
+ * Add inline styles for admin bar compatibility
+ */
+function mtq_admin_bar_inline_styles() {
+	if (is_admin_bar_showing()) {
+		?>
+		<style type="text/css">
+			/* Ensure admin bar doesn't conflict with sticky header */
+			html {
+				margin-top: 0 !important;
+			}
+			
+			/* Additional admin bar fixes for mobile */
+			@media screen and (max-width: 782px) {
+				html.wp-toolbar {
+					margin-top: 0 !important;
+				}
+			}
+		</style>
+		<?php
+	}
+}
+add_action('wp_head', 'mtq_admin_bar_inline_styles');
 
 /**
  * Implement the Custom Header feature.

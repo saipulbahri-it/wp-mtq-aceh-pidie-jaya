@@ -95,7 +95,7 @@
 	</div>
 
 	<!-- Header -->
-	<header id="main-header" class="fixed top-0 w-full bg-white/90 backdrop-blur-sm border-b border-slate-200/50 z-50 transition-all duration-300">
+	<header id="main-header" class="sticky top-0 w-full bg-white/95 backdrop-blur-md border-b border-slate-200/50 z-50 transition-all duration-300 shadow-sm">
 		<div class="max-w-7xl mx-auto header-padding px-4 py-4">
 			<div class="flex justify-between items-center">
 				<div class="flex items-center space-x-3">

@@ -20,7 +20,7 @@ get_header();
 	<!-- Hero Section -->
 	<section
 		id="beranda"
-		class="min-h-screen hero-pattern flex items-center justify-center relative overflow-hidden pt-28 md:pt-24 section-animate">
+		class="min-h-screen hero-pattern flex items-center justify-center relative overflow-hidden pt-20 md:pt-24 section-animate">
 		<!-- Decorative Elements -->
 		<div class="absolute inset-0 opacity-20">
 			<div
