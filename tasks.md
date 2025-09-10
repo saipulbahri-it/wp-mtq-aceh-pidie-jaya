@@ -4,7 +4,7 @@
 
 #### **1. Template Files yang Hilang**
 - [ ] **Buat archive.php** - Template untuk archive kategori, tags, dan author
-- [ ] **Buat category.php** - Template khusus untuk halaman kategori  
+- [x] **Buat category.php** - Template khusus untuk halaman kategori  
 - [ ] **Buat tag.php** - Template khusus untuk halaman tags
 - [ ] **Buat search.php** - Template untuk hasil pencarian
 - [ ] **Buat searchform.php** - Form pencarian custom
