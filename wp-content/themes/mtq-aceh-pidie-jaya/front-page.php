@@ -3,7 +3,18 @@
 /**
  * The front page template file
  *
- * This is the most generic template file in a WordPress theme
+ * This is the most generic template file in a					<div class="flex flex-col sm:flex-row gap-4 mt-8">
+						<a
+							href="#tentang"
+							class="px-8 py-3 bg-gradient-to-r from-blue-600 to-blue-500 text-white font-semibold rounded-full hover:from-blue-500 hover:to-blue-400 transition-all duration-300 transform hover:scale-105">
+							Tentang MTQ
+						</a>
+						<a
+							href="#berita"
+							class="px-8 py-3 border-2 border-blue-600 text-blue-600 font-semibold rounded-full hover:bg-blue-600 hover:text-white transition-all duration-300">
+							Lihat Berita
+						</a>
+					</div>heme
  * and one of the two required files for a theme (the other being style.css).
  * It is used to display the front page of the site.
  *

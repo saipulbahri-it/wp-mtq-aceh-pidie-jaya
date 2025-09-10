@@ -118,7 +118,6 @@
 							echo '<a href="' . esc_url( get_home_url() ) . '#tentang" class="nav-link">Tentang</a>';
 							echo '<a href="' . esc_url( get_home_url() ) . '#cabang" class="nav-link">Cabang Lomba</a>';
 							echo '<a href="' . get_permalink( get_page_by_path( 'arena-dan-lokasi' ) ) . '" class="nav-link">Arena & Lokasi</a>';
-							echo '<a href="' . esc_url( get_home_url() ) . '#jadwal" class="nav-link">Jadwal</a>';
 							echo '<a href="' . esc_url( get_home_url() ) . '#berita" class="nav-link">Berita</a>';
 							echo '<a href="' . esc_url( get_home_url() ) . '#live" class="nav-link text-orange-600 font-bold flex items-center gap-1"><span class="relative flex items-center"><span class="live-dot animate-pulse"></span><svg class="w-4 h-4 ml-1 text-orange-500" fill="currentColor" viewBox="0 0 20 20"><circle cx="10" cy="10" r="6" fill="currentColor"></circle></svg></span>Live</a>';
 						},
@@ -149,7 +148,6 @@
 							echo '<a href="' . esc_url( get_home_url() ) . '#tentang" class="nav-link">Tentang</a>';
 							echo '<a href="' . esc_url( get_home_url() ) . '#cabang" class="nav-link">Cabang Lomba</a>';
 							echo '<a href="' . get_permalink( get_page_by_path( 'arena-dan-lokasi' ) ) . '" class="nav-link">Arena & Lokasi</a>';
-							echo '<a href="' . esc_url( get_home_url() ) . '#jadwal" class="nav-link">Jadwal</a>';
 							echo '<a href="' . esc_url( get_home_url() ) . '#berita" class="nav-link">Berita</a>';
 							echo '<a href="' . esc_url( get_home_url() ) . '#live" class="nav-link text-orange-600 font-bold flex items-center gap-1"><span class="relative flex items-center"><span class="live-dot animate-pulse"></span><svg class="w-4 h-4 ml-1 text-orange-500" fill="currentColor" viewBox="0 0 20 20"><circle cx="10" cy="10" r="6" fill="currentColor"></circle></svg></span>Live</a>';
 						},
