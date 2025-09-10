@@ -404,6 +404,13 @@ get_header();
         </div>
     </section>
 
+    <!-- Related Posts Section -->
+    <section class="py-8 md:py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <?php get_template_part('template-parts/related-posts'); ?>
+        </div>
+    </section>
+
     <?php endwhile; ?>
 </main>
 
