@@ -119,7 +119,7 @@ get_header();
             <div class="mt-16 fade-in-delay-3">
                 <nav aria-label="Navigasi Halaman Berita" role="navigation">
                     <div class="max-w-lg mx-auto px-0 sm:px-1">
-                        <div class="bg-white rounded-xl sm:rounded-2xl p-4 sm:p-6 shadow-lg border border-slate-100">
+                        <div>
                             <div class="flex items-center justify-center gap-1 sm:gap-2 flex-wrap">
                                 
                                 <!-- Previous Button -->

@@ -33,7 +33,7 @@ get_header();
                 <nav class="mb-6" aria-label="Breadcrumb">
                     <ol class="inline-flex items-center space-x-1 md:space-x-3 text-sm">
                         <li class="inline-flex items-center">
-                            <a href="<?php echo home_url(); ?>" class="text-white/80 hover:text-blue-300 transition-colors">
+                            <a href="<?php echo home_url(); ?>" class="text-white/80 hover:text-blue-300 transition-colors flex">
                                 <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
                                     <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path>
                                 </svg>
@@ -113,24 +113,31 @@ get_header();
 
     <!-- Article Content -->
     <article class="py-16 bg-white">
-        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-            
-            <!-- Featured Image -->
-            <?php if (has_post_thumbnail()) : ?>
-            <div class="mb-12 fade-in">
-                <figure class="relative overflow-hidden rounded-2xl shadow-xl">
-                    <?php the_post_thumbnail('full', ['class' => 'w-full h-auto object-cover']); ?>
-                    <?php if (get_the_post_thumbnail_caption()) : ?>
-                    <figcaption class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-6">
-                        <p class="text-white text-sm"><?php echo get_the_post_thumbnail_caption(); ?></p>
-                    </figcaption>
-                    <?php endif; ?>
-                </figure>
-            </div>
-            <?php endif; ?>
-            
-            <!-- Article Body -->
-            <div class="prose prose-lg prose-slate max-w-none fade-in-delay-2">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+                
+                <!-- Main Content -->
+                <div class="lg:col-span-3">
+                    <!-- Featured Image -->
+                    <div class="mb-12 fade-in">
+                        <figure class="relative overflow-hidden rounded-2xl shadow-xl">
+                            <?php if (has_post_thumbnail()) : ?>
+                                <?php the_post_thumbnail('full', ['class' => 'w-full h-auto object-cover']); ?>
+                            <?php else : ?>
+                                <img src="<?php echo get_template_directory_uri(); ?>/assets/images/default-thumbnail.svg" 
+                                     alt="<?php echo esc_attr(get_the_title()); ?>"
+                                     class="w-full h-64 object-cover bg-slate-100">
+                            <?php endif; ?>
+                            <?php if (get_the_post_thumbnail_caption()) : ?>
+                            <figcaption class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-6">
+                                <p class="text-white text-sm"><?php echo get_the_post_thumbnail_caption(); ?></p>
+                            </figcaption>
+                            <?php endif; ?>
+                        </figure>
+                    </div>
+                    
+                    <!-- Article Body -->
+                    <div class="prose prose-lg prose-slate max-w-none fade-in-delay-2">
                 <?php
                 the_content(
                     sprintf(
@@ -149,24 +156,109 @@ get_header();
                 ?>
             </div>
             
-            <!-- Tags -->
-            <?php 
-            $tags = get_the_tags();
-            if ($tags) :
-            ?>
-            <div class="mt-12 pt-8 border-t border-slate-200 fade-in-delay-3">
-                <h3 class="text-lg font-semibold text-slate-800 mb-4">Tags:</h3>
-                <div class="flex flex-wrap gap-2">
-                    <?php foreach ($tags as $tag) : ?>
-                    <a href="<?php echo get_tag_link($tag->term_id); ?>" 
-                       class="inline-flex items-center px-3 py-1.5 text-sm font-medium text-slate-600 bg-slate-100 rounded-full hover:bg-slate-200 transition-colors">
-                        #<?php echo $tag->name; ?>
-                    </a>
-                    <?php endforeach; ?>
+                    <!-- Tags -->
+                    <?php 
+                    $tags = get_the_tags();
+                    if ($tags) :
+                    ?>
+                    <div class="mt-12 pt-8 border-t border-slate-200 fade-in-delay-3">
+                        <h3 class="text-lg font-semibold text-slate-800 mb-4">Tags:</h3>
+                        <div class="flex flex-wrap gap-2">
+                            <?php foreach ($tags as $tag) : ?>
+                            <a href="<?php echo get_tag_link($tag->term_id); ?>" 
+                               class="inline-flex items-center px-3 py-1.5 text-sm font-medium text-slate-600 bg-slate-100 rounded-full hover:bg-slate-200 transition-colors">
+                                #<?php echo $tag->name; ?>
+                            </a>
+                            <?php endforeach; ?>
+                        </div>
+                    </div>
+                    <?php endif; ?>
                 </div>
+                
+                <!-- Sidebar -->
+                <div class="lg:col-span-1">
+                    <div class="sticky top-8">
+                        <!-- Popular Posts -->
+                        <div class="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl p-6 mb-8">
+                            <h3 class="text-xl font-bold text-slate-800 mb-6 flex items-center">
+                                <svg class="w-6 h-6 text-blue-600 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                                </svg>
+                                Berita Populer
+                            </h3>
+                            
+                            <?php
+                            // Get popular posts based on comments count
+                            $popular_posts = get_posts(array(
+                                'numberposts' => 5,
+                                'orderby' => 'comment_count',
+                                'order' => 'DESC',
+                                'post_status' => 'publish',
+                                'post__not_in' => array(get_the_ID())
+                            ));
+                            
+                            if ($popular_posts) :
+                                foreach ($popular_posts as $index => $popular_post) :
+                                    setup_postdata($popular_post);
+                                    $thumbnail = get_the_post_thumbnail_url($popular_post->ID, 'thumbnail');
+                                    // Default thumbnail jika tidak ada featured image
+                                    if (!$thumbnail) {
+                                        $thumbnail = get_template_directory_uri() . '/assets/images/default-thumbnail.svg';
+                                    }
+                            ?>
+                            <article class="flex gap-4 mb-6 last:mb-0 group">
+                                <div class="flex-1 min-w-0">
+                                    <div class="mb-3 relative overflow-hidden rounded-lg">
+                                        <img src="<?php echo esc_url($thumbnail); ?>" 
+                                             alt="<?php echo esc_attr(get_the_title($popular_post->ID)); ?>"
+                                             class="w-full h-20 object-cover bg-slate-100 transition-transform duration-300 group-hover:scale-105"
+                                             onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQwIiBoZWlnaHQ9IjgwIiB2aWV3Qm94PSIwIDAgMjQwIDgwIiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8cmVjdCB3aWR0aD0iMjQwIiBoZWlnaHQ9IjgwIiBmaWxsPSIjRjFGNUY5Ii8+CjxwYXRoIGQ9Ik05NiA0MEgxNDRWNDRIOTZWNDBaTTEwNCA0NEgxMzZWNDhIMTA0VjQ0WiIgZmlsbD0iIzk0QTNCOCIvPgo8cGF0aCBkPSJNMTA4IDMyQzEwOCAzMC44OTU0IDEwOC44OTUgMzAgMTEwIDMwSDE0MkMxNDMuMTA1IDMwIDE0NCAzMC44OTU0IDE0NCAzMlYzNkMxNDQgMzcuMTA0NiAxNDMuMTA1IDM4IDE0MiAzOEgxMTBDMTA4Ljg5NSAzOCAxMDggMzcuMTA0NiAxMDggMzZWMzJaIiBmaWxsPSIjOTRBM0I4Ii8+Cjwvc3ZnPg=='">
+                                        <!-- Premium Number Badge -->
+                                        <div class="absolute top-2 left-2">
+                                            <div class="relative">
+                                                <!-- Background with gradient -->
+                                                <div class="w-8 h-8 bg-gradient-to-br from-blue-500 to-blue-700 rounded-full shadow-xl border-2 border-white"></div>
+                                                <!-- Number -->
+                                                <span class="absolute inset-0 flex items-center justify-center text-white font-black text-xs tracking-tight">
+                                                    <?php echo $index + 1; ?>
+                                                </span>
+                                                <!-- Shine effect -->
+                                                <div class="absolute inset-0 rounded-full bg-gradient-to-tr from-white/30 to-transparent opacity-60"></div>
+                                            </div>
+                                        </div>
+                                        <!-- Hover overlay -->
+                                        <div class="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                                    </div>
+                                    <h4 class="font-semibold text-slate-800 group-hover:text-blue-600 transition-colors leading-tight mb-2">
+                                        <a href="<?php echo get_permalink($popular_post->ID); ?>" class="hover:underline">
+                                            <?php echo wp_trim_words(get_the_title($popular_post->ID), 8, '...'); ?>
+                                        </a>
+                                    </h4>
+                                    <div class="flex items-center gap-3 text-xs text-slate-500">
+                                        <time datetime="<?php echo get_the_date('c', $popular_post->ID); ?>">
+                                            <?php echo get_the_date('d M Y', $popular_post->ID); ?>
+                                        </time>
+                                        <span class="flex items-center gap-1">
+                                            <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                                                <path fill-rule="evenodd" d="M18 10c0 3.866-3.582 7-8 7a8.841 8.841 0 01-4.083-.98L2 17l1.338-3.123C2.493 12.767 2 11.434 2 10c0-3.866 3.582-7 8-7s8 3.134 8 7zM7 9H5v2h2V9zm8 0h-2v2h2V9zM9 9h2v2H9V9z" clip-rule="evenodd"></path>
+                                            </svg>
+                                            <?php echo get_comments_number($popular_post->ID); ?>
+                                        </span>
+                                    </div>
+                                </div>
+                            </article>
+                            <?php
+                                endforeach;
+                                wp_reset_postdata();
+                            else :
+                            ?>
+                            <p class="text-slate-600 text-center py-8">Belum ada berita populer.</p>
+                            <?php endif; ?>
+                        </div>
+                    </div>
+                </div>
+                
             </div>
-            <?php endif; ?>
-            
         </div>
     </article>
 
