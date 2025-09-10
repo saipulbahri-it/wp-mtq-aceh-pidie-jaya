@@ -166,13 +166,11 @@ function mtq_aceh_pidie_jaya_scripts() {
    // Enqueue Google Fonts
    wp_enqueue_style('mtq-aceh-pidie-jaya-fonts', 'https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap', array(), null);
 
-   // Enqueue built Tailwind CSS if exists, otherwise fallback to prototype CSS
+   // Enqueue built Tailwind CSS if exists
    $dist_css = get_template_directory() . '/dist/app.css';
    if (file_exists($dist_css)) {
 	   wp_enqueue_style('mtq-aceh-pidie-jaya-app', get_template_directory_uri() . '/dist/app.css', array(), filemtime($dist_css));
    }
-   // Always enqueue prototype CSS
-   wp_enqueue_style('mtq-aceh-pidie-jaya-prototype-css', get_template_directory_uri() . '/prototype/css/index.css', array(), _S_VERSION);
 
    // Enqueue social sharing CSS
    wp_enqueue_style('mtq-social-sharing-css', get_template_directory_uri() . '/assets/css/social-sharing.css', array(), _S_VERSION);
