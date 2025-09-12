@@ -69,6 +69,7 @@ get_header();
 					$show_title = get_option('mtq_show_title', false);
 					$show_date = get_option('mtq_show_date', false);
 					$show_location = get_option('mtq_show_location', false);
+					$show_progress = get_option('mtq_show_progress', true);
 					
 					// Check if event has passed (for auto-completion)
 					$current_time = current_time('timestamp');
@@ -155,7 +156,8 @@ get_header();
 								</div>
 								
 								<!-- Countdown Progress Indicator -->
-								<div class="mt-6 hidden md:block">
+								<?php if ($show_progress): ?>
+								<div class="countdown-progress-container mt-6 hidden md:block">
 									<div class="flex items-center justify-between text-xs text-gray-500 mb-2">
 										<span>Pengumuman</span>
 										<span>Persiapan</span>
@@ -165,6 +167,7 @@ get_header();
 										<div class="countdown-progress bg-gradient-to-r from-blue-500 to-blue-600 h-2 rounded-full transition-all duration-1000" style="width: 75%"></div>
 									</div>
 								</div>
+								<?php endif; ?>
 							<?php endif; ?>
 						</div>
 

@@ -93,6 +93,14 @@ class MTQ_Countdown_Admin {
             'mtq_countdown_section'
         );
         
+        add_settings_field(
+            'mtq_show_progress',
+            __('Tampilkan Progress Bar', 'mtq-aceh-pidie-jaya'),
+            array($this, 'show_progress_callback'),
+            'mtq_countdown_settings',
+            'mtq_countdown_section'
+        );
+        
         // Register settings
         register_setting('mtq_countdown_settings', 'mtq_event_date', array(
             'type' => 'string',
@@ -131,6 +139,12 @@ class MTQ_Countdown_Admin {
         ));
         
         register_setting('mtq_countdown_settings', 'mtq_show_location', array(
+            'type' => 'boolean',
+            'default' => true,
+            'sanitize_callback' => 'rest_sanitize_boolean'
+        ));
+        
+        register_setting('mtq_countdown_settings', 'mtq_show_progress', array(
             'type' => 'boolean',
             'default' => true,
             'sanitize_callback' => 'rest_sanitize_boolean'
@@ -235,6 +249,16 @@ class MTQ_Countdown_Admin {
     }
     
     /**
+     * Show progress field callback
+     */
+    public function show_progress_callback() {
+        $value = get_option('mtq_show_progress', true);
+        echo '<label><input type="checkbox" name="mtq_show_progress" value="1"' . checked(1, $value, false) . ' /> ';
+        echo __('Tampilkan progress bar countdown', 'mtq-aceh-pidie-jaya') . '</label>';
+        echo '<p class="description">' . __('Centang untuk menampilkan indikator progress acara (Pengumuman → Persiapan → Pelaksanaan)', 'mtq-aceh-pidie-jaya') . '</p>';
+    }
+    
+    /**
      * Admin page content
      */
     public function admin_page_content() {
@@ -290,6 +314,7 @@ class MTQ_Countdown_Admin {
                 var showTitle = $('input[name="mtq_show_title"]').is(':checked');
                 var showDate = $('input[name="mtq_show_date"]').is(':checked');
                 var showLocation = $('input[name="mtq_show_location"]').is(':checked');
+                var showProgress = $('input[name="mtq_show_progress"]').is(':checked');
                 
                 $.ajax({
                     url: ajaxurl,
@@ -303,6 +328,7 @@ class MTQ_Countdown_Admin {
                         show_title: showTitle,
                         show_date: showDate,
                         show_location: showLocation,
+                        show_progress: showProgress,
                         nonce: '<?php echo wp_create_nonce('mtq_countdown_nonce'); ?>'
                     },
                     success: function(response) {
@@ -350,63 +376,14 @@ class MTQ_Countdown_Admin {
         $show_title = get_option('mtq_show_title', true);
         $show_date = get_option('mtq_show_date', true);
         $show_location = get_option('mtq_show_location', true);
+        $show_progress = get_option('mtq_show_progress', true);
         
         if ($status === 'hidden') {
             return '<p style="color: #666; font-style: italic;">' . __('Countdown tidak akan ditampilkan di website', 'mtq-aceh-pidie-jaya') . '</p>';
         }
         
-        ob_start();
-        ?>
-        <div style="max-width: 400px; margin: 0 auto;">
-            <?php if ($show_title): ?>
-            <h3 style="color: #2563eb; margin-bottom: 10px; font-size: 18px;"><?php echo esc_html($event_title); ?></h3>
-            <?php endif; ?>
-            
-            <?php if ($show_date || $show_location): ?>
-            <p style="color: #64748b; margin-bottom: 20px; font-size: 14px;">
-                <?php if ($show_date): ?>
-                    📅 <?php echo date('d F Y, H:i', strtotime(get_option('mtq_event_date'))); ?>
-                <?php endif; ?>
-                <?php if ($show_date && $show_location): ?> • <?php endif; ?>
-                <?php if ($show_location): ?>
-                    📍 <?php echo esc_html($event_location); ?>
-                <?php endif; ?>
-            </p>
-            <?php endif; ?>
-            
-            <?php if ($status === 'completed'): ?>
-                <div style="background: #d1fae5; border: 2px solid #10b981; border-radius: 12px; padding: 20px;">
-                    <h4 style="color: #065f46; margin: 0 0 8px 0;">🎉 Acara Telah Selesai!</h4>
-                    <p style="color: #047857; margin: 0; font-size: 14px;">Terima kasih atas partisipasi Anda</p>
-                </div>
-            <?php elseif ($status === 'paused'): ?>
-                <div style="background: #fef3c7; border: 2px solid #f59e0b; border-radius: 12px; padding: 20px;">
-                    <h4 style="color: #92400e; margin: 0 0 8px 0;">⏸️ Countdown Dijeda</h4>
-                    <p style="color: #b45309; margin: 0; font-size: 14px;">Countdown sementara tidak aktif</p>
-                </div>
-            <?php else: ?>
-                <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px;">
-                    <div style="background: #f8fafc; border: 2px solid #e2e8f0; border-radius: 12px; padding: 15px; text-align: center;">
-                        <div style="font-size: 24px; font-weight: bold; color: #1e293b;">00</div>
-                        <div style="font-size: 12px; color: #64748b;">Hari</div>
-                    </div>
-                    <div style="background: #f8fafc; border: 2px solid #e2e8f0; border-radius: 12px; padding: 15px; text-align: center;">
-                        <div style="font-size: 24px; font-weight: bold; color: #1e293b;">00</div>
-                        <div style="font-size: 12px; color: #64748b;">Jam</div>
-                    </div>
-                    <div style="background: #f8fafc; border: 2px solid #e2e8f0; border-radius: 12px; padding: 15px; text-align: center;">
-                        <div style="font-size: 24px; font-weight: bold; color: #1e293b;">00</div>
-                        <div style="font-size: 12px; color: #64748b;">Menit</div>
-                    </div>
-                    <div style="background: #f8fafc; border: 2px solid #e2e8f0; border-radius: 12px; padding: 15px; text-align: center;">
-                        <div style="font-size: 24px; font-weight: bold; color: #1e293b;">00</div>
-                        <div style="font-size: 12px; color: #64748b;">Detik</div>
-                    </div>
-                </div>
-            <?php endif; ?>
-        </div>
-        <?php
-        return ob_get_clean();
+        $event_date = get_option('mtq_event_date', '2025-11-01T07:00:00');
+        return $this->generate_preview_html($event_date, $event_title, $event_location, $status, $show_title, $show_date, $show_location, $show_progress);
     }
     
     /**
@@ -426,9 +403,10 @@ class MTQ_Countdown_Admin {
         $show_title = isset($_POST['show_title']) ? rest_sanitize_boolean($_POST['show_title']) : false;
         $show_date = isset($_POST['show_date']) ? rest_sanitize_boolean($_POST['show_date']) : false;
         $show_location = isset($_POST['show_location']) ? rest_sanitize_boolean($_POST['show_location']) : false;
+        $show_progress = isset($_POST['show_progress']) ? rest_sanitize_boolean($_POST['show_progress']) : false;
         
         // Generate preview HTML
-        $preview_html = $this->generate_preview_html($event_date, $event_title, $event_location, $status, $show_title, $show_date, $show_location);
+        $preview_html = $this->generate_preview_html($event_date, $event_title, $event_location, $status, $show_title, $show_date, $show_location, $show_progress);
         
         wp_send_json_success($preview_html);
     }
@@ -436,7 +414,7 @@ class MTQ_Countdown_Admin {
     /**
      * Generate preview HTML with current settings
      */
-    private function generate_preview_html($event_date, $event_title, $event_location, $status, $show_title = true, $show_date = true, $show_location = true) {
+    private function generate_preview_html($event_date, $event_title, $event_location, $status, $show_title = true, $show_date = true, $show_location = true, $show_progress = true) {
         if ($status === 'hidden') {
             return '<p style="color: #666; font-style: italic;">' . __('Countdown tidak akan ditampilkan di website', 'mtq-aceh-pidie-jaya') . '</p>';
         }
@@ -530,6 +508,7 @@ class MTQ_Countdown_Admin {
                 </div>
                 
                 <!-- Progress Bar -->
+                <?php if ($show_progress): ?>
                 <?php 
                 // Calculate progress (assuming event planning started 6 months ago)
                 $planning_start = strtotime('-6 months', $event_timestamp);
@@ -547,6 +526,7 @@ class MTQ_Countdown_Admin {
                         <div style="background: linear-gradient(90deg, #3b82f6 0%, #1d4ed8 100%); height: 100%; border-radius: 10px; width: <?php echo $progress; ?>%; transition: width 0.5s ease;"></div>
                     </div>
                 </div>
+                <?php endif; ?>
             <?php endif; ?>
         </div>
         

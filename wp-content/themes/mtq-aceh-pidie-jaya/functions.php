@@ -220,6 +220,7 @@ function mtq_countdown_body_classes($classes) {
 	$show_title = get_option('mtq_show_title', true);
 	$show_date = get_option('mtq_show_date', true);
 	$show_location = get_option('mtq_show_location', true);
+	$show_progress = get_option('mtq_show_progress', true);
 	
 	// Add classes based on settings
 	if (!$show_title) {
@@ -232,6 +233,10 @@ function mtq_countdown_body_classes($classes) {
 	
 	if (!$show_location) {
 		$classes[] = 'hide-countdown-location';
+	}
+	
+	if (!$show_progress) {
+		$classes[] = 'hide-countdown-progress';
 	}
 	
 	return $classes;

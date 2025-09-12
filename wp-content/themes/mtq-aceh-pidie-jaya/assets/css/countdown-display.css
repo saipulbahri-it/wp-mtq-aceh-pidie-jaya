@@ -273,6 +273,11 @@
     display: none;
 }
 
+/* Hide progress bar when setting is disabled */
+.hide-countdown-progress .countdown-progress-container {
+    display: none !important;
+}
+
 /* Responsive adjustments */
 @media (max-width: 640px) {
     /* Countdown section spacing */
