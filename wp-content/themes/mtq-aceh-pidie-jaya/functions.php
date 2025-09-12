@@ -29,6 +29,8 @@ require get_template_directory() . '/inc/shortcodes.php';
 require get_template_directory() . '/inc/cabang-lomba.php';
 require get_template_directory() . '/inc/social-analytics-dashboard.php';
 require get_template_directory() . '/inc/countdown-admin.php';
+require get_template_directory() . '/inc/youtube-live-admin.php';
+require get_template_directory() . '/inc/youtube-live-display.php';
 
 if (! function_exists('mtq_aceh_pidie_jaya_setup')) :
 	/**
