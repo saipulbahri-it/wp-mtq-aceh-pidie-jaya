@@ -26,27 +26,37 @@ if (empty($youtube_url)) {
 ?>
 
 <!-- YouTube Live Stream Section -->
-<section class="mtq-homepage-section mtq-youtube-live-homepage" id="live-stream">
-    <div class="container">
+<section class="py-20 bg-gradient-to-br from-red-50 to-pink-50 section-animate relative" id="live-stream">
+    <!-- Decorative Background -->
+    <div class="absolute inset-0 opacity-20">
+        <div class="absolute top-20 left-10 w-32 h-32 border border-red-400/30 rounded-full"></div>
+        <div class="absolute bottom-20 right-10 w-24 h-24 bg-red-400/20 rounded-full"></div>
+        <div class="absolute top-1/2 left-1/4 w-16 h-16 border-2 border-red-400/40 rotate-45"></div>
+    </div>
+
+    <div class="max-w-7xl mx-auto px-4 relative z-10">
         
         <!-- Section Header -->
-        <div class="section-header text-center mb-5">
-            <span class="section-badge">
-                <i class="fas fa-play-circle"></i>
+        <div class="text-center mb-16 fade-in">
+            <span class="inline-block bg-red-100/80 text-red-600 px-4 py-2 rounded-full text-sm font-semibold mb-4">
+                <i class="fas fa-play-circle mr-2"></i>
                 Live Streaming
             </span>
-            <h2 class="section-title">
+            <h2 class="text-4xl md:text-5xl font-bold mb-6 text-slate-800">
                 <?php echo esc_html($youtube_title); ?>
             </h2>
+            <div class="w-24 h-1 bg-gradient-to-r from-red-600 to-transparent mx-auto mb-8"></div>
             <?php if (!empty($youtube_description)): ?>
-                <p class="section-description">
+                <p class="text-xl text-slate-600 max-w-3xl mx-auto leading-relaxed">
                     <?php echo esc_html($youtube_description); ?>
                 </p>
             <?php endif; ?>
         </div>
         
         <!-- YouTube Live Content -->
-        <div class="youtube-live-wrapper">
+        <div class="youtube-live-wrapper fade-in"
+             data-status="<?php echo esc_attr($youtube_status); ?>"
+             data-url="<?php echo esc_url($youtube_url); ?>">
             <?php 
             echo $youtube_display->render_youtube_live(array(
                 'show_title' => false, // Already shown in section header
@@ -128,7 +138,7 @@ if (empty($youtube_url)) {
                     <span class="replay-icon">▶</span>
                     <strong>TONTON TAYANGAN ULANG</strong>
                 </div>
-                <p class="replay-message">
+                <p class="replay-message text-center text-slate-600 max-w-2xl mx-auto">
                     Lewatkan live streaming? Tidak masalah! Tonton kembali momen-momen terbaik 
                     dari kompetisi MTQ Aceh XXXVII.
                 </p>
@@ -139,55 +149,18 @@ if (empty($youtube_url)) {
 </section>
 
 <style>
-/* Homepage YouTube Live Specific Styles */
-.mtq-youtube-live-homepage {
-    padding: 4rem 0;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    position: relative;
-    overflow: hidden;
-}
-
-.mtq-youtube-live-homepage::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="dots" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="10" cy="10" r="1" fill="rgba(255,255,255,0.1)"/></pattern></defs><rect width="100" height="100" fill="url(%23dots)"/></svg>');
-    pointer-events: none;
-}
-
+/* Homepage YouTube Live Specific Styles - Updated for centered full-width design */
 .youtube-live-wrapper {
+    max-width: 1200px;
+    margin: 0 auto;
     position: relative;
     z-index: 2;
 }
 
-.section-badge {
-    display: inline-block;
-    background: rgba(255, 255, 255, 0.2);
-    color: white;
-    padding: 0.5rem 1rem;
-    border-radius: 25px;
-    font-size: 0.9rem;
-    font-weight: 600;
-    margin-bottom: 1rem;
-    backdrop-filter: blur(10px);
-}
-
-.section-title {
-    color: white;
-    font-size: 2.5rem;
-    font-weight: 700;
-    margin-bottom: 1rem;
-    text-shadow: 0 2px 4px rgba(0,0,0,0.3);
-}
-
-.section-description {
-    color: rgba(255, 255, 255, 0.9);
-    font-size: 1.1rem;
-    max-width: 600px;
-    margin: 0 auto;
+/* Ensure consistent styling with theme */
+.replay-message {
+    line-height: 1.6;
+    margin-top: 1rem;
 }
 
 /* Live CTA Styles */
