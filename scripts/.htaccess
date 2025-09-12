@@ -1,0 +1,23 @@
+# Deny direct access to PHP files in scripts directory
+<Files "*.php">
+    Order allow,deny
+    Deny from all
+</Files>
+
+# Deny access to log files
+<Files "*.log">
+    Order allow,deny
+    Deny from all
+</Files>
+
+# Deny access to JSON data files
+<Files "*.json">
+    Order allow,deny
+    Deny from all
+</Files>
+
+# Deny access to sensitive files
+<Files "*.md">
+    Order allow,deny
+    Deny from all
+</Files>

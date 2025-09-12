@@ -1,0 +1,5 @@
+# Protect data directory
+<Files "*">
+    Order allow,deny
+    Deny from all
+</Files>

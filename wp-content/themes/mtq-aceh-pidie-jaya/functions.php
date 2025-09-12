@@ -758,6 +758,27 @@ add_shortcode('mtq_related_posts', 'mtq_related_posts_shortcode');
 
 /**
  * =========================================
+ * SECURITY FUNCTIONS
+ * =========================================
+ */
+
+/**
+ * Log security events
+ */
+function mtq_log_security_event($event, $details = array()) {
+    if (WP_DEBUG_LOG) {
+        $log_entry = array(
+            'timestamp' => current_time('mysql'),
+            'event' => $event,
+            'details' => $details,
+            'user_agent' => isset($_SERVER['HTTP_USER_AGENT']) ? sanitize_text_field($_SERVER['HTTP_USER_AGENT']) : '',
+        );
+        error_log('[MTQ SECURITY] ' . json_encode($log_entry));
+    }
+}
+
+/**
+ * =========================================
  * SOCIAL SHARING ANALYTICS FUNCTIONALITY
  * =========================================
  */
@@ -766,15 +787,29 @@ add_shortcode('mtq_related_posts', 'mtq_related_posts_shortcode');
  * Track social sharing analytics via AJAX
  */
 function mtq_track_social_share() {
+    // Rate limiting check
+    $user_ip = mtq_get_user_ip();
+    $rate_limit_key = 'mtq_share_rate_limit_' . md5($user_ip);
+    
+    if (get_transient($rate_limit_key)) {
+        wp_send_json_error('Rate limit exceeded. Please try again later.');
+        return;
+    }
+    
+    // Set rate limit (max 10 requests per minute)
+    set_transient($rate_limit_key, true, 60);
+    
     // Verify nonce for security
     if (!wp_verify_nonce($_POST['nonce'], 'mtq_social_share_nonce')) {
+        mtq_log_security_event('social_share_nonce_failed', array('ip' => $user_ip));
         wp_die('Security check failed');
     }
     
     $post_id = intval($_POST['post_id']);
     $platform = sanitize_text_field($_POST['platform']);
     
-    if (!$post_id || !$platform) {
+    // Enhanced validation
+    if (!$post_id || !$platform || !in_array($platform, ['facebook', 'twitter', 'whatsapp', 'telegram', 'email', 'copy'])) {
         wp_send_json_error('Invalid parameters');
         return;
     }

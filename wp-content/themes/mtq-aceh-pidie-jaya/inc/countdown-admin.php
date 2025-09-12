@@ -390,8 +390,21 @@ class MTQ_Countdown_Admin {
      * AJAX handler for updating countdown preview
      */
     public function ajax_update_countdown_preview() {
+        // Rate limiting check
+        $user_ip = $this->get_user_ip();
+        $rate_limit_key = 'mtq_countdown_rate_limit_' . md5($user_ip);
+        
+        if (get_transient($rate_limit_key)) {
+            wp_send_json_error('Rate limit exceeded. Please try again later.');
+            return;
+        }
+        
+        // Set rate limit (max 20 requests per minute for admin)
+        set_transient($rate_limit_key, true, 60);
+        
         // Verify nonce
         if (!wp_verify_nonce($_POST['nonce'], 'mtq_countdown_nonce')) {
+            $this->log_security_event('countdown_nonce_failed', array('ip' => $user_ip));
             wp_die(__('Security check failed', 'mtq-aceh-pidie-jaya'));
         }
         
@@ -538,6 +551,28 @@ class MTQ_Countdown_Admin {
         </style>
         <?php
         return ob_get_clean();
+    }
+    
+    /**
+     * Get user IP address
+     */
+    private function get_user_ip() {
+        if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
+            return sanitize_text_field($_SERVER['HTTP_CLIENT_IP']);
+        } elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+            return sanitize_text_field($_SERVER['HTTP_X_FORWARDED_FOR']);
+        } else {
+            return sanitize_text_field($_SERVER['REMOTE_ADDR']);
+        }
+    }
+    
+    /**
+     * Log security events
+     */
+    private function log_security_event($event_type, $details = array()) {
+        if (function_exists('mtq_log_security_event')) {
+            mtq_log_security_event($event_type, $details);
+        }
     }
 }
 
