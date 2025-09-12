@@ -1,0 +1,21 @@
+<svg width="320" height="240" viewBox="0 0 320 240" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="320" height="240" fill="#F1F5F9"/>
+  
+  <!-- Logo MTQ -->
+  <g transform="translate(160, 120)">
+    <!-- Circle background -->
+    <circle cx="0" cy="-10" r="40" fill="#3B82F6" fill-opacity="0.1" stroke="#3B82F6" stroke-width="2"/>
+    
+    <!-- Mosque icon -->
+    <path d="M-20 10 L-15 -5 L-5 -5 L0 -15 L5 -5 L15 -5 L20 10 L15 10 L15 5 L5 5 L5 10 L-5 10 L-5 5 L-15 5 L-15 10 Z" fill="#3B82F6"/>
+    
+    <!-- Minaret -->
+    <rect x="-2" y="-25" width="4" height="15" fill="#3B82F6"/>
+    <circle cx="0" cy="-27" r="2" fill="#3B82F6"/>
+  </g>
+  
+  <!-- MTQ Text -->
+  <text x="160" y="180" text-anchor="middle" fill="#64748B" font-family="Arial, sans-serif" font-size="16" font-weight="bold">MTQ ACEH</text>
+  <text x="160" y="200" text-anchor="middle" fill="#94A3B8" font-family="Arial, sans-serif" font-size="12">PIDIE JAYA</text>
+</svg>
