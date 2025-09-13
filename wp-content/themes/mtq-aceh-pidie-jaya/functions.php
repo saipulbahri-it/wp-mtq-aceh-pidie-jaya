@@ -190,10 +190,10 @@ function mtq_aceh_pidie_jaya_scripts() {
    // Enqueue main JavaScript
 	wp_enqueue_script('mtq-aceh-pidie-jaya-navigation', get_template_directory_uri() . '/js/navigation.js', array(), _S_VERSION, true);
 
-	// Enqueue prototype JavaScript (UI interactions)
-	wp_enqueue_script('mtq-aceh-pidie-jaya-prototype-js', get_template_directory_uri() . '/prototype/js/index.js', array(), _S_VERSION, true);
+	// Enqueue main JavaScript (UI interactions)
+	wp_enqueue_script('mtq-aceh-pidie-jaya-main-js', get_template_directory_uri() . '/assets/js/index.js', array(), _S_VERSION, true);
 	// Countdown with dynamic configuration
-	wp_enqueue_script('mtq-aceh-pidie-jaya-countdown', get_template_directory_uri() . '/prototype/js/countdown.js', array(), _S_VERSION, true);
+	wp_enqueue_script('mtq-aceh-pidie-jaya-countdown', get_template_directory_uri() . '/assets/js/countdown.js', array(), _S_VERSION, true);
 	
 	// Localize countdown configuration for JavaScript
 	wp_localize_script('mtq-aceh-pidie-jaya-countdown', 'mtqCountdownConfig', array(

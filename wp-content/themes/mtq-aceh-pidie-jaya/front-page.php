@@ -218,7 +218,7 @@ get_header();
 							<div class="glass-card p-4">
 								<div class="relative overflow-hidden rounded-xl mb-3">
 									<img
-										src="<?php echo get_template_directory_uri(); ?>/prototype/images/gub-wagub-aceh.png"
+										src="<?php echo get_template_directory_uri(); ?>/assets/images/gub-wagub-aceh.png"
 										alt="Gubernur dan Wakil Gubernur Aceh"
 										class="w-full h-64 object-cover transition-transform duration-500 hover:scale-110 img-zoom-in"
 										decoding="async"
@@ -253,7 +253,7 @@ get_header();
 							<div class="glass-card p-4">
 								<div class="relative overflow-hidden rounded-xl mb-3">
 									<img
-										src="<?php echo get_template_directory_uri(); ?>/prototype/images/bupati-dan-wakil-2025.png"
+										src="<?php echo get_template_directory_uri(); ?>/assets/images/bupati-dan-wakil-2025.png"
 										alt="Bupati dan Wakil Bupati Pidie Jaya 2025"
 										class="w-full h-64 object-cover transition-transform duration-500 hover:scale-110 img-zoom-in"
 										loading="lazy"

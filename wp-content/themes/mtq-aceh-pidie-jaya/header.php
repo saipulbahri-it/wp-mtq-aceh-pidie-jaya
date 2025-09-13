@@ -99,7 +99,7 @@
 		<div class="max-w-7xl mx-auto header-padding px-4 py-4">
 			<div class="flex justify-between items-center">
 				<div class="flex items-center space-x-3">
-					<img src="<?php echo get_template_directory_uri(); ?>/prototype/images/logo.png" alt="Logo MTQ Aceh XXXVII" class="logo-img h-16 transition-all duration-300" decoding="async" fetchpriority="high">
+					<img src="<?php echo get_template_directory_uri(); ?>/assets/images/logo.png" alt="Logo MTQ Aceh XXXVII" class="logo-img h-16 transition-all duration-300" decoding="async" fetchpriority="high">
 					<div class="hidden sm:block">
 						<h1 class="text-xl font-bold text-blue-600"><?php bloginfo( 'name' ); ?></h1>
 						<p class="text-sm text-slate-600"><?php bloginfo( 'description' ); ?></p>
@@ -119,7 +119,7 @@
 							echo '<a href="' . esc_url( get_home_url() ) . '#cabang" class="nav-link">Cabang Lomba</a>';
 							echo '<a href="' . get_permalink( get_page_by_path( 'arena-dan-lokasi' ) ) . '" class="nav-link">Arena & Lokasi</a>';
 							echo '<a href="' . esc_url( get_home_url() ) . '#berita" class="nav-link">Berita</a>';
-							echo '<a href="' . esc_url( get_home_url() ) . '#live" class="nav-link text-orange-600 font-bold flex items-center gap-1"><span class="relative flex items-center"><span class="live-dot animate-pulse"></span><svg class="w-4 h-4 ml-1 text-orange-500" fill="currentColor" viewBox="0 0 20 20"><circle cx="10" cy="10" r="6" fill="currentColor"></circle></svg></span>Live</a>';
+							echo '<a href="' . esc_url( get_home_url() ) . '#live-stream" class="nav-link text-orange-600 font-bold flex items-center gap-1"><span class="relative flex items-center"><span class="live-dot animate-pulse"></span><svg class="w-4 h-4 ml-1 text-orange-500" fill="currentColor" viewBox="0 0 20 20"><circle cx="10" cy="10" r="6" fill="currentColor"></circle></svg></span>Live</a>';
 						},
 						'link_before' => '<span class="nav-link">',
 						'link_after' => '</span>',
@@ -149,7 +149,7 @@
 							echo '<a href="' . esc_url( get_home_url() ) . '#cabang" class="nav-link">Cabang Lomba</a>';
 							echo '<a href="' . get_permalink( get_page_by_path( 'arena-dan-lokasi' ) ) . '" class="nav-link">Arena & Lokasi</a>';
 							echo '<a href="' . esc_url( get_home_url() ) . '#berita" class="nav-link">Berita</a>';
-							echo '<a href="' . esc_url( get_home_url() ) . '#live" class="nav-link text-orange-600 font-bold flex items-center gap-1"><span class="relative flex items-center"><span class="live-dot animate-pulse"></span><svg class="w-4 h-4 ml-1 text-orange-500" fill="currentColor" viewBox="0 0 20 20"><circle cx="10" cy="10" r="6" fill="currentColor"></circle></svg></span>Live</a>';
+							echo '<a href="' . esc_url( get_home_url() ) . '#live-stream" class="nav-link text-orange-600 font-bold flex items-center gap-1"><span class="relative flex items-center"><span class="live-dot animate-pulse"></span><svg class="w-4 h-4 ml-1 text-orange-500" fill="currentColor" viewBox="0 0 20 20"><circle cx="10" cy="10" r="6" fill="currentColor"></circle></svg></span>Live</a>';
 						},
 						'link_before' => '<span class="nav-link">',
 						'link_after' => '</span>',

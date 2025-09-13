@@ -564,6 +564,3 @@ class MTQ_YouTube_Live_Widget extends WP_Widget {
         return $instance;
     }
 }
-
-// Initialize YouTube Live Display
-new MTQ_YouTube_Live_Display();

@@ -378,10 +378,23 @@ class MTQ_YouTube_Live_Admin {
         echo '<div style="margin-top: 10px;">';
         echo '<p><strong>Preview Gradients:</strong></p>';
         echo '<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; margin-top: 10px;">';
+        
+        // Define actual gradient CSS for preview
+        $gradient_css = array(
+            'from-blue-50 to-indigo-50' => 'linear-gradient(to right, #eff6ff, #eef2ff)',
+            'from-red-50 to-pink-50' => 'linear-gradient(to right, #fef2f2, #fdf2f8)',
+            'from-green-50 to-emerald-50' => 'linear-gradient(to right, #f0fdf4, #ecfdf5)',
+            'from-yellow-50 to-orange-50' => 'linear-gradient(to right, #fefce8, #fff7ed)',
+            'from-purple-50 to-violet-50' => 'linear-gradient(to right, #faf5ff, #f5f3ff)',
+            'from-gray-50 to-slate-50' => 'linear-gradient(to right, #f9fafb, #f8fafc)',
+            'from-teal-50 to-cyan-50' => 'linear-gradient(to right, #f0fdfa, #ecfeff)',
+            'from-rose-50 to-pink-50' => 'linear-gradient(to right, #fff1f2, #fdf2f8)'
+        );
+        
         foreach ($gradients as $gradient_class => $gradient_name) {
-            $bg_class = 'bg-gradient-to-r ' . $gradient_class;
-            echo '<div style="padding: 20px; border-radius: 8px; text-align: center; font-size: 12px; color: #333;" class="' . $bg_class . '">';
-            echo $gradient_name;
+            $gradient_style = isset($gradient_css[$gradient_class]) ? $gradient_css[$gradient_class] : 'linear-gradient(to right, #f9fafb, #f8fafc)';
+            echo '<div style="padding: 20px; border-radius: 8px; text-align: center; font-size: 12px; color: #333; background: ' . $gradient_style . '; border: 1px solid #e5e7eb;">';
+            echo esc_html($gradient_name);
             echo '</div>';
         }
         echo '</div>';
@@ -791,6 +804,3 @@ class MTQ_YouTube_Live_Admin {
         }
     }
 }
-
-// Initialize YouTube Live admin class
-$mtq_youtube_live_admin = new MTQ_YouTube_Live_Admin();
