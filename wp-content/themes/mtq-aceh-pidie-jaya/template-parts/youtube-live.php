@@ -26,19 +26,13 @@ if (empty($youtube_url)) {
 ?>
 
 <!-- YouTube Live Stream Section -->
-<section class="py-20 bg-gradient-to-br from-red-50 to-pink-50 section-animate relative" id="live-stream">
-    <!-- Decorative Background -->
-    <div class="absolute inset-0 opacity-20">
-        <div class="absolute top-20 left-10 w-32 h-32 border border-red-400/30 rounded-full"></div>
-        <div class="absolute bottom-20 right-10 w-24 h-24 bg-red-400/20 rounded-full"></div>
-        <div class="absolute top-1/2 left-1/4 w-16 h-16 border-2 border-red-400/40 rotate-45"></div>
-    </div>
+<section class="py-20 section-animate relative" id="live-stream">
 
     <div class="max-w-7xl mx-auto px-4 relative z-10">
         
         <!-- Section Header -->
         <div class="text-center mb-16 fade-in">
-            <span class="inline-block bg-red-100/80 text-red-600 px-4 py-2 rounded-full text-sm font-semibold mb-4">
+            <span class="inline-block bg-red-600 text-white px-4 py-2 rounded-full text-sm font-semibold mb-4 shadow-lg">
                 <i class="fas fa-play-circle mr-2"></i>
                 Live Streaming
             </span>
