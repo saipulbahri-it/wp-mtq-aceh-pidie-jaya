@@ -668,6 +668,3 @@ class MTQ_Gallery_Post_Type {
         }
     }
 }
-
-// Initialize the Gallery Post Type
-new MTQ_Gallery_Post_Type();

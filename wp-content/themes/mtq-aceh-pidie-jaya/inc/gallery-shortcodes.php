@@ -535,6 +535,3 @@ class MTQ_Gallery_Shortcodes {
         // We just need to make sure Tailwind CSS is available
     }
 }
-
-// Initialize Gallery Shortcodes
-new MTQ_Gallery_Shortcodes();

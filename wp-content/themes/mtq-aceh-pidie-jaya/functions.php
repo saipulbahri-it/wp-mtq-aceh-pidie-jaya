@@ -36,6 +36,49 @@ require get_template_directory() . '/inc/youtube-live-display.php';
 require get_template_directory() . '/inc/gallery-post-type.php';
 require get_template_directory() . '/inc/gallery-shortcodes.php';
 
+// Initialize gallery system
+function mtq_init_gallery_system() {
+    // Initialize gallery post type
+    new MTQ_Gallery_Post_Type();
+    new MTQ_Gallery_Shortcodes();
+    
+    // Flush permalinks if needed (on theme activation)
+    if (get_option('mtq_gallery_permalinks_flushed') !== 'yes') {
+        flush_rewrite_rules();
+        update_option('mtq_gallery_permalinks_flushed', 'yes');
+    }
+}
+add_action('init', 'mtq_init_gallery_system');
+
+// Flush permalinks on theme activation
+function mtq_theme_activation() {
+    // Force permalink flush on theme activation
+    delete_option('mtq_gallery_permalinks_flushed');
+    flush_rewrite_rules();
+}
+add_action('after_switch_theme', 'mtq_theme_activation');
+
+// Admin notice untuk gallery setup
+function mtq_gallery_admin_notice() {
+    if (!current_user_can('manage_options')) {
+        return;
+    }
+    
+    // Only show if we have gallery issues
+    if (!post_type_exists('mtq_gallery') || !get_option('mtq_gallery_permalinks_flushed')) {
+        ?>
+        <div class="notice notice-warning is-dismissible">
+            <p><strong>MTQ Gallery System:</strong> 
+            Jika mengalami masalah "Halaman Galeri Tidak Ditemukan", 
+            silakan pergi ke <a href="<?php echo admin_url('options-permalink.php'); ?>">Settings → Permalinks</a> 
+            dan klik "Save Changes" untuk refresh permalink structure.
+            </p>
+        </div>
+        <?php
+    }
+}
+add_action('admin_notices', 'mtq_gallery_admin_notice');
+
 if (! function_exists('mtq_aceh_pidie_jaya_setup')) :
 	/**
 	 * Sets up theme defaults and registers support for various WordPress features.
