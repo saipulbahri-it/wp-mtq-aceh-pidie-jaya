@@ -18,6 +18,49 @@ wp-content/plugins/*
 wp-admin/
 wp-includes/
 /*.php
+
+# Project specific ignores
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Theme specific ignores
+wp-content/themes/mtq-aceh-pidie-jaya/node_modules/
+wp-content/themes/mtq-aceh-pidie-jaya/.sass-cache/
+wp-content/themes/mtq-aceh-pidie-jaya/dist/
+wp-content/themes/mtq-aceh-pidie-jaya/.npm/
+
+# Temporary and debug files
+*.log
+*.tmp
+*.temp
+*-debug.php
+*-fix.php
+debug-*.php
+test-*.php
+prototype-backup-*.tar.gz
+
+# IDE files
+.vscode/
+.idea/
+*.sublime-*
+
+# Build and dependency files
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Environment files
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
 /*.html
 /*.txt
 wp-*.php
