@@ -1,5 +1,4 @@
 <?php
-
 /**
  * The template for displaying all single posts
  *
@@ -16,343 +15,515 @@ if (!defined('ABSPATH')) {
 get_header();
 ?>
 
-<?php get_template_part('template-parts/breadcrumbs'); ?>
+<main id="primary" class="site-main bg-gray-50 min-h-screen">
+    <?php while (have_posts()) : the_post(); ?>
 
-<main id="primary" class="site-main">
-	<?php while (have_posts()) : the_post(); ?>
+        <!-- Breadcrumb Section -->
+        <section class="bg-white border-b border-gray-200 py-4">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <nav class="text-sm" aria-label="Breadcrumb">
+                    <ol class="flex items-center space-x-2 text-gray-500">
+                        <li>
+                            <a href="<?php echo home_url(); ?>" class="hover:text-red-600 transition-colors">
+                                <i class="fas fa-home mr-1"></i>
+                                Beranda
+                            </a>
+                        </li>
+                        <li class="text-gray-300">/</li>
+                        <li>
+                            <a href="<?php echo home_url('/berita'); ?>" class="hover:text-red-600 transition-colors">
+                                Berita
+                            </a>
+                        </li>
+                        <li class="text-gray-300">/</li>
+                        <li class="text-gray-600 truncate max-w-xs">
+                            <?php echo wp_trim_words(get_the_title(), 5, '...'); ?>
+                        </li>
+                    </ol>
+                </nav>
+            </div>
+        </section>
 
-		<!-- Hero Section with Featured Image -->
-		<!-- Hero Section with Optimized Layout -->
-		<section class="relative pt-24 pb-20 sm:pb-24 md:pb-32 bg-gradient-to-br from-blue-50 via-white to-slate-50 overflow-hidden">
-			<?php if (has_post_thumbnail()) : ?>
-				<!-- Background Image with Blur Effect -->
-				<div class="absolute inset-0">
-					<?php the_post_thumbnail('full', ['class' => 'w-full h-full object-cover blur-sm']); ?>
-					<!-- Subtle Dark Overlay for Better Text Contrast -->
-					<div class="absolute inset-0 bg-gradient-to-b from-black/30 via-black/20 to-black/40"></div>
-				</div>
-			<?php else : ?>
-				<!-- Fallback Gradient Background -->
-				<div class="absolute inset-0 bg-gradient-to-br from-blue-600 via-blue-700 to-slate-800"></div>
-			<?php endif; ?>
+        <!-- Main Content Area -->
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <div class="grid lg:grid-cols-4 gap-8">
+                
+                <!-- Article Content (Left 3 columns) -->
+                <div class="lg:col-span-3">
+                    
+                    <!-- Article Header -->
+                    <article class="bg-white rounded-lg shadow-sm overflow-hidden">
+                        
+                        <!-- Article Title & Meta -->
+                        <div class="p-8 pb-4">
+                            <!-- Category Badge -->
+                            <?php
+                            $categories = get_the_category();
+                            if (!empty($categories)) :
+                            ?>
+                                <div class="mb-4">
+                                    <?php foreach ($categories as $category) : ?>
+                                        <span class="inline-block px-3 py-1 bg-red-100 text-red-800 text-sm font-medium rounded-full">
+                                            <?php echo esc_html($category->name); ?>
+                                        </span>
+                                    <?php endforeach; ?>
+                                </div>
+                            <?php endif; ?>
 
-			<div class="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-				<div class="text-center fade-in-delay">
-					<!-- Breadcrumb -->
-					<nav class="mb-6" aria-label="Breadcrumb">
-						<ol class="inline-flex items-center space-x-1 md:space-x-3 text-sm">
-							<li class="inline-flex items-center">
-								<a href="<?php echo home_url(); ?>" class="text-white/80 hover:text-blue-300 transition-colors flex">
-									<svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
-										<path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path>
-									</svg>
-									Beranda
-								</a>
-							</li>
-							<li>
-								<div class="flex items-center">
-									<svg class="w-6 h-6 text-white/60" fill="currentColor" viewBox="0 0 20 20">
-										<path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path>
-									</svg>
-									<a href="<?php echo home_url('/berita'); ?>" class="ml-1 text-white/80 hover:text-blue-300 transition-colors md:ml-2">Berita</a>
-								</div>
-							</li>
-							<li>
-								<div class="flex items-center">
-									<svg class="w-6 h-6 text-white/60" fill="currentColor" viewBox="0 0 20 20">
-										<path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path>
-									</svg>
-									<span class="ml-1 text-white font-medium md:ml-2"><?php echo wp_trim_words(get_the_title(), 8, '...'); ?></span>
-								</div>
-							</li>
-						</ol>
-					</nav>
+                            <!-- Article Title -->
+                            <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 leading-tight mb-6">
+                                <?php the_title(); ?>
+                            </h1>
 
-					<!-- Category Badge -->
-					<?php
-					$categories = get_the_category();
-					if (!empty($categories)) :
-					?>
-						<div class="mb-6">
-							<span class="inline-flex items-center px-6 py-3 rounded-full text-sm font-bold bg-white/95 text-slate-800 backdrop-blur-md">
-								<?php echo esc_html($categories[0]->name); ?>
-							</span>
-						</div>
-					<?php endif; ?>
+                            <!-- Author & Date Info -->
+                            <div class="flex flex-wrap items-center gap-6 text-gray-600 border-b border-gray-200 pb-6">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center">
+                                        <?php echo get_avatar(get_the_author_meta('ID'), 40, '', '', ['class' => 'w-10 h-10 rounded-full']) ?: '<i class="fas fa-user text-gray-400"></i>'; ?>
+                                    </div>
+                                    <div>
+                                        <p class="font-medium text-gray-900"><?php the_author(); ?></p>
+                                        <p class="text-sm text-gray-500">Penulis</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex items-center gap-2">
+                                    <i class="fas fa-calendar text-gray-400"></i>
+                                    <div>
+                                        <time datetime="<?php echo get_the_date('c'); ?>" class="font-medium text-gray-900">
+                                            <?php echo get_the_date('d F Y'); ?>
+                                        </time>
+                                        <p class="text-sm text-gray-500"><?php echo get_the_date('H:i'); ?> WIB</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex items-center gap-2">
+                                    <i class="fas fa-eye text-gray-400"></i>
+                                    <div>
+                                        <span class="font-medium text-gray-900" id="view-count">
+                                            <?php echo get_post_meta(get_the_ID(), 'post_views_count', true) ?: '0'; ?>
+                                        </span>
+                                        <p class="text-sm text-gray-500">Dibaca</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
-					<!-- Title with Clean Background -->
-					<div class="mb-8">
-						<div class="bg-black/30 backdrop-blur-md rounded-2xl px-8 py-6">
-							<h1 class="text-3xl md:text-5xl font-black text-white mb-4 leading-tight">
-								<?php the_title(); ?>
-							</h1>
-							<p class="text-lg md:text-xl text-white/95 leading-relaxed font-medium">
-								<?php echo wp_trim_words(get_the_excerpt() ?: get_the_content(), 25, '...'); ?>
-							</p>
-						</div>
-					</div>
+                        <!-- Featured Image with Caption -->
+                        <?php if (has_post_thumbnail()) : ?>
+                            <div class="px-8 pb-6">
+                                <figure>
+                                    <div class="rounded-lg overflow-hidden">
+                                        <?php the_post_thumbnail('large', [
+                                            'class' => 'w-full h-64 md:h-96 object-cover'
+                                        ]); ?>
+                                    </div>
+                                    <?php 
+                                    $caption = get_the_post_thumbnail_caption();
+                                    if ($caption) : 
+                                    ?>
+                                        <figcaption class="mt-3 text-sm text-gray-600 italic">
+                                            <?php echo esc_html($caption); ?>
+                                        </figcaption>
+                                    <?php endif; ?>
+                                </figure>
+                            </div>
+                        <?php endif; ?>
 
-					<!-- Meta Info with Clean Blur -->
-					<div class="flex flex-wrap items-center justify-center gap-4 text-white">
-						<div class="flex items-center gap-2 bg-white/20 backdrop-blur-md rounded-xl px-4 py-3">
-							<svg class="w-5 h-5 text-blue-200" fill="currentColor" viewBox="0 0 20 20">
-								<path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"></path>
-							</svg>
-							<time datetime="<?php echo get_the_date('c'); ?>" class="font-semibold">
-								<?php echo get_the_date('d F Y'); ?>
-							</time>
-						</div>
-						<div class="flex items-center gap-2 bg-white/20 backdrop-blur-md rounded-xl px-4 py-3">
-							<svg class="w-5 h-5 text-white/80" fill="currentColor" viewBox="0 0 20 20">
-								<path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path>
-							</svg>
-							<span class="font-semibold"><?php the_author(); ?></span>
-						</div>
-						<div class="flex items-center gap-2 bg-white/20 backdrop-blur-md rounded-xl px-4 py-3">
-							<svg class="w-5 h-5 text-white/70" fill="currentColor" viewBox="0 0 20 20">
-								<path d="M10 12a2 2 0 100-4 2 2 0 000 4z"></path>
-								<path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM4.332 8.027a6.012 6.012 0 011.912-2.706C6.512 5.73 6.974 6 7.5 6A1.5 1.5 0 019 7.5V8a2 2 0 004 0v-.5A1.5 1.5 0 0114.5 6c.526 0 .988-.27 1.256-.679a6.012 6.012 0 011.912 2.706A8.1 8.1 0 0118 10a8.1 8.1 0 01-.332 1.973 6.012 6.012 0 01-1.912 2.706c-.268.409-.73.679-1.256.679A1.5 1.5 0 0113 13.5V13a2 2 0 00-4 0v.5A1.5 1.5 0 017.5 15c-.526 0-.988.27-1.256.679a6.012 6.012 0 01-1.912-2.706A8.1 8.1 0 014 10c0-.691.108-1.355.332-1.973z" clip-rule="evenodd"></path>
-							</svg>
-							<span><?php echo do_shortcode('[reading_time]'); ?> menit baca</span>
-						</div>
-					</div>
-				</div>
-			</div>
-		</section>
+                        <!-- Article Content -->
+                        <div class="px-8 pb-8">
+                            <!-- Article Excerpt -->
+                            <?php if (has_excerpt()) : ?>
+                                <div class="mb-8 p-4 bg-orange-50 border-l-4 border-orange-400 rounded-r-lg">
+                                    <p class="text-lg text-gray-800 leading-relaxed font-medium italic">
+                                        <?php echo get_the_excerpt(); ?>
+                                    </p>
+                                </div>
+                            <?php endif; ?>
 
-		<!-- Article Content -->
-		<article class="py-16 bg-white">
-			<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-				<div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+                            <!-- Main Content -->
+                            <div class="prose prose-lg max-w-none">
+                                <?php
+                                $content = get_the_content();
+                                $content = apply_filters('the_content', $content);
+                                
+                                // Enhanced styling for content
+                                $content = str_replace('<p>', '<p class="mb-6 leading-relaxed text-gray-800 text-lg">', $content);
+                                $content = str_replace('<h2>', '<h2 class="text-2xl md:text-3xl font-bold text-gray-900 mt-10 mb-6 border-b border-gray-200 pb-3">', $content);
+                                $content = str_replace('<h3>', '<h3 class="text-xl md:text-2xl font-semibold text-gray-900 mt-8 mb-4">', $content);
+                                
+                                // Style quotes from sources
+                                $content = str_replace('<blockquote>', '<blockquote class="border-l-4 border-red-400 pl-6 italic text-gray-700 my-8 bg-red-50 py-6 rounded-r-lg relative">
+                                    <div class="absolute top-2 left-2 text-red-300 text-4xl leading-none">
+                                        <i class="fas fa-quote-left"></i>
+                                    </div>
+                                    <div class="pl-8">', $content);
+                                $content = str_replace('</blockquote>', '</div></blockquote>', $content);
+                                
+                                $content = str_replace('<ul>', '<ul class="list-disc list-inside space-y-2 my-6 text-gray-800 ml-4">', $content);
+                                $content = str_replace('<ol>', '<ol class="list-decimal list-inside space-y-2 my-6 text-gray-800 ml-4">', $content);
+                                
+                                echo $content;
+                                ?>
+                            </div>
 
-					<!-- Main Content -->
-					<div class="lg:col-span-3">
-						<!-- Featured Image -->
-						<div class="mb-12 fade-in">
-							<figure class="relative overflow-hidden rounded-2xl shadow-xl">
-								<?php if (has_post_thumbnail()) : ?>
-									<?php the_post_thumbnail('full', ['class' => 'w-full h-auto object-cover']); ?>
-								<?php else : ?>
-									<img src="<?php echo get_template_directory_uri(); ?>/assets/images/default-thumbnail.svg"
-										alt="<?php echo esc_attr(get_the_title()); ?>"
-										class="w-full h-64 object-cover bg-slate-100">
-								<?php endif; ?>
-								<?php if (get_the_post_thumbnail_caption()) : ?>
-									<figcaption class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-6">
-										<p class="text-white text-sm"><?php echo get_the_post_thumbnail_caption(); ?></p>
-									</figcaption>
-								<?php endif; ?>
-							</figure>
-						</div>
+                            <!-- Tags Section -->
+                            <?php
+                            $tags = get_the_tags();
+                            if ($tags) :
+                            ?>
+                                <div class="mt-12 pt-8 border-t border-gray-200">
+                                    <h3 class="text-lg font-semibold text-gray-900 mb-4">Tags:</h3>
+                                    <div class="flex flex-wrap gap-2">
+                                        <?php foreach ($tags as $tag) : ?>
+                                            <a href="<?php echo get_tag_link($tag->term_id); ?>" 
+                                               class="inline-block px-3 py-1 bg-gray-100 text-gray-700 text-sm rounded-full hover:bg-red-100 hover:text-red-800 transition-colors">
+                                                #<?php echo esc_html($tag->name); ?>
+                                            </a>
+                                        <?php endforeach; ?>
+                                    </div>
+                                </div>
+                            <?php endif; ?>
 
-						<!-- Article Body -->
-						<div class="prose prose-lg prose-slate max-w-none fade-in-delay-2">
-							<?php
-							the_content(
-								sprintf(
-									wp_kses(
-										__('Continue reading<span class="screen-reader-text"> "%s"</span>', 'mtq-aceh-pidie-jaya'),
-										array('span' => array('class' => array()))
-									),
-									wp_kses_post(get_the_title())
-								)
-							);
+                            <!-- Share Section -->
+                            <div class="mt-8 pt-6 border-t border-gray-200">
+                                <h3 class="text-lg font-semibold text-gray-900 mb-4">Bagikan:</h3>
+                                <div class="flex gap-3">
+                                    <a href="https://www.facebook.com/sharer/sharer.php?u=<?php echo urlencode(get_permalink()); ?>" 
+                                       target="_blank" 
+                                       class="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm">
+                                        <i class="fab fa-facebook-f"></i>
+                                        Facebook
+                                    </a>
+                                    <a href="https://twitter.com/intent/tweet?url=<?php echo urlencode(get_permalink()); ?>&text=<?php echo urlencode(get_the_title()); ?>" 
+                                       target="_blank" 
+                                       class="flex items-center gap-2 px-4 py-2 bg-sky-500 text-white rounded-lg hover:bg-sky-600 transition-colors text-sm">
+                                        <i class="fab fa-twitter"></i>
+                                        Twitter
+                                    </a>
+                                    <a href="https://wa.me/?text=<?php echo urlencode(get_the_title() . ' - ' . get_permalink()); ?>" 
+                                       target="_blank" 
+                                       class="flex items-center gap-2 px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors text-sm">
+                                        <i class="fab fa-whatsapp"></i>
+                                        WhatsApp
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+                </div>
 
-							wp_link_pages(array(
-								'before' => '<div class="page-links mt-8 p-6 bg-slate-50 rounded-xl">' . esc_html__('Pages:', 'mtq-aceh-pidie-jaya'),
-								'after'  => '</div>',
-							));
-							?>
-						</div>
+                <!-- Sidebar (Right 1 column) -->
+                <div class="lg:col-span-1">
+                    
+                    <!-- Popular Articles Widget -->
+                    <div class="bg-white rounded-lg shadow-sm p-6 mb-8">
+                        <h3 class="text-xl font-bold text-gray-900 mb-6 border-b border-gray-200 pb-3">
+                            <i class="fas fa-fire text-red-500 mr-2"></i>
+                            Populer
+                        </h3>
+                        
+                        <?php
+                        $popular_posts = get_posts([
+                            'numberposts' => 5,
+                            'meta_key' => 'post_views_count',
+                            'orderby' => 'meta_value_num',
+                            'order' => 'DESC',
+                            'post__not_in' => [get_the_ID()]
+                        ]);
 
-						<!-- Tags -->
-						<?php
-						$tags = get_the_tags();
-						if ($tags) :
-						?>
-							<div class="mt-12 pt-8 border-t border-slate-200 fade-in-delay-3">
-								<h3 class="text-lg font-semibold text-slate-800 mb-4">Tags:</h3>
-								<div class="flex flex-wrap gap-2">
-									<?php foreach ($tags as $tag) : ?>
-										<a href="<?php echo get_tag_link($tag->term_id); ?>"
-											class="inline-flex items-center px-3 py-1.5 text-sm font-medium text-slate-600 bg-slate-100 rounded-full hover:bg-slate-200 transition-colors">
-											#<?php echo $tag->name; ?>
-										</a>
-									<?php endforeach; ?>
-								</div>
-							</div>
-						<?php endif; ?>
-						<!-- Social Sharing Buttons -->
-						<div class="mt-12 fade-in-delay-4">
-							<?php get_template_part('template-parts/social-sharing'); ?>
-						</div>
-						<!-- Navigation & Back Button -->
-						<div class="py-16 mt-4>
-							<div class=" max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-							<!-- Post Navigation -->
-							<nav class="mb-16 fade-in" aria-label="Post navigation">
-								<div class="grid md:grid-cols-2 gap-6">
-									<?php
-									$prev_post = get_previous_post();
-									$next_post = get_next_post();
+                        if ($popular_posts) :
+                            foreach ($popular_posts as $index => $popular_post) : setup_postdata($popular_post);
+                        ?>
+                            <article class="flex gap-4 pb-4 mb-4 <?php echo $index < 4 ? 'border-b border-gray-100' : ''; ?>">
+                                <div class="flex-shrink-0">
+                                    <span class="inline-flex items-center justify-center w-8 h-8 bg-red-100 text-red-600 font-bold text-sm rounded-full">
+                                        <?php echo $index + 1; ?>
+                                    </span>
+                                </div>
+                                <div class="flex-1 min-w-0">
+                                    <h4 class="text-sm font-medium text-gray-900 leading-tight mb-2 hover:text-red-600 transition-colors">
+                                        <a href="<?php echo get_permalink($popular_post->ID); ?>" class="line-clamp-3">
+                                            <?php echo get_the_title($popular_post->ID); ?>
+                                        </a>
+                                    </h4>
+                                    <div class="flex items-center gap-2 text-xs text-gray-500">
+                                        <i class="fas fa-calendar"></i>
+                                        <time datetime="<?php echo get_the_date('c', $popular_post->ID); ?>">
+                                            <?php echo get_the_date('d M Y', $popular_post->ID); ?>
+                                        </time>
+                                    </div>
+                                </div>
+                            </article>
+                        <?php
+                            endforeach;
+                            wp_reset_postdata();
+                        endif;
+                        ?>
+                    </div>
 
-									if ($prev_post) :
-									?>
-										<a href="<?php echo get_permalink($prev_post->ID); ?>"
-											class="group bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1">
-											<div class="flex items-center gap-3 mb-3">
-												<svg class="w-5 h-5 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-													<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
-												</svg>
-												<span class="text-sm font-medium text-slate-500">Artikel Sebelumnya</span>
-											</div>
-											<h3 class="font-semibold text-slate-800 group-hover:text-blue-600 transition-colors">
-												<?php echo wp_trim_words($prev_post->post_title, 10); ?>
-											</h3>
-										</a>
-									<?php else : ?>
-										<div></div>
-									<?php endif; ?>
+                    <!-- Recent Articles Widget -->
+                    <div class="bg-white rounded-lg shadow-sm p-6">
+                        <h3 class="text-xl font-bold text-gray-900 mb-6 border-b border-gray-200 pb-3">
+                            <i class="fas fa-clock text-orange-500 mr-2"></i>
+                            Terbaru
+                        </h3>
+                        
+                        <?php
+                        $recent_posts = get_posts([
+                            'numberposts' => 5,
+                            'orderby' => 'date',
+                            'order' => 'DESC',
+                            'post__not_in' => [get_the_ID()]
+                        ]);
 
-									<?php if ($next_post) : ?>
-										<a href="<?php echo get_permalink($next_post->ID); ?>"
-											class="group bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1 text-right">
-											<div class="flex items-center justify-end gap-3 mb-3">
-												<span class="text-sm font-medium text-slate-500">Artikel Berikutnya</span>
-												<svg class="w-5 h-5 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-													<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-												</svg>
-											</div>
-											<h3 class="font-semibold text-slate-800 group-hover:text-blue-600 transition-colors">
-												<?php echo wp_trim_words($next_post->post_title, 10); ?>
-											</h3>
-										</a>
-									<?php endif; ?>
-								</div>
-							</nav>
+                        if ($recent_posts) :
+                            foreach ($recent_posts as $index => $recent_post) : setup_postdata($recent_post);
+                        ?>
+                            <article class="pb-4 mb-4 <?php echo $index < 4 ? 'border-b border-gray-100' : ''; ?>">
+                                <h4 class="text-sm font-medium text-gray-900 leading-tight mb-2 hover:text-red-600 transition-colors">
+                                    <a href="<?php echo get_permalink($recent_post->ID); ?>" class="line-clamp-3">
+                                        <?php echo get_the_title($recent_post->ID); ?>
+                                    </a>
+                                </h4>
+                                <div class="flex items-center gap-2 text-xs text-gray-500">
+                                    <i class="fas fa-calendar"></i>
+                                    <time datetime="<?php echo get_the_date('c', $recent_post->ID); ?>">
+                                        <?php echo get_the_date('d M Y', $recent_post->ID); ?>
+                                    </time>
+                                </div>
+                            </article>
+                        <?php
+                            endforeach;
+                            wp_reset_postdata();
+                        endif;
+                        ?>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-						</div>
-					</div>
+        </div>
 
-					<!-- Sidebar -->
-					<div class="lg:col-span-1">
-						<div class="sticky top-24">
-							<!-- Popular Posts -->
-							<div class="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl p-6 mb-8">
-								<h3 class="text-xl font-bold text-slate-800 mb-6 flex items-center">
-									<svg class="w-6 h-6 text-blue-600 mr-3" fill="currentColor" viewBox="0 0 20 20">
-										<path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
-									</svg>
-									Berita Populer
-								</h3>
+        <!-- Other News Section -->
+        <section class="bg-white py-12">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center mb-10">
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Berita Lainnya</h2>
+                    <div class="w-20 h-1 bg-red-500 mx-auto"></div>
+                </div>
 
-								<?php
-								// Get popular posts based on comments count
-								$popular_posts = get_posts(array(
-									'numberposts' => 5,
-									'orderby' => 'comment_count',
-									'order' => 'DESC',
-									'post_status' => 'publish',
-									'post__not_in' => array(get_the_ID())
-								));
+                <!-- News Grid -->
+                <div id="news-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+                    <?php
+                    $other_posts = get_posts([
+                        'numberposts' => 6,
+                        'post__not_in' => [get_the_ID()],
+                        'orderby' => 'date',
+                        'order' => 'DESC'
+                    ]);
 
-								if ($popular_posts) :
-									foreach ($popular_posts as $index => $popular_post) :
-										setup_postdata($popular_post);
-										$thumbnail = get_the_post_thumbnail_url($popular_post->ID, 'thumbnail');
-										// Default thumbnail jika tidak ada featured image
-										if (!$thumbnail) {
-											$thumbnail = get_template_directory_uri() . '/assets/images/default-thumbnail.svg';
-										}
-								?>
-										<article class="flex gap-4 mb-6 last:mb-0 group">
-											<div class="flex-1 min-w-0">
-												<div class="mb-3 relative overflow-hidden rounded-lg">
-													<img src="<?php echo esc_url($thumbnail); ?>"
-														alt="<?php echo esc_attr(get_the_title($popular_post->ID)); ?>"
-														class="w-full h-20 object-cover bg-slate-100 transition-transform duration-300 group-hover:scale-105"
-														onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQwIiBoZWlnaHQ9IjgwIiB2aWV3Qm94PSIwIDAgMjQwIDgwIiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8cmVjdCB3aWR0aD0iMjQwIiBoZWlnaHQ9IjgwIiBmaWxsPSIjRjFGNUY5Ii8+CjxwYXRoIGQ9Ik05NiA0MEgxNDRWNDRIOTZWNDBaTTEwNCA0NEgxMzZWNDhIMTA0VjQ0WiIgZmlsbD0iIzk0QTNCOCIvPgo8cGF0aCBkPSJNMTA4IDMyQzEwOCAzMC44OTU0IDEwOC44OTUgMzAgMTEwIDMwSDE0MkMxNDMuMTA1IDMwIDE0NCAzMC44OTU0IDE0NCAzMlYzNkMxNDQgMzcuMTA0NiAxNDMuMTA1IDM4IDE0MiAzOEgxMTBDMTA4Ljg5NSAzOCAxMDggMzcuMTA0NiAxMDggMzZWMzJaIiBmaWxsPSIjOTRBM0I4Ii8+Cjwvc3ZnPg=='">
-													<!-- Premium Number Badge -->
-													<div class="absolute top-2 left-2">
-														<div class="relative">
-															<!-- Background with gradient -->
-															<div class="w-8 h-8 bg-gradient-to-br from-blue-500 to-blue-700 rounded-full shadow-xl border-2 border-white"></div>
-															<!-- Number -->
-															<span class="absolute inset-0 flex items-center justify-center text-white font-black text-xs tracking-tight">
-																<?php echo $index + 1; ?>
-															</span>
-															<!-- Shine effect -->
-															<div class="absolute inset-0 rounded-full bg-gradient-to-tr from-white/30 to-transparent opacity-60"></div>
-														</div>
-													</div>
-													<!-- Hover overlay -->
-													<div class="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-												</div>
-												<h4 class="font-semibold text-slate-800 group-hover:text-blue-600 transition-colors leading-tight mb-2">
-													<a href="<?php echo get_permalink($popular_post->ID); ?>" class="hover:underline">
-														<?php echo wp_trim_words(get_the_title($popular_post->ID), 8, '...'); ?>
-													</a>
-												</h4>
-												<div class="flex items-center gap-3 text-xs text-slate-500">
-													<time datetime="<?php echo get_the_date('c', $popular_post->ID); ?>">
-														<?php echo get_the_date('d M Y', $popular_post->ID); ?>
-													</time>
-													<span class="flex items-center gap-1">
-														<svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
-															<path fill-rule="evenodd" d="M18 10c0 3.866-3.582 7-8 7a8.841 8.841 0 01-4.083-.98L2 17l1.338-3.123C2.493 12.767 2 11.434 2 10c0-3.866 3.582-7 8-7s8 3.134 8 7zM7 9H5v2h2V9zm8 0h-2v2h2V9zM9 9h2v2H9V9z" clip-rule="evenodd"></path>
-														</svg>
-														<?php echo get_comments_number($popular_post->ID); ?>
-													</span>
-												</div>
-											</div>
-										</article>
-									<?php
-									endforeach;
-									wp_reset_postdata();
-								else :
-									?>
-									<p class="text-slate-600 text-center py-8">Belum ada berita populer.</p>
-								<?php endif; ?>
-							</div>
-						</div>
-					</div>
+                    if ($other_posts) :
+                        foreach ($other_posts as $other_post) : setup_postdata($other_post);
+                    ?>
+                        <article class="group relative bg-white rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
+                            <div class="relative overflow-hidden">
+                                <?php if (has_post_thumbnail($other_post->ID)) : ?>
+                                    <div class="aspect-video">
+                                        <?php echo get_the_post_thumbnail($other_post->ID, 'medium_large', [
+                                            'class' => 'w-full h-full object-cover group-hover:scale-105 transition-transform duration-300'
+                                        ]); ?>
+                                    </div>
+                                <?php else : ?>
+                                    <div class="aspect-video bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center">
+                                        <i class="fas fa-newspaper text-gray-400 text-3xl"></i>
+                                    </div>
+                                <?php endif; ?>
+                                
+                                <!-- Dark Overlay -->
+                                <div class="absolute inset-0 bg-black bg-opacity-40 group-hover:bg-opacity-50 transition-all duration-300"></div>
+                                
+                                <!-- Category Badge -->
+                                <?php
+                                $post_categories = get_the_category($other_post->ID);
+                                if (!empty($post_categories)) :
+                                ?>
+                                    <span class="absolute top-4 left-4 px-3 py-1 bg-red-600 text-white text-xs font-semibold rounded-full">
+                                        <?php echo esc_html($post_categories[0]->name); ?>
+                                    </span>
+                                <?php endif; ?>
+                                
+                                <!-- Content Overlay -->
+                                <div class="absolute bottom-0 left-0 right-0 p-6 text-white">
+                                    <h3 class="text-lg font-bold leading-tight mb-3 group-hover:text-orange-300 transition-colors">
+                                        <a href="<?php echo get_permalink($other_post->ID); ?>" class="line-clamp-3">
+                                            <?php echo get_the_title($other_post->ID); ?>
+                                        </a>
+                                    </h3>
+                                    
+                                    <div class="flex items-center gap-4 text-sm opacity-90">
+                                        <div class="flex items-center gap-1">
+                                            <i class="fas fa-calendar text-orange-300"></i>
+                                            <time datetime="<?php echo get_the_date('c', $other_post->ID); ?>">
+                                                <?php echo get_the_date('d M Y', $other_post->ID); ?>
+                                            </time>
+                                        </div>
+                                        <div class="flex items-center gap-1">
+                                            <i class="fas fa-eye text-orange-300"></i>
+                                            <span><?php echo get_post_meta($other_post->ID, 'post_views_count', true) ?: '0'; ?></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+                    <?php
+                        endforeach;
+                        wp_reset_postdata();
+                    endif;
+                    ?>
+                </div>
 
-				</div>
-			</div>
-		</article>
+                <!-- Load More Button -->
+                <div class="text-center">
+                    <button id="load-more-btn" 
+                            class="inline-flex items-center px-8 py-3 bg-red-600 text-white font-semibold rounded-lg hover:bg-red-700 transition-colors duration-300 transform hover:scale-105"
+                            data-page="1" 
+                            data-exclude="<?php echo get_the_ID(); ?>">
+                        <i class="fas fa-plus mr-2"></i>
+                        Muat Lebih Banyak
+                    </button>
+                    <div id="loading-spinner" class="hidden mt-4">
+                        <div class="inline-flex items-center text-gray-600">
+                            <div class="animate-spin rounded-full h-6 w-6 border-b-2 border-red-600 mr-2"></div>
+                            Memuat...
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-		<!-- Related Posts -->
-		<?php
-		// Get related posts from same category
-		$categories = get_the_category();
-		if ($categories) {
-			$category_ids = array();
-			foreach ($categories as $category) {
-				$category_ids[] = $category->term_id;
-			}
+        <!-- Comments Section -->
+        <?php if (comments_open() || get_comments_number()) : ?>
+            <section class="py-12 bg-gray-50">
+                <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="bg-white rounded-lg shadow-sm p-8">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-6 flex items-center gap-3">
+                            <i class="fas fa-comments text-red-600"></i>
+                            Komentar
+                        </h2>
+                        <?php comments_template(); ?>
+                    </div>
+                </div>
+            </section>
+        <?php endif; ?>
 
-			$related_posts = get_posts(array(
-				'category__in' => $category_ids,
-				'post__not_in' => array($post->ID),
-				'numberposts' => 3,
-				'orderby' => 'rand'
-			));
-
-			if ($related_posts) :
-		?>
-		<?php
-			endif;
-		}
-		?>
-
-		<!-- Related Posts Section -->
-		<section class="py-8 md:py-12">
-			<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-				<?php get_template_part('template-parts/related-posts'); ?>
-			</div>
-		</section>
-
-	<?php endwhile; ?>
+    <?php endwhile; ?>
 </main>
 
-<?php get_footer();
+<!-- JavaScript for Load More functionality and View Tracking -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Load More functionality
+    const loadMoreBtn = document.getElementById('load-more-btn');
+    const loadingSpinner = document.getElementById('loading-spinner');
+    const newsGrid = document.getElementById('news-grid');
+    
+    if (loadMoreBtn) {
+        loadMoreBtn.addEventListener('click', function() {
+            const currentPage = parseInt(this.getAttribute('data-page'));
+            const excludeId = this.getAttribute('data-exclude');
+            
+            // Show loading state
+            loadMoreBtn.style.display = 'none';
+            loadingSpinner.classList.remove('hidden');
+            
+            // AJAX request to load more posts
+            fetch('<?php echo admin_url('admin-ajax.php'); ?>', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: `action=load_more_posts&page=${currentPage + 1}&exclude=${excludeId}&nonce=<?php echo wp_create_nonce('load_more_posts'); ?>`
+            })
+            .then(response => response.json())
+            .then(data => {
+                loadingSpinner.classList.add('hidden');
+                
+                if (data.success && data.data.html) {
+                    // Add new posts to grid
+                    newsGrid.insertAdjacentHTML('beforeend', data.data.html);
+                    
+                    // Update page number
+                    loadMoreBtn.setAttribute('data-page', currentPage + 1);
+                    
+                    // Show button again if there are more posts
+                    if (data.data.has_more) {
+                        loadMoreBtn.style.display = 'inline-flex';
+                    } else {
+                        loadMoreBtn.innerHTML = '<i class="fas fa-check mr-2"></i>Semua Berita Ditampilkan';
+                        loadMoreBtn.classList.remove('hover:bg-red-700');
+                        loadMoreBtn.classList.add('bg-gray-400', 'cursor-not-allowed');
+                        loadMoreBtn.disabled = true;
+                        loadMoreBtn.style.display = 'inline-flex';
+                    }
+                } else {
+                    loadMoreBtn.style.display = 'inline-flex';
+                    loadMoreBtn.innerHTML = '<i class="fas fa-exclamation-triangle mr-2"></i>Gagal Memuat';
+                    loadMoreBtn.classList.add('bg-gray-400');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                loadingSpinner.classList.add('hidden');
+                loadMoreBtn.style.display = 'inline-flex';
+                loadMoreBtn.innerHTML = '<i class="fas fa-exclamation-triangle mr-2"></i>Gagal Memuat';
+                loadMoreBtn.classList.add('bg-gray-400');
+            });
+        });
+    }
+    
+    // Track page view
+    const trackView = () => {
+        fetch('<?php echo admin_url('admin-ajax.php'); ?>', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: 'action=track_post_view&post_id=<?php echo get_the_ID(); ?>&nonce=<?php echo wp_create_nonce('track_post_view'); ?>'
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success && data.data.views) {
+                const viewCountEl = document.getElementById('view-count');
+                if (viewCountEl) {
+                    viewCountEl.textContent = data.data.views;
+                }
+            }
+        })
+        .catch(error => {
+            console.log('View tracking error:', error);
+        });
+    };
+    
+    // Track view after 10 seconds
+    setTimeout(trackView, 10000);
+    
+    // Smooth scrolling for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        });
+    });
+});
+</script>
+
+<?php
+get_footer();
+?>
