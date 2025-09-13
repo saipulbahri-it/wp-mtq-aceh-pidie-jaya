@@ -743,8 +743,9 @@ get_header();
                     </h4>
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                         <div
-                            class="bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden cursor-pointer hover:shadow-lg transition-shadow"
-                            onclick="openImageModal('<?php echo esc_url( get_template_directory_uri() ); ?>/assets/images/Peta_MTQ_page-0001.jpg', 'Jalan Akses Arena MTQ')">
+                            class="bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden cursor-pointer hover:shadow-lg transition-shadow image-gallery-item"
+                            data-image-src="<?php echo esc_url( get_template_directory_uri() ); ?>/assets/images/Peta_MTQ_page-0001.jpg"
+                            data-image-title="Jalan Akses Arena MTQ">
                             <img
                                 src="<?php echo esc_url( get_template_directory_uri() ); ?>/assets/images/Peta_MTQ_page-0001.jpg"
                                 alt="Jalan Akses Arena MTQ"
@@ -760,8 +761,9 @@ get_header();
                         </div>
 
                         <div
-                            class="bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden cursor-pointer hover:shadow-lg transition-shadow"
-                            onclick="openImageModal('<?php echo esc_url( get_template_directory_uri() ); ?>/assets/images/Peta_MTQ_page-0002.jpg', 'Titik Arena MTQ')">
+                            class="bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden cursor-pointer hover:shadow-lg transition-shadow image-gallery-item"
+                            data-image-src="<?php echo esc_url( get_template_directory_uri() ); ?>/assets/images/Peta_MTQ_page-0002.jpg"
+                            data-image-title="Titik Arena MTQ">
                             <img
                                 src="<?php echo esc_url( get_template_directory_uri() ); ?>/assets/images/Peta_MTQ_page-0002.jpg"
                                 alt="Titik Arena MTQ"
@@ -777,8 +779,9 @@ get_header();
                         </div>
 
                         <div
-                            class="bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden cursor-pointer hover:shadow-lg transition-shadow"
-                            onclick="openImageModal('<?php echo esc_url( get_template_directory_uri() ); ?>/assets/images/Peta_MTQ_page-0003.jpg', 'Penginapan Dewan Hakim')">
+                            class="bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden cursor-pointer hover:shadow-lg transition-shadow image-gallery-item"
+                            data-image-src="<?php echo esc_url( get_template_directory_uri() ); ?>/assets/images/Peta_MTQ_page-0003.jpg"
+                            data-image-title="Penginapan Dewan Hakim">
                             <img
                                 src="<?php echo esc_url( get_template_directory_uri() ); ?>/assets/images/Peta_MTQ_page-0003.jpg"
                                 alt="Penginapan Dewan Hakim"
@@ -794,8 +797,9 @@ get_header();
                         </div>
 
                         <div
-                            class="bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden cursor-pointer hover:shadow-lg transition-shadow"
-                            onclick="openImageModal('<?php echo esc_url( get_template_directory_uri() ); ?>/assets/images/Peta_MTQ_page-0004.jpg', 'Penginapan Kafilah Block 1')">
+                            class="bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden cursor-pointer hover:shadow-lg transition-shadow image-gallery-item"
+                            data-image-src="<?php echo esc_url( get_template_directory_uri() ); ?>/assets/images/Peta_MTQ_page-0004.jpg"
+                            data-image-title="Penginapan Kafilah Block 1">
                             <img
                                 src="<?php echo esc_url( get_template_directory_uri() ); ?>/assets/images/Peta_MTQ_page-0004.jpg"
                                 alt="Penginapan Kafilah Block 1"
@@ -811,8 +815,9 @@ get_header();
                         </div>
 
                         <div
-                            class="bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden cursor-pointer hover:shadow-lg transition-shadow"
-                            onclick="openImageModal('<?php echo esc_url( get_template_directory_uri() ); ?>/assets/images/Peta_MTQ_page-0005.jpg', 'Penginapan Kafilah Block 2')">
+                            class="bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden cursor-pointer hover:shadow-lg transition-shadow image-gallery-item"
+                            data-image-src="<?php echo esc_url( get_template_directory_uri() ); ?>/assets/images/Peta_MTQ_page-0005.jpg"
+                            data-image-title="Penginapan Kafilah Block 2">
                             <img
                                 src="<?php echo esc_url( get_template_directory_uri() ); ?>/assets/images/Peta_MTQ_page-0005.jpg"
                                 alt="Penginapan Kafilah Block 2"
@@ -828,8 +833,9 @@ get_header();
                         </div>
 
                         <div
-                            class="bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden cursor-pointer hover:shadow-lg transition-shadow"
-                            onclick="openImageModal('<?php echo esc_url( get_template_directory_uri() ); ?>/assets/images/Peta_MTQ_page-0006.jpg', 'Penginapan Kafilah Block 3')">
+                            class="bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden cursor-pointer hover:shadow-lg transition-shadow image-gallery-item"
+                            data-image-src="<?php echo esc_url( get_template_directory_uri() ); ?>/assets/images/Peta_MTQ_page-0006.jpg"
+                            data-image-title="Penginapan Kafilah Block 3">
                             <img
                                 src="<?php echo esc_url( get_template_directory_uri() ); ?>/assets/images/Peta_MTQ_page-0006.jpg"
                                 alt="Penginapan Kafilah Block 3"
@@ -853,8 +859,9 @@ get_header();
                     </h4>
                     <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
                         <div
-                            class="bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden cursor-pointer hover:shadow-lg transition-shadow"
-                            onclick="openImageModal('<?php echo esc_url( get_template_directory_uri() ); ?>/assets/images/Titik_Rumah_Kafilah_page-0001.jpg', 'Titik Rumah Kafilah Detail')">
+                            class="bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden cursor-pointer hover:shadow-lg transition-shadow image-gallery-item"
+                            data-image-src="<?php echo esc_url( get_template_directory_uri() ); ?>/assets/images/Titik_Rumah_Kafilah_page-0001.jpg"
+                            data-image-title="Titik Rumah Kafilah Detail">
                             <img
                                 src="<?php echo esc_url( get_template_directory_uri() ); ?>/assets/images/Titik_Rumah_Kafilah_page-0001.jpg"
                                 alt="Titik Rumah Kafilah"
@@ -1028,5 +1035,29 @@ get_header();
             </div>
         </div>
     </section>
+
+    <!-- Image Preview Modal -->
+    <div id="image-modal" class="image-modal">
+        <div class="image-modal-overlay" onclick="closeImageModal()"></div>
+        <div class="image-modal-content">
+            <button class="image-modal-close" onclick="closeImageModal()" aria-label="Tutup modal">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+            </button>
+            <div class="image-modal-body">
+                <!-- Loading spinner -->
+                <div id="modal-loading" class="modal-loading">
+                    <div class="loading-spinner"></div>
+                    <p class="text-white text-sm mt-3">Memuat gambar...</p>
+                </div>
+                <img id="modal-image" src="" alt="" class="max-w-full max-h-full object-contain" style="display: none;">
+                <div class="image-modal-caption" id="modal-caption" style="display: none;">
+                    <h3 id="modal-title" class="text-lg font-semibold text-white"></h3>
+                    <p class="text-gray-300 text-sm mt-1">Klik di luar gambar atau tekan ESC untuk menutup</p>
+                </div>
+            </div>
+        </div>
+    </div>
 </main>
 <?php get_footer(); ?>

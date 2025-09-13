@@ -176,3 +176,98 @@ function copyToClipboard() {
     alert("Link copied to clipboard!");
   });
 }
+
+// Image Preview Modal
+function openImageModal(imageSrc, imageTitle) {
+  const modal = document.getElementById("image-modal");
+  const modalImage = document.getElementById("modal-image");
+  const modalTitle = document.getElementById("modal-title");
+  const modalCaption = document.getElementById("modal-caption");
+  const modalLoading = document.getElementById("modal-loading");
+  
+  if (modal && modalImage && modalTitle && modalCaption && modalLoading) {
+    // Show modal with loading state
+    modal.classList.add("open");
+    modalLoading.style.display = "flex";
+    modalImage.style.display = "none";
+    modalCaption.style.display = "none";
+    
+    // Set title
+    modalTitle.textContent = imageTitle;
+    
+    // Prevent body scroll when modal is open
+    document.body.style.overflow = "hidden";
+    
+    // Load image
+    const img = new Image();
+    img.onload = function() {
+      modalImage.src = imageSrc;
+      modalImage.alt = imageTitle;
+      
+      // Hide loading, show image and caption
+      modalLoading.style.display = "none";
+      modalImage.style.display = "block";
+      modalCaption.style.display = "block";
+    };
+    
+    img.onerror = function() {
+      modalLoading.innerHTML = `
+        <div class="text-center">
+          <svg class="w-12 h-12 text-red-400 mx-auto mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z"></path>
+          </svg>
+          <p class="text-white text-sm">Gagal memuat gambar</p>
+          <button onclick="closeImageModal()" class="mt-3 px-4 py-2 bg-blue-600 text-white rounded-lg text-sm hover:bg-blue-700">Tutup</button>
+        </div>
+      `;
+    };
+    
+    img.src = imageSrc;
+  }
+}
+
+function closeImageModal() {
+  const modal = document.getElementById("image-modal");
+  
+  if (modal) {
+    modal.classList.remove("open");
+    
+    // Restore body scroll
+    document.body.style.overflow = "";
+  }
+}
+
+// Close modal when pressing Escape key
+document.addEventListener("keydown", function(event) {
+  if (event.key === "Escape") {
+    closeImageModal();
+  }
+});
+
+// Ensure modal close button and overlay work
+document.addEventListener("DOMContentLoaded", function() {
+  const modal = document.getElementById("image-modal");
+  const overlay = document.querySelector(".image-modal-overlay");
+  const closeBtn = document.querySelector(".image-modal-close");
+  
+  if (overlay) {
+    overlay.addEventListener("click", closeImageModal);
+  }
+  
+  if (closeBtn) {
+    closeBtn.addEventListener("click", closeImageModal);
+  }
+  
+  // Add click event listeners to all image gallery items
+  const galleryItems = document.querySelectorAll(".image-gallery-item");
+  galleryItems.forEach(function(item) {
+    item.addEventListener("click", function() {
+      const imageSrc = this.getAttribute("data-image-src");
+      const imageTitle = this.getAttribute("data-image-title");
+      
+      if (imageSrc && imageTitle) {
+        openImageModal(imageSrc, imageTitle);
+      }
+    });
+  });
+});
