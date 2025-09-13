@@ -35,6 +35,24 @@ switch ($background_type) {
         break;
     case 'gradient':
         $background_classes = 'bg-gradient-to-br ' . esc_attr($background_gradient);
+        
+        // Add fallback gradient styles for better compatibility
+        $gradient_map = array(
+            'from-blue-50 to-indigo-50' => 'linear-gradient(to bottom right, #eff6ff, #eef2ff)',
+            'from-red-50 to-pink-50' => 'linear-gradient(to bottom right, #fef2f2, #fdf2f8)',
+            'from-green-50 to-emerald-50' => 'linear-gradient(to bottom right, #f0fdf4, #ecfdf5)',
+            'from-yellow-50 to-orange-50' => 'linear-gradient(to bottom right, #fefce8, #fff7ed)',
+            'from-purple-50 to-violet-50' => 'linear-gradient(to bottom right, #faf5ff, #f5f3ff)',
+            'from-gray-50 to-slate-50' => 'linear-gradient(to bottom right, #f9fafb, #f8fafc)',
+            'from-teal-50 to-cyan-50' => 'linear-gradient(to bottom right, #f0fdfa, #ecfeff)',
+            'from-rose-50 to-pink-50' => 'linear-gradient(to bottom right, #fff1f2, #fdf2f8)'
+        );
+        
+        // Always use inline styles for gradient to ensure compatibility
+        if (isset($gradient_map[$background_gradient])) {
+            $background_styles = 'background: ' . $gradient_map[$background_gradient] . ';';
+            $background_classes = ''; // Clear Tailwind classes since we're using inline styles
+        }
         break;
     case 'transparent':
     default:
@@ -44,6 +62,17 @@ switch ($background_type) {
 
 if (empty($youtube_url)) {
     return;
+}
+
+// Debug: Output current settings as HTML comments (remove in production)
+if (defined('WP_DEBUG') && WP_DEBUG) {
+    echo '<!-- YouTube Live Debug:';
+    echo ' background_type=' . esc_html($background_type);
+    echo ' background_color=' . esc_html($background_color);
+    echo ' background_gradient=' . esc_html($background_gradient);
+    echo ' background_classes=' . esc_html($background_classes);
+    echo ' background_styles=' . esc_html($background_styles);
+    echo ' -->';
 }
 ?>
 
@@ -179,6 +208,44 @@ if (empty($youtube_url)) {
 .replay-message {
     line-height: 1.6;
     margin-top: 1rem;
+}
+
+/* Fallback CSS for Tailwind gradient classes */
+.bg-gradient-to-br {
+    background-image: linear-gradient(to bottom right, var(--tw-gradient-from), var(--tw-gradient-to));
+}
+
+/* Gradient fallbacks for better compatibility */
+.bg-gradient-to-br.from-blue-50.to-indigo-50 {
+    background: linear-gradient(to bottom right, #eff6ff, #eef2ff);
+}
+
+.bg-gradient-to-br.from-red-50.to-pink-50 {
+    background: linear-gradient(to bottom right, #fef2f2, #fdf2f8);
+}
+
+.bg-gradient-to-br.from-green-50.to-emerald-50 {
+    background: linear-gradient(to bottom right, #f0fdf4, #ecfdf5);
+}
+
+.bg-gradient-to-br.from-yellow-50.to-orange-50 {
+    background: linear-gradient(to bottom right, #fefce8, #fff7ed);
+}
+
+.bg-gradient-to-br.from-purple-50.to-violet-50 {
+    background: linear-gradient(to bottom right, #faf5ff, #f5f3ff);
+}
+
+.bg-gradient-to-br.from-gray-50.to-slate-50 {
+    background: linear-gradient(to bottom right, #f9fafb, #f8fafc);
+}
+
+.bg-gradient-to-br.from-teal-50.to-cyan-50 {
+    background: linear-gradient(to bottom right, #f0fdfa, #ecfeff);
+}
+
+.bg-gradient-to-br.from-rose-50.to-pink-50 {
+    background: linear-gradient(to bottom right, #fff1f2, #fdf2f8);
 }
 
 /* Live CTA Styles */

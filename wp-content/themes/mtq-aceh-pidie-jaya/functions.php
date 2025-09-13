@@ -1168,3 +1168,26 @@ add_action('wp_head', function() {
  * END SOCIAL SHARING FUNCTIONALITY
  * =========================================
  */
+
+/**
+ * =========================================
+ * YOUTUBE LIVE INITIALIZATION
+ * =========================================
+ */
+
+// Initialize YouTube Live classes
+function mtq_init_youtube_live() {
+    if (class_exists('MTQ_YouTube_Live_Admin')) {
+        new MTQ_YouTube_Live_Admin();
+    }
+    if (class_exists('MTQ_YouTube_Live_Display')) {
+        new MTQ_YouTube_Live_Display();
+    }
+}
+add_action('init', 'mtq_init_youtube_live');
+
+/**
+ * =========================================
+ * END YOUTUBE LIVE INITIALIZATION
+ * =========================================
+ */
