@@ -32,6 +32,10 @@ require get_template_directory() . '/inc/countdown-admin.php';
 require get_template_directory() . '/inc/youtube-live-admin.php';
 require get_template_directory() . '/inc/youtube-live-display.php';
 
+// Include gallery system files
+require get_template_directory() . '/inc/gallery-post-type.php';
+require get_template_directory() . '/inc/gallery-shortcodes.php';
+
 if (! function_exists('mtq_aceh_pidie_jaya_setup')) :
 	/**
 	 * Sets up theme defaults and registers support for various WordPress features.
