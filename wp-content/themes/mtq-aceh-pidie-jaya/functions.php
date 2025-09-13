@@ -42,21 +42,56 @@ function mtq_init_gallery_system() {
     new MTQ_Gallery_Post_Type();
     new MTQ_Gallery_Shortcodes();
     
-    // Flush permalinks if needed (on theme activation)
-    if (get_option('mtq_gallery_permalinks_flushed') !== 'yes') {
-        flush_rewrite_rules();
+    // Check if we need to flush permalinks
+    $permalinks_flushed = get_option('mtq_gallery_permalinks_flushed');
+    $theme_version = get_option('mtq_theme_version', '1.0.0');
+    
+    // Force flush if:
+    // 1. Never flushed before
+    // 2. Theme version changed
+    // 3. Gallery post type not working (emergency check)
+    if ($permalinks_flushed !== 'yes' || 
+        $theme_version !== '1.1.0' || 
+        !get_post_type_archive_link('mtq_gallery')) {
+        
+        flush_rewrite_rules(true);
         update_option('mtq_gallery_permalinks_flushed', 'yes');
+        update_option('mtq_theme_version', '1.1.0');
+        
+        // Log the flush for debugging
+        if (WP_DEBUG) {
+            error_log('MTQ Gallery: Permalinks flushed at ' . current_time('mysql'));
+        }
     }
 }
-add_action('init', 'mtq_init_gallery_system');
+add_action('init', 'mtq_init_gallery_system', 10);
 
 // Flush permalinks on theme activation
 function mtq_theme_activation() {
     // Force permalink flush on theme activation
     delete_option('mtq_gallery_permalinks_flushed');
-    flush_rewrite_rules();
+    delete_option('mtq_theme_version');
+    flush_rewrite_rules(true);
+    
+    // Set flag to flush again on next init
+    update_option('mtq_gallery_needs_flush', 'yes');
 }
 add_action('after_switch_theme', 'mtq_theme_activation');
+
+// Emergency permalink flush check
+function mtq_emergency_permalink_check() {
+    // Only run this on admin pages to avoid performance issues
+    if (!is_admin()) {
+        return;
+    }
+    
+    if (get_option('mtq_gallery_needs_flush') === 'yes') {
+        flush_rewrite_rules(true);
+        delete_option('mtq_gallery_needs_flush');
+        update_option('mtq_gallery_permalinks_flushed', 'yes');
+    }
+}
+add_action('admin_init', 'mtq_emergency_permalink_check');
 
 // Admin notice untuk gallery setup
 function mtq_gallery_admin_notice() {

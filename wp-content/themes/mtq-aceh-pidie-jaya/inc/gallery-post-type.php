@@ -76,7 +76,13 @@ class MTQ_Gallery_Post_Type {
             'publicly_queryable'    => true,
             'capability_type'       => 'post',
             'show_in_rest'          => true,
-            'rewrite'               => array('slug' => 'gallery'),
+            'rewrite'               => array(
+                'slug' => 'gallery',
+                'with_front' => false,
+                'pages' => true,
+                'feeds' => true,
+            ),
+            'query_var'             => true,
         );
         
         register_post_type('mtq_gallery', $args);
