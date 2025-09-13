@@ -53,28 +53,23 @@ if (! function_exists('mtq_aceh_pidie_jaya_header_style')) :
 		}
 
 		// If we get this far, we have custom styles. Let's do this.
-?>
-
-		<?php
-		if (!display_header_text()) :
-		?>
-			<style type="text/css">
+		echo '<style type="text/css">';
+		
+		if (!display_header_text()) {
+			echo '
 			.site-title,
 			.site-description {
 				position: absolute;
 				clip: rect(1px, 1px, 1px, 1px);
-			}
-			</style>
-		<?php
-		else :
-		?>
-			<style type="text/css">
+			}';
+		} else {
+			echo '
 			.site-title a,
 			.site-description {
-				color: #<?php echo esc_attr($header_text_color); ?>;
-			}
-			</style>
-		<?php
-		endif;
+				color: #' . esc_attr($header_text_color) . ';
+			}';
+		}
+		
+		echo '</style>';
 	}
 endif;
