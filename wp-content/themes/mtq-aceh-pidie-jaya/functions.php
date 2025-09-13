@@ -1512,3 +1512,120 @@ function mtq_save_featured_post_meta($post_id) {
     update_post_meta($post_id, '_featured_post', $featured);
 }
 add_action('save_post', 'mtq_save_featured_post_meta');
+
+/**
+ * AJAX handler for loading more posts in category pages
+ */
+function mtq_ajax_load_more_category() {
+    // Verify nonce for security
+    if (!wp_verify_nonce($_POST['nonce'], 'load_more_category')) {
+        wp_die('Security check failed');
+    }
+    
+    $page = intval($_POST['page']);
+    $category_id = intval($_POST['category']);
+    
+    if ($page <= 0 || $category_id <= 0) {
+        wp_send_json_error('Invalid parameters');
+        return;
+    }
+    
+    // Get posts for the requested page and category
+    $posts = get_posts([
+        'numberposts' => 6,
+        'cat' => $category_id,
+        'orderby' => 'date',
+        'order' => 'DESC',
+        'offset' => ($page - 1) * 6
+    ]);
+    
+    if (empty($posts)) {
+        wp_send_json_success(['html' => '', 'has_more' => false]);
+        return;
+    }
+    
+    ob_start();
+    
+    foreach ($posts as $post) : setup_postdata($post);
+    ?>
+        <article class="group bg-white rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
+            <div class="relative overflow-hidden">
+                <?php if (has_post_thumbnail($post->ID)) : ?>
+                    <div class="aspect-video">
+                        <a href="<?php echo get_permalink($post->ID); ?>">
+                            <?php echo get_the_post_thumbnail($post->ID, 'medium_large', [
+                                'class' => 'w-full h-full object-cover group-hover:scale-105 transition-transform duration-300'
+                            ]); ?>
+                        </a>
+                    </div>
+                <?php else : ?>
+                    <div class="aspect-video bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center">
+                        <i class="fas fa-newspaper text-gray-400 text-3xl"></i>
+                    </div>
+                <?php endif; ?>
+                
+                <!-- Dark Overlay -->
+                <div class="absolute inset-0 bg-black bg-opacity-40 group-hover:bg-opacity-50 transition-all duration-300"></div>
+                
+                <!-- Category Badge -->
+                <?php
+                $post_categories = get_the_category($post->ID);
+                if (!empty($post_categories)) :
+                ?>
+                    <span class="absolute top-4 left-4 px-3 py-1 bg-red-600 text-white text-xs font-semibold rounded-full">
+                        <?php echo esc_html($post_categories[0]->name); ?>
+                    </span>
+                <?php endif; ?>
+                
+                <!-- Content Overlay -->
+                <div class="absolute bottom-0 left-0 right-0 p-6 text-white">
+                    <h3 class="text-lg font-bold leading-tight mb-3 group-hover:text-orange-300 transition-colors">
+                        <a href="<?php echo get_permalink($post->ID); ?>" class="line-clamp-3">
+                            <?php echo get_the_title($post->ID); ?>
+                        </a>
+                    </h3>
+                    
+                    <div class="flex items-center gap-4 text-sm opacity-90">
+                        <div class="flex items-center gap-1">
+                            <i class="fas fa-calendar text-orange-300"></i>
+                            <time datetime="<?php echo get_the_date('c', $post->ID); ?>">
+                                <?php echo get_the_date('d M Y', $post->ID); ?>
+                            </time>
+                        </div>
+                        <div class="flex items-center gap-1">
+                            <i class="fas fa-user text-orange-300"></i>
+                            <span><?php echo get_the_author_meta('display_name', $post->post_author); ?></span>
+                        </div>
+                        <div class="flex items-center gap-1">
+                            <i class="fas fa-eye text-orange-300"></i>
+                            <span><?php echo get_post_meta($post->ID, 'post_views_count', true) ?: '0'; ?></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </article>
+    <?php
+    endforeach;
+    wp_reset_postdata();
+    
+    $html = ob_get_clean();
+    
+    // Check if there are more posts
+    $next_posts = get_posts([
+        'numberposts' => 1,
+        'cat' => $category_id,
+        'orderby' => 'date',
+        'order' => 'DESC',
+        'offset' => $page * 6
+    ]);
+    
+    $has_more = !empty($next_posts);
+    
+    wp_send_json_success([
+        'html' => $html,
+        'has_more' => $has_more
+    ]);
+}
+
+add_action('wp_ajax_load_more_category', 'mtq_ajax_load_more_category');
+add_action('wp_ajax_nopriv_load_more_category', 'mtq_ajax_load_more_category');
