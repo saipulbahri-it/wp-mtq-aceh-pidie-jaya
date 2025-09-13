@@ -4,6 +4,11 @@
  *
  * @package MTQ_Aceh_Pidie_Jaya
  */
+
+// Prevent direct access
+if (!defined('ABSPATH')) {
+    exit;
+}
 ?>
 
 <form role="search" method="get" class="search-form relative" action="<?php echo esc_url(home_url('/')); ?>">

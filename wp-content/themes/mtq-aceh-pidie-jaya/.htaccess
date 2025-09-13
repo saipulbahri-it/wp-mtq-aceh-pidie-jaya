@@ -1,0 +1,46 @@
+# Prevent direct access to theme files
+# MTQ Aceh Pidie Jaya Theme Security
+
+# Deny access to sensitive files
+<Files "*.php">
+    Order Deny,Allow
+    Deny from all
+</Files>
+
+# Allow WordPress to access theme files properly
+<FilesMatch "^(index\.php|functions\.php|style\.css)$">
+    Order Allow,Deny
+    Allow from all
+</FilesMatch>
+
+# Prevent access to specific file types
+<FilesMatch "\.(inc|conf|config|log|bak|backup|sql)$">
+    Order Deny,Allow
+    Deny from all
+</FilesMatch>
+
+# Prevent access to hidden files
+<FilesMatch "^\.">
+    Order Deny,Allow
+    Deny from all
+</FilesMatch>
+
+# Security headers
+<IfModule mod_headers.c>
+    Header always set X-Content-Type-Options nosniff
+    Header always set X-Frame-Options SAMEORIGIN
+    Header always set X-XSS-Protection "1; mode=block"
+</IfModule>
+
+# Disable directory browsing
+Options -Indexes
+
+# Prevent access to theme directory without proper context
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteCond %{REQUEST_FILENAME} -f
+    RewriteCond %{REQUEST_URI} !^/wp-admin
+    RewriteCond %{REQUEST_URI} !^/wp-includes
+    RewriteCond %{REQUEST_URI} \.(php)$ [NC]
+    RewriteRule .* - [F,L]
+</IfModule>

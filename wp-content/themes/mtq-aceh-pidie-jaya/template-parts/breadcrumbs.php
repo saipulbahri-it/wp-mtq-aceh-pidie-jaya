@@ -5,6 +5,11 @@
  * @package MTQ_Aceh_Pidie_Jaya
  */
 
+// Prevent direct access
+if (!defined('ABSPATH')) {
+    exit;
+}
+
 if (!function_exists('mtq_get_breadcrumbs')) {
     function mtq_get_breadcrumbs() {
         // Don't display on front page

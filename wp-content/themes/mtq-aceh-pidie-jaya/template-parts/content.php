@@ -7,6 +7,11 @@
  * @package MTQ_Aceh_Pidie_Jaya
  */
 
+// Prevent direct access
+if (!defined('ABSPATH')) {
+    exit;
+}
+
 ?>
 
 <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>

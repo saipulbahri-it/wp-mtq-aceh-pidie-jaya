@@ -8,6 +8,11 @@
  * @package MTQ_Aceh_Pidie_Jaya
  */
 
+// Prevent direct access
+if (!defined('ABSPATH')) {
+    exit;
+}
+
 // Get current post data
 $post_url = get_permalink();
 $post_title = get_the_title();

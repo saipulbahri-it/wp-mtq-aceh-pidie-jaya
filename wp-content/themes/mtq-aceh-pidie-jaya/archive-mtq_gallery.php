@@ -5,6 +5,11 @@
  * @package MTQ_Aceh_Pidie_Jaya
  */
 
+// Prevent direct access
+if (!defined('ABSPATH')) {
+    exit;
+}
+
 get_header(); ?>
 
 <main class="container mx-auto px-4 py-8">
