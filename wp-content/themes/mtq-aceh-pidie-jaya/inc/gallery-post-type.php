@@ -13,13 +13,16 @@ if (!defined('ABSPATH')) {
 class MTQ_Gallery_Post_Type {
     
     public function __construct() {
-        add_action('init', array($this, 'register_gallery_post_type'));
-        add_action('init', array($this, 'register_gallery_taxonomies'));
+        // Remove init hooks from constructor to prevent double initialization
         add_action('add_meta_boxes', array($this, 'add_gallery_meta_boxes'));
         add_action('save_post', array($this, 'save_gallery_meta'));
         add_action('admin_enqueue_scripts', array($this, 'enqueue_admin_scripts'));
         add_filter('manage_mtq_gallery_posts_columns', array($this, 'set_custom_columns'));
         add_action('manage_mtq_gallery_posts_custom_column', array($this, 'custom_column_content'), 10, 2);
+        
+        // Register post type and taxonomies immediately
+        $this->register_gallery_post_type();
+        $this->register_gallery_taxonomies();
     }
     
     /**
