@@ -54,39 +54,27 @@ if (! function_exists('mtq_aceh_pidie_jaya_header_style')) :
 
 		// If we get this far, we have custom styles. Let's do this.
 ?>
-		<style type="text/css">
-			<?php
-			if (!display_header_text()) :
-			?>.site-title,
+
+		<?php
+		if (!display_header_text()) :
+		?>
+			<style type="text/css">
+			.site-title,
 			.site-description {
 				position: absolute;
 				clip: rect(1px, 1px, 1px, 1px);
 			}
-
-			<?php
-			else :
-			?>.site-title a,
+			</style>
+		<?php
+		else :
+		?>
+			<style type="text/css">
+			.site-title a,
 			.site-description {
 				color: #<?php echo esc_attr($header_text_color); ?>;
 			}
-
-			<?php
-			endif;
-			?>
-		</style>
-<?php
+			</style>
+		<?php
+		endif;
 	}
 endif;
-
-/**
- * Disable CSS validation
- *
- * This is a workaround to disable CSS validation in the editor.
- */
-add_filter('wp_enqueue_scripts', function () {
-	if (is_admin()) {
-		return;
-	}
-
-	wp_add_inline_style('theme-style-handle', '/* CSS validation disabled */');
-}, 100);
