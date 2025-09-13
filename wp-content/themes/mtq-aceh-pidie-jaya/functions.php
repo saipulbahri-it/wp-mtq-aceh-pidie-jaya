@@ -32,6 +32,128 @@ require get_template_directory() . '/inc/countdown-admin.php';
 require get_template_directory() . '/inc/youtube-live-admin.php';
 require get_template_directory() . '/inc/youtube-live-display.php';
 
+// Include gallery system files
+require get_template_directory() . '/inc/gallery-post-type.php';
+require get_template_directory() . '/inc/gallery-shortcodes.php';
+
+// Initialize gallery system
+function mtq_init_gallery_system() {
+    // Initialize gallery post type
+    new MTQ_Gallery_Post_Type();
+    new MTQ_Gallery_Shortcodes();
+    
+    // Check if we need to flush permalinks
+    $permalinks_flushed = get_option('mtq_gallery_permalinks_flushed');
+    $theme_version = get_option('mtq_theme_version', '1.0.0');
+    
+    // Force flush if:
+    // 1. Never flushed before
+    // 2. Theme version changed
+    // 3. Gallery post type not working (emergency check)
+    if ($permalinks_flushed !== 'yes' || 
+        $theme_version !== '1.1.0' || 
+        !get_post_type_archive_link('mtq_gallery')) {
+        
+        flush_rewrite_rules(true);
+        update_option('mtq_gallery_permalinks_flushed', 'yes');
+        update_option('mtq_theme_version', '1.1.0');
+        
+        // Log the flush for debugging
+        if (WP_DEBUG) {
+            error_log('MTQ Gallery: Permalinks flushed at ' . current_time('mysql'));
+        }
+    }
+}
+add_action('init', 'mtq_init_gallery_system', 5); // Earlier priority to ensure registration
+
+// Debug function to check gallery registration
+function mtq_debug_gallery_registration() {
+    if (is_admin() && current_user_can('manage_options')) {
+        if (!post_type_exists('mtq_gallery')) {
+            add_action('admin_notices', function() {
+                echo '<div class="notice notice-error"><p><strong>MTQ Gallery:</strong> Post type tidak terdaftar! Check theme files.</p></div>';
+            });
+        } else {
+            // Gallery registered successfully
+            if (isset($_GET['debug_gallery'])) {
+                add_action('admin_notices', function() {
+                    echo '<div class="notice notice-success"><p><strong>MTQ Gallery:</strong> Post type berhasil terdaftar!</p></div>';
+                });
+            }
+        }
+    }
+}
+add_action('admin_init', 'mtq_debug_gallery_registration');
+
+// Flush permalinks on theme activation
+function mtq_theme_activation() {
+    // Force permalink flush on theme activation
+    delete_option('mtq_gallery_permalinks_flushed');
+    delete_option('mtq_theme_version');
+    flush_rewrite_rules(true);
+    
+    // Set flag to flush again on next init
+    update_option('mtq_gallery_needs_flush', 'yes');
+}
+add_action('after_switch_theme', 'mtq_theme_activation');
+
+// Emergency permalink flush check
+function mtq_emergency_permalink_check() {
+    // Only run this on admin pages to avoid performance issues
+    if (!is_admin()) {
+        return;
+    }
+    
+    if (get_option('mtq_gallery_needs_flush') === 'yes') {
+        flush_rewrite_rules(true);
+        delete_option('mtq_gallery_needs_flush');
+        update_option('mtq_gallery_permalinks_flushed', 'yes');
+    }
+}
+add_action('admin_init', 'mtq_emergency_permalink_check');
+
+// Admin notice untuk gallery setup
+function mtq_gallery_admin_notice() {
+    if (!current_user_can('manage_options')) {
+        return;
+    }
+    
+    // Check if gallery post type is registered
+    if (!post_type_exists('mtq_gallery')) {
+        ?>
+        <div class="notice notice-error is-dismissible">
+            <p><strong>❌ MTQ Gallery System Error:</strong> 
+            Gallery post type tidak terdaftar! Periksa file theme atau hubungi developer.
+            <a href="<?php echo admin_url('admin.php?page=debug_gallery'); ?>">Debug Gallery</a>
+            </p>
+        </div>
+        <?php
+    } elseif (!get_option('mtq_gallery_permalinks_flushed')) {
+        ?>
+        <div class="notice notice-warning is-dismissible">
+            <p><strong>⚠️ MTQ Gallery System:</strong> 
+            Jika mengalami masalah "Halaman Galeri Tidak Ditemukan", 
+            silakan pergi ke <a href="<?php echo admin_url('options-permalink.php'); ?>">Settings → Permalinks</a> 
+            dan klik "Save Changes" untuk refresh permalink structure.
+            </p>
+        </div>
+        <?php
+    } else {
+        // Gallery working fine, show success notice only if requested
+        if (isset($_GET['gallery_debug']) && $_GET['gallery_debug'] === 'success') {
+            ?>
+            <div class="notice notice-success is-dismissible">
+                <p><strong>✅ MTQ Gallery System:</strong> 
+                Gallery berhasil terdaftar dan siap digunakan! 
+                <a href="<?php echo admin_url('post-new.php?post_type=mtq_gallery'); ?>">Buat Gallery Baru</a>
+                </p>
+            </div>
+            <?php
+        }
+    }
+}
+add_action('admin_notices', 'mtq_gallery_admin_notice');
+
 if (! function_exists('mtq_aceh_pidie_jaya_setup')) :
 	/**
 	 * Sets up theme defaults and registers support for various WordPress features.

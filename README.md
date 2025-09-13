@@ -1,166 +1,183 @@
-# WordPress MTQ Aceh Pidie Jaya
+# 🕌 MTQ Aceh Pidie Jaya 2025
 
-Website resmi Musabaqah Tilawatil Quran (MTQ) Kabupaten Pidie Jaya, Aceh.
+> **Musabaqah Tilawatil Quran (MTQ) ke-37 Aceh di Kabupaten Pidie Jaya**
 
-## Deskripsi
+![MTQ Aceh Pidie Jaya](https://mtq.pidiejayakab.go.id/wp-content/themes/mtq-aceh-pidie-jaya/screenshot.png)
 
-Proyek ini adalah website WordPress untuk Musabaqah Tilawatil Quran (MTQ) Kabupaten Pidie Jaya. Website ini bertujuan untuk menyediakan informasi terkini seputar kegiatan MTQ, berita, jadwal, hasil pertandingan, dan informasi lainnya kepada masyarakat.
+## 📋 **Deskripsi**
 
-## Teknologi yang Digunakan
+Website resmi untuk event MTQ (Musabaqah Tilawatil Quran) ke-37 tingkat Aceh yang diselenggarakan di Kabupaten Pidie Jaya tahun 2025. Website ini menyediakan informasi lengkap tentang kompetisi, peserta, jadwal, hasil, dan dokumentasi kegiatan.
 
-- **WordPress 6.8.2** - Sistem manajemen konten
-- **Nginx** - Web server
-- **PHP 8.3** - Interpreter bahasa pemrograman
-- **Self-signed SSL Certificate** - Untuk koneksi HTTPS di lingkungan pengembangan
+## ✨ **Fitur Utama**
 
-## Konfigurasi Lokal
+### 🎯 **Core Features**
+- **Homepage Dinamis** dengan countdown timer dan live updates
+- **Sistem Berita** untuk pengumuman dan update terkini
+- **Gallery Multimedia** untuk foto dan video dokumentasi
+- **Arena & Lokasi** dengan informasi detail venue
+- **Live Streaming** integration untuk siaran langsung
+- **Social Media** integration dan sharing
 
-### Prasyarat
+### 🛠️ **Technical Features**
+- **Responsive Design** - Mobile-first approach
+- **Performance Optimized** - Fast loading dengan caching
+- **SEO Friendly** - Meta tags dan structured data
+- **Security Enhanced** - Input validation dan sanitization
+- **Admin Dashboard** - Custom post types dan meta boxes
 
-- Sistem operasi macOS
-- Homebrew (package manager)
-- Nginx
-- PHP 8.3
-- WordPress 6.8.2
+## 🚀 **Quick Start**
 
-### Instalasi
+### **Untuk Pengembang:**
 
-1. **Clone repository**
+```bash
+# Clone repository
+git clone https://github.com/saipulbahri-it/wp-mtq-aceh-pidie-jaya.git
+cd wp-mtq-aceh-pidie-jaya
 
-   ```bash
-   git clone <repository-url>
-   cd wp-mtq-aceh-pidie-jaya
-   ```
+# Install dependencies
+npm install
 
-2. **Instalasi dependensi menggunakan Homebrew**
+# Development mode
+npm run dev
 
-   ```bash
-   brew install nginx php@8.3
-   ```
-
-3. **Memulai layanan**
-   ```bash
-   brew services start nginx
-   brew services start php@8.3
-   ```
-
-### Konfigurasi Nginx
-
-File konfigurasi Nginx terletak di:
-
-```
-/opt/homebrew/etc/nginx/sites-available/mtq.pidiejayakab.go.id
+# Production build
+npm run build
 ```
 
-Konfigurasi mencakup:
+### **Untuk Admin:**
 
-- Server block untuk domain `mtq.pidiejayakab.go.id`
-- Redirect HTTP ke HTTPS
-- SSL dengan sertifikat self-signed
-- Integrasi PHP-FPM
-- Aturan khusus WordPress
+1. **Access Admin Panel:** `https://mtq.pidiejayakab.go.id/wp-admin`
+2. **Buat Berita Baru:** Gallery MTQ → Add New Gallery
+3. **Upload Media:** Media → Add New
+4. **Kelola Gallery:** Gallery MTQ → All Galleries
 
-### Konfigurasi SSL
-
-Sertifikat SSL self-signed dibuat untuk pengembangan lokal:
-
-- Certificate: `/opt/homebrew/etc/nginx/ssl/mtq.pidiejayakab.go.id.crt`
-- Private Key: `/opt/homebrew/etc/nginx/ssl/mtq.pidiejayakab.go.id.key`
-
-Sertifikat telah ditambahkan ke keychain pengguna untuk menghindari peringatan browser.
-
-### Akses Website
-
-Website dapat diakses melalui:
-
-- URL: https://mtq.pidiejayakab.go.id/
-- Alamat IP lokal: https://127.0.0.1/
-
-### Konfigurasi Hosts
-
-Entri berikut telah ditambahkan ke file `/etc/hosts`:
-
-```
-127.0.0.1 mtq.pidiejayakab.go.id
-```
-
-## Struktur Direktori
+## 📁 **Struktur Proyek**
 
 ```
 wp-mtq-aceh-pidie-jaya/
-├── wp-admin/           # Admin panel WordPress
-├── wp-content/         # Tema, plugin, dan media
-├── wp-includes/        # File inti WordPress
-├── index.php           # File index utama
-└── ...                 # File konfigurasi WordPress lainnya
+├── wp-content/themes/mtq-aceh-pidie-jaya/   # Theme utama
+│   ├── inc/                                  # Custom functionality
+│   ├── template-parts/                       # Template components
+│   ├── assets/                              # Source CSS/JS
+│   └── dist/                                # Compiled assets
+├── scripts/                                 # Utility scripts
+│   └── gallery-import/                      # Gallery import tools
+├── docs/                                    # Dokumentasi
+└── data/                                    # Sample data
 ```
 
-## Pengembangan
+## 🔧 **Instalasi & Deployment**
 
-### Menjalankan Server
+### **Development Setup:**
 
-Untuk memulai server:
+1. **WordPress Requirements:**
+   - PHP 7.4+
+   - MySQL 5.7+
+   - WordPress 5.8+
 
-```bash
-brew services start nginx
-brew services start php@8.3
+2. **Theme Installation:**
+   ```bash
+   # Navigate to WordPress themes directory
+   cd wp-content/themes/
+   
+   # Activate theme via WP Admin
+   # Appearance → Themes → MTQ Aceh Pidie Jaya → Activate
+   ```
+
+3. **Dependencies:**
+   ```bash
+   # Install Node.js dependencies
+   npm install
+   
+   # Build assets
+   npm run build
+   ```
+
+### **Production Deployment:**
+
+Lihat [DEPLOYMENT_GUIDE.md](./DEPLOYMENT_GUIDE.md) untuk panduan lengkap.
+
+## 📚 **Dokumentasi**
+
+### **User Guides:**
+- [Gallery System](./docs/GALLERY_SYSTEM_DOCUMENTATION.md) - Panduan lengkap sistem gallery
+- [Import Guide](./IMPORT_GUIDE.md) - Cara import data gallery
+- [Admin Panel](./docs/GALLERY_ADMIN_PANEL_FIX.md) - Troubleshooting admin panel
+
+### **Technical Docs:**
+- [Theme Development](./THEME_DEVELOPMENT_PLAN.md) - Rencana pengembangan theme
+- [Deployment Guide](./DEPLOYMENT_GUIDE.md) - Panduan deployment
+- [Changelog](./docs/CHANGELOG.md) - Riwayat perubahan
+
+### **Troubleshooting:**
+- [Gallery Issues](./docs/GALLERY_FIX_SOLUTION.md) - Solusi masalah gallery
+- [Live Server Fix](./docs/LIVE_SERVER_GALLERY_FIX.md) - Perbaikan server live
+
+## 🎨 **Gallery System**
+
+### **Features:**
+- ✅ **Multi-media Support** - Foto dan video
+- ✅ **Kategorisasi** - Organized by categories dan tags  
+- ✅ **Responsive Gallery** - Grid, slider, dan masonry layouts
+- ✅ **Lightbox Modal** - Full-screen viewing experience
+- ✅ **Admin Interface** - Drag & drop upload
+- ✅ **Shortcode Support** - Easy embedding
+
+### **Usage:**
+```php
+// Display gallery grid
+[mtq_gallery category="pembukaan" limit="12"]
+
+// Display gallery slider  
+[mtq_gallery layout="slider" category="lomba"]
+
+// List all galleries
+[mtq_gallery_list limit="6"]
 ```
 
-Untuk merestart server:
+## 🛡️ **Security & Performance**
 
-```bash
-brew services restart nginx
-brew services restart php@8.3
-```
+- **Input Validation** - Semua input di-sanitize
+- **CSRF Protection** - Nonce verification  
+- **XSS Prevention** - Output escaping
+- **Image Optimization** - Automatic compression
+- **Caching Support** - Compatible dengan caching plugins
+- **CDN Ready** - Asset optimization
 
-### Testing
+## 🌐 **Browser Support**
 
-Untuk menguji koneksi:
+- ✅ Chrome 80+
+- ✅ Firefox 75+
+- ✅ Safari 13+
+- ✅ Edge 80+
+- ✅ Mobile browsers (iOS Safari, Chrome Mobile)
 
-```bash
-curl -I https://mtq.pidiejayakab.go.id/
-```
+## 🤝 **Contributing**
 
-## Troubleshooting
-
-### Masalah SSL
-
-Jika terjadi masalah dengan sertifikat SSL:
-
-1. Pastikan sertifikat telah ditambahkan ke keychain
-2. Restart layanan Nginx
-3. Clear cache browser
-
-### Masalah PHP
-
-Jika PHP tidak merespon:
-
-1. Periksa status layanan PHP: `brew services list | grep php`
-2. Restart layanan PHP: `brew services restart php@8.3`
-
-### Masalah Nginx
-
-Jika Nginx tidak merespon:
-
-1. Periksa konfigurasi: `nginx -t`
-2. Periksa log error: `tail -f /opt/homebrew/var/log/nginx/error.log`
-3. Restart layanan: `brew services restart nginx`
-
-## Kontribusi
+Kontribusi sangat diterima! Silakan:
 
 1. Fork repository ini
-2. Buat branch fitur (`git checkout -b feature/AmazingFeature`)
+2. Buat feature branch (`git checkout -b feature/AmazingFeature`)
 3. Commit perubahan (`git commit -m 'Add some AmazingFeature'`)
 4. Push ke branch (`git push origin feature/AmazingFeature`)
-5. Buka Pull Request
+5. Buat Pull Request
 
-## Kontak
+## 📄 **License**
 
-Dikembangkan oleh: DISKOMINFOTIK PIDIE JAYA - Dinas Komunikasi dan Informatika, Statistik dan Persandian
+Distributed under the GPL v2 License. See `license.txt` for more information.
 
-BERANDA
-Email: -
+## 👥 **Team**
 
-## Lisensi
+- **Developer:** Saipul Bahri IT
+- **Client:** Pemerintah Kabupaten Pidie Jaya
+- **Event:** MTQ Aceh XXXVII Pidie Jaya 2025
 
-Proyek ini dikembangkan khusus untuk Pemerintah Kabupaten Pidie Jaya.
+## 📞 **Support**
+
+- **Website:** https://mtq.pidiejayakab.go.id
+- **Issues:** [GitHub Issues](https://github.com/saipulbahri-it/wp-mtq-aceh-pidie-jaya/issues)
+- **Documentation:** [Project Docs](./docs/)
+
+---
+
+**🕌 Pidie Jaya - Bumi Pejuang Meumakmu**

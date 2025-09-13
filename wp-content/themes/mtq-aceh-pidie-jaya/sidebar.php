@@ -7,6 +7,11 @@
  * @package MTQ_Aceh_Pidie_Jaya
  */
 
+// Prevent direct access
+if (!defined('ABSPATH')) {
+    exit;
+}
+
 if ( ! is_active_sidebar( 'sidebar-1' ) ) {
 	return;
 }
