@@ -576,8 +576,8 @@ get_header();
 			</div>
 
 			<div class="text-center mt-12 fade-in">
-				<?php
-				// Get Berita page link using modern approach (get_page_by_title is deprecated since WP 6.2.0)
+				<?php 
+				// Get Berita page using WP_Query (get_page_by_title is deprecated since WP 6.2.0)
 				$berita_query = new WP_Query(array(
 					'post_type' => 'page',
 					'post_status' => 'publish',
@@ -586,14 +586,14 @@ get_header();
 					'fields' => 'ids'
 				));
 				
-				$berita_link = '#';
+				$berita_url = '#';
 				if ($berita_query->have_posts()) {
-					$berita_link = get_permalink($berita_query->posts[0]);
+					$berita_url = get_page_link($berita_query->posts[0]);
 				}
 				wp_reset_postdata();
 				?>
 				<a
-					href="<?php echo esc_url($berita_link); ?>"
+					href="<?php echo esc_url($berita_url); ?>"
 					class="inline-flex items-center gap-2 bg-orange-600 hover:bg-orange-700 text-white px-6 py-3 rounded-full font-medium transition-colors transform hover:scale-105">
 					<svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
 						<path
