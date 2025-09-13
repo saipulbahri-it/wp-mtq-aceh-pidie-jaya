@@ -81,7 +81,7 @@ if (defined('WP_DEBUG') && WP_DEBUG) {
          id="live-stream"
          <?php if (!empty($background_styles)): ?>style="<?php echo esc_attr($background_styles); ?>"<?php endif; ?>>
 
-    <div class="max-w-7xl mx-auto px-4 relative z-10">
+    <div class="max-w-7xl mx-auto relative z-10">
         
         <!-- Section Header -->
         <div class="text-center mb-16 fade-in">
