@@ -26,14 +26,23 @@ if (!is_array($items)) {
 }
 
 foreach ($items as $item) {
-    // Find existing post by title
-    $existing = get_page_by_title($item['title'], OBJECT, 'post');
-    if (!$existing) {
+    // Find existing post by title using WP_Query (get_page_by_title is deprecated since WP 6.2.0)
+    $existing_query = new WP_Query(array(
+        'post_type' => 'post',
+        'post_status' => 'any',
+        'title' => $item['title'],
+        'posts_per_page' => 1,
+        'fields' => 'ids'
+    ));
+    
+    if (!$existing_query->have_posts()) {
         if (php_sapi_name() === 'cli') echo "Post not found: {$item['title']}\n";
+        wp_reset_postdata();
         continue;
     }
     
-    $post_id = $existing->ID;
+    $post_id = $existing_query->posts[0];
+    wp_reset_postdata();
     
     // Check if post already has featured image
     if (has_post_thumbnail($post_id)) {
