@@ -1629,3 +1629,139 @@ function mtq_ajax_load_more_category() {
 
 add_action('wp_ajax_load_more_category', 'mtq_ajax_load_more_category');
 add_action('wp_ajax_nopriv_load_more_category', 'mtq_ajax_load_more_category');
+
+/**
+ * AJAX handler for loading more posts in news page
+ */
+function mtq_ajax_load_more_news_page() {
+    // Verify nonce for security
+    if (!wp_verify_nonce($_POST['nonce'], 'load_more_news')) {
+        wp_die('Security check failed');
+    }
+    
+    $page = intval($_POST['page']);
+    
+    if ($page <= 0) {
+        wp_send_json_error('Invalid page number');
+        return;
+    }
+    
+    // Get posts for the requested page
+    $posts = get_posts([
+        'numberposts' => 9,
+        'orderby' => 'date',
+        'order' => 'DESC',
+        'offset' => ($page - 1) * 9
+    ]);
+    
+    if (empty($posts)) {
+        wp_send_json_success(['html' => '', 'has_more' => false]);
+        return;
+    }
+    
+    ob_start();
+    
+    foreach ($posts as $post) : setup_postdata($post);
+    ?>
+        <article class="news-article group bg-white rounded-2xl shadow-sm hover:shadow-xl border border-slate-100 overflow-hidden transition-all duration-300 hover:-translate-y-1 flex flex-col h-full" 
+                 data-categories="<?php echo implode(',', wp_get_post_categories($post->ID)); ?>">
+            <?php if (has_post_thumbnail($post->ID)) : ?>
+                <div class="relative overflow-hidden">
+                    <a href="<?php echo get_permalink($post->ID); ?>" class="block">
+                        <?php echo get_the_post_thumbnail($post->ID, 'medium_large', [
+                            'class' => 'w-full h-56 object-cover transition-transform duration-300 group-hover:scale-105',
+                            'loading' => 'lazy'
+                        ]); ?>
+                    </a>
+                    <!-- Category Badge -->
+                    <div class="absolute top-4 left-4">
+                        <?php 
+                        $categories = get_the_category($post->ID);
+                        if (!empty($categories)) :
+                        ?>
+                        <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-red-600 text-white backdrop-blur-sm">
+                            <?php echo esc_html($categories[0]->name); ?>
+                        </span>
+                        <?php endif; ?>
+                    </div>
+                    
+                    <!-- View Count Badge -->
+                    <div class="absolute top-4 right-4">
+                        <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-black/50 text-white backdrop-blur-sm">
+                            <i class="fas fa-eye mr-1"></i>
+                            <?php echo get_post_meta($post->ID, 'post_views_count', true) ?: '0'; ?>
+                        </span>
+                    </div>
+                </div>
+            <?php endif; ?>
+            
+            <div class="p-6 flex flex-col flex-grow">
+                <!-- Date and Author -->
+                <div class="flex items-center gap-4 text-sm text-slate-500 mb-3">
+                    <div class="flex items-center gap-1.5">
+                        <svg class="w-4 h-4 text-red-400" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"></path>
+                        </svg>
+                        <time datetime="<?php echo get_the_date('c', $post->ID); ?>">
+                            <?php echo get_the_date('d M Y', $post->ID); ?>
+                        </time>
+                    </div>
+                    <div class="flex items-center gap-1.5">
+                        <svg class="w-4 h-4 text-slate-400" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path>
+                        </svg>
+                        <span><?php echo get_the_author_meta('display_name', $post->post_author); ?></span>
+                    </div>
+                </div>
+                
+                <!-- Title -->
+                <h3 class="text-xl font-bold text-slate-900 mb-3 line-clamp-2 leading-tight">
+                    <a href="<?php echo get_permalink($post->ID); ?>" 
+                       class="hover:text-red-600 transition-colors duration-200"
+                       aria-label="Baca artikel: <?php echo esc_attr(get_the_title($post->ID)); ?>">
+                        <?php echo get_the_title($post->ID); ?>
+                    </a>
+                </h3>
+                
+                <!-- Excerpt -->
+                <div class="text-slate-600 mb-6 line-clamp-3 leading-relaxed flex-grow">
+                    <?php echo wp_trim_words(get_the_excerpt($post->ID), 18, '...'); ?>
+                </div>
+                
+                <!-- Read More Button -->
+                <div class="mt-auto">
+                    <a href="<?php echo get_permalink($post->ID); ?>" 
+                       class="inline-flex items-center gap-2 text-red-600 hover:text-red-700 font-semibold text-sm transition-colors duration-200 group-hover:gap-3"
+                       aria-label="Baca selengkapnya: <?php echo esc_attr(get_the_title($post->ID)); ?>">
+                        Baca Selengkapnya
+                        <svg class="w-4 h-4 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </article>
+    <?php
+    endforeach;
+    wp_reset_postdata();
+    
+    $html = ob_get_clean();
+    
+    // Check if there are more posts
+    $next_posts = get_posts([
+        'numberposts' => 1,
+        'orderby' => 'date',
+        'order' => 'DESC',
+        'offset' => $page * 9
+    ]);
+    
+    $has_more = !empty($next_posts);
+    
+    wp_send_json_success([
+        'html' => $html,
+        'has_more' => $has_more
+    ]);
+}
+
+add_action('wp_ajax_load_more_news_page', 'mtq_ajax_load_more_news_page');
+add_action('wp_ajax_nopriv_load_more_news_page', 'mtq_ajax_load_more_news_page');

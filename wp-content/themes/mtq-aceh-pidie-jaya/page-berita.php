@@ -12,22 +12,8 @@ if (!defined('ABSPATH')) {
 get_header();
 ?>
 <main id="primary" class="site-main">
-    <!-- Hero Section -->
-    <section class="pt-28 pb-16 bg-gradient-to-br from-blue-50 via-white to-slate-50 section-animate">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <div class="fade-in-delay">
-                <h1 class="text-4xl md:text-6xl font-bold text-slate-800 mb-6">
-                    Berita Terbaru
-                </h1>
-                <p class="text-xl text-slate-600 max-w-3xl mx-auto mb-8">
-                    Informasi, update, dan kabar terbaru seputar MTQ Aceh XXXVII di Kabupaten Pidie Jaya.
-                </p>
-            </div>
-        </div>
-    </section>
-
     <!-- Headlines Slider Section -->
-    <section class="py-8 bg-white border-b border-gray-100 section-animate">
+    <section class="pt-28 pb-8 bg-white border-b border-gray-100 section-animate">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-8 fade-in">
                 <h2 class="text-2xl md:text-3xl font-bold text-slate-800 mb-2">
@@ -46,7 +32,7 @@ get_header();
                         // Get featured/recent posts for the slider
                         $headline_query = new WP_Query([
                             'post_type' => 'post',
-                            'posts_per_page' => 5,
+                            'posts_per_page' => 5, // Limited to 5 articles
                             'meta_query' => [
                                 'relation' => 'OR',
                                 [
@@ -176,29 +162,79 @@ get_header();
         </div>
     </section>
 
+    <!-- Search Section -->
+    <section class="py-8 bg-white border-b border-gray-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-center">
+                <!-- Search Box -->
+                <div class="search-container relative">
+                    <div class="relative">
+                        <input type="text" 
+                               id="news-search" 
+                               placeholder="Cari berita..."
+                               class="w-full md:w-80 pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-red-500 focus:border-red-500 transition-all duration-200">
+                        <div class="absolute left-3 top-1/2 transform -translate-y-1/2">
+                            <i class="fas fa-search text-gray-400"></i>
+                        </div>
+                        <button id="search-btn" class="absolute right-2 top-1/2 transform -translate-y-1/2 px-4 py-1 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                    <!-- Search Results Dropdown -->
+                    <div id="search-results" class="absolute top-full left-0 right-0 bg-white border border-gray-200 rounded-xl shadow-lg mt-2 max-h-96 overflow-y-auto z-50 hidden">
+                        <!-- Search results will be populated here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Daftar Berita Section -->
     <section class="py-16 bg-slate-50 section-animate">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-12 fade-in">
                 <h2 class="text-3xl md:text-4xl font-bold text-slate-800 mb-4">
-                    Semua Berita
+                    <span id="section-title">Semua Berita</span>
                 </h2>
                 <p class="text-lg text-slate-600 max-w-2xl mx-auto">
-                    Temukan berita terbaru, pengumuman, dan dokumentasi kegiatan MTQ Aceh XXXVII.
+                    <span id="section-subtitle">Temukan berita terbaru, pengumuman, dan dokumentasi kegiatan MTQ Aceh XXXVII.</span>
                 </p>
+                
+                <!-- Loading Indicator -->
+                <div id="loading-indicator" class="hidden mt-4">
+                    <div class="inline-flex items-center gap-2 text-gray-600">
+                        <svg class="animate-spin h-5 w-5" fill="none" viewBox="0 0 24 24">
+                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                        </svg>
+                        <span>Memuat berita...</span>
+                    </div>
+                </div>
             </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 fade-in-delay-2">
+            
+            <!-- Articles Grid Container -->
+            <div id="articles-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 fade-in-delay-2 min-h-[400px]">
                 <?php
+                // Get IDs from headline slider to exclude them from main grid
+                $headline_post_ids = [];
+                if ($headline_query->have_posts()) {
+                    foreach ($headline_query->posts as $post) {
+                        $headline_post_ids[] = $post->ID;
+                    }
+                }
+                
                 $paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
                 $berita_query = new WP_Query([
                     'post_type' => 'post',
                     'posts_per_page' => 9,
                     'paged' => $paged,
+                    'post__not_in' => $headline_post_ids, // Exclude posts shown in slider
                 ]);
                 if ($berita_query->have_posts()) :
                     while ($berita_query->have_posts()) : $berita_query->the_post();
                 ?>
-                <article class="group bg-white rounded-2xl shadow-sm hover:shadow-xl border border-slate-100 overflow-hidden transition-all duration-300 hover:-translate-y-1 flex flex-col h-full">
+                <article class="news-article group bg-white rounded-2xl shadow-sm hover:shadow-xl border border-slate-100 overflow-hidden transition-all duration-300 hover:-translate-y-1 flex flex-col h-full" 
+                         data-categories="<?php echo implode(',', wp_get_post_categories(get_the_ID())); ?>">
                     <?php if (has_post_thumbnail()) : ?>
                         <div class="relative overflow-hidden">
                             <a href="<?php the_permalink(); ?>" class="block">
@@ -213,10 +249,18 @@ get_header();
                                 $categories = get_the_category();
                                 if (!empty($categories)) :
                                 ?>
-                                <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800 backdrop-blur-sm">
+                                <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-red-600 text-white backdrop-blur-sm">
                                     <?php echo esc_html($categories[0]->name); ?>
                                 </span>
                                 <?php endif; ?>
+                            </div>
+                            
+                            <!-- View Count Badge -->
+                            <div class="absolute top-4 right-4">
+                                <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-black/50 text-white backdrop-blur-sm">
+                                    <i class="fas fa-eye mr-1"></i>
+                                    <?php echo get_post_meta(get_the_ID(), 'post_views_count', true) ?: '0'; ?>
+                                </span>
                             </div>
                         </div>
                     <?php endif; ?>
@@ -225,7 +269,7 @@ get_header();
                         <!-- Date and Author -->
                         <div class="flex items-center gap-4 text-sm text-slate-500 mb-3">
                             <div class="flex items-center gap-1.5">
-                                <svg class="w-4 h-4 text-blue-400" fill="currentColor" viewBox="0 0 20 20">
+                                <svg class="w-4 h-4 text-red-400" fill="currentColor" viewBox="0 0 20 20">
                                     <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"></path>
                                 </svg>
                                 <time datetime="<?php echo get_the_date('c'); ?>">
@@ -243,7 +287,7 @@ get_header();
                         <!-- Title -->
                         <h3 class="text-xl font-bold text-slate-900 mb-3 line-clamp-2 leading-tight">
                             <a href="<?php the_permalink(); ?>" 
-                               class="hover:text-blue-600 transition-colors duration-200"
+                               class="hover:text-red-600 transition-colors duration-200"
                                aria-label="Baca artikel: <?php echo esc_attr(get_the_title()); ?>">
                                 <?php the_title(); ?>
                             </a>
@@ -257,7 +301,7 @@ get_header();
                         <!-- Read More Button -->
                         <div class="mt-auto">
                             <a href="<?php the_permalink(); ?>" 
-                               class="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 font-semibold text-sm transition-colors duration-200 group-hover:gap-3"
+                               class="inline-flex items-center gap-2 text-red-600 hover:text-red-700 font-semibold text-sm transition-colors duration-200 group-hover:gap-3"
                                aria-label="Baca selengkapnya: <?php echo esc_attr(get_the_title()); ?>">
                                 Baca Selengkapnya
                                 <svg class="w-4 h-4 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -268,6 +312,33 @@ get_header();
                     </div>
                 </article>
                 <?php endwhile; ?>
+                <?php else : ?>
+                    <div class="col-span-full text-center py-16">
+                        <div class="max-w-md mx-auto">
+                            <i class="fas fa-newspaper text-gray-300 text-6xl mb-4"></i>
+                            <h3 class="text-lg font-semibold text-slate-600 mb-2">Belum Ada Berita</h3>
+                            <p class="text-slate-500">Berita akan segera ditambahkan. Silakan kembali lagi nanti.</p>
+                        </div>
+                    </div>
+                <?php endif; wp_reset_postdata(); ?>
+            </div>
+            
+            <!-- Load More Button -->
+            <div class="text-center mt-12">
+                <button id="load-more-news" 
+                        class="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-red-600 to-orange-600 text-white font-semibold rounded-xl hover:from-red-700 hover:to-orange-700 transform hover:scale-105 transition-all duration-200 shadow-lg"
+                        data-page="1" 
+                        data-nonce="<?php echo wp_create_nonce('load_more_news'); ?>">
+                    <span class="load-more-text">Muat Lebih Banyak</span>
+                    <div class="load-more-spinner hidden">
+                        <svg class="animate-spin h-5 w-5" fill="none" viewBox="0 0 24 24">
+                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                        </svg>
+                    </div>
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+            </div>
             </div>
             <!-- Pagination -->
             <?php if ($berita_query->max_num_pages > 1) : ?>
@@ -345,181 +416,338 @@ get_header();
                 </nav>
             </div>
             <?php endif; ?>
-            <?php else : ?>
-                <div class="text-center py-16 fade-in">
-                    <div class="max-w-md mx-auto">
-                        <svg class="w-16 h-16 text-slate-300 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"></path>
-                        </svg>
-                        <h3 class="text-lg font-semibold text-slate-600 mb-2">Belum Ada Berita</h3>
-                        <p class="text-slate-500">Berita akan segera ditambahkan. Silakan kembali lagi nanti.</p>
-                    </div>
+        </div>
+    </section>
+
+    <!-- Newsletter Signup Section -->
+    <section class="py-16 bg-gradient-to-br from-blue-600 via-blue-700 to-blue-800 text-white">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <div class="mb-8">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">
+                    Jangan Lewatkan Berita Terbaru
+                </h2>
+                <p class="text-xl text-blue-100 max-w-2xl mx-auto">
+                    Dapatkan update berita terbaru seputar MTQ Aceh XXXVII langsung di email Anda.
+                </p>
+            </div>
+            
+            <form class="max-w-md mx-auto" id="newsletter-form">
+                <div class="flex gap-2">
+                    <input type="email" 
+                           id="newsletter-email"
+                           placeholder="Masukkan email Anda..."
+                           class="flex-1 px-4 py-3 rounded-lg text-gray-900 focus:ring-2 focus:ring-orange-400 focus:outline-none"
+                           required>
+                    <button type="submit" 
+                            class="px-6 py-3 bg-gradient-to-r from-orange-500 to-red-600 text-white font-semibold rounded-lg hover:from-orange-600 hover:to-red-700 transition-all duration-200 transform hover:scale-105">
+                        <i class="fas fa-paper-plane mr-2"></i>
+                        Berlangganan
+                    </button>
                 </div>
-            <?php endif; wp_reset_postdata(); ?>
+                <p class="text-sm text-blue-200 mt-3">
+                    <i class="fas fa-shield-alt mr-1"></i>
+                    Email Anda aman bersama kami. Tidak ada spam.
+                </p>
+            </form>
         </div>
     </section>
 </main>
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    const slider = document.querySelector('.headlines-slider');
-    const track = document.querySelector('.headlines-track');
-    const slides = document.querySelectorAll('.headlines-slide');
-    const prevBtn = document.querySelector('.headlines-prev');
-    const nextBtn = document.querySelector('.headlines-next');
-    const dots = document.querySelectorAll('.headlines-dot');
+    // Initialize all functionality
+    initHeadlineSlider();
+    initSearchFunctionality();
+    initLoadMore();
+    initNewsletterForm();
+    initAnimations();
     
-    if (!track || slides.length === 0) return;
-    
-    let currentSlide = 0;
-    const totalSlides = slides.length;
-    
-    // Auto-play settings
-    let autoPlayInterval;
-    const autoPlayDelay = 5000; // 5 seconds
-    
-    function updateSlider() {
-        const translateX = -currentSlide * 100;
-        track.style.transform = `translateX(${translateX}%)`;
+    // Headline Slider Functionality
+    function initHeadlineSlider() {
+        const slider = document.querySelector('.headlines-slider');
+        const track = document.querySelector('.headlines-track');
+        const slides = document.querySelectorAll('.headlines-slide');
+        const prevBtn = document.querySelector('.headlines-prev');
+        const nextBtn = document.querySelector('.headlines-next');
+        const dots = document.querySelectorAll('.headlines-dot');
         
-        // Update dots
+        if (!track || slides.length === 0) return;
+        
+        let currentSlide = 0;
+        const totalSlides = slides.length;
+        let autoPlayInterval;
+        const autoPlayDelay = 5000;
+        
+        function updateSlider() {
+            const translateX = -currentSlide * 100;
+            track.style.transform = `translateX(${translateX}%)`;
+            
+            dots.forEach((dot, index) => {
+                dot.classList.toggle('bg-white', index === currentSlide);
+                dot.classList.toggle('bg-white/30', index !== currentSlide);
+            });
+        }
+        
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % totalSlides;
+            updateSlider();
+        }
+        
+        function prevSlide() {
+            currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+            updateSlider();
+        }
+        
+        function startAutoPlay() {
+            if (totalSlides > 1) {
+                autoPlayInterval = setInterval(nextSlide, autoPlayDelay);
+            }
+        }
+        
+        function stopAutoPlay() {
+            clearInterval(autoPlayInterval);
+        }
+        
+        // Event listeners
+        if (prevBtn) prevBtn.addEventListener('click', () => { prevSlide(); stopAutoPlay(); startAutoPlay(); });
+        if (nextBtn) nextBtn.addEventListener('click', () => { nextSlide(); stopAutoPlay(); startAutoPlay(); });
+        
         dots.forEach((dot, index) => {
-            dot.classList.toggle('bg-white', index === currentSlide);
-            dot.classList.toggle('bg-white/30', index !== currentSlide);
+            dot.addEventListener('click', () => {
+                currentSlide = index;
+                updateSlider();
+                stopAutoPlay();
+                startAutoPlay();
+            });
         });
-    }
-    
-    function nextSlide() {
-        currentSlide = (currentSlide + 1) % totalSlides;
-        updateSlider();
-    }
-    
-    function prevSlide() {
-        currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
-        updateSlider();
-    }
-    
-    function goToSlide(index) {
-        currentSlide = index;
-        updateSlider();
-    }
-    
-    // Auto-play functionality
-    function startAutoPlay() {
-        if (totalSlides > 1) {
-            autoPlayInterval = setInterval(nextSlide, autoPlayDelay);
-        }
-    }
-    
-    function stopAutoPlay() {
-        clearInterval(autoPlayInterval);
-    }
-    
-    // Event listeners
-    if (prevBtn) {
-        prevBtn.addEventListener('click', () => {
-            prevSlide();
-            stopAutoPlay();
-            startAutoPlay(); // Restart auto-play
-        });
-    }
-    
-    if (nextBtn) {
-        nextBtn.addEventListener('click', () => {
-            nextSlide();
-            stopAutoPlay();
-            startAutoPlay(); // Restart auto-play
-        });
-    }
-    
-    dots.forEach((dot, index) => {
-        dot.addEventListener('click', () => {
-            goToSlide(index);
-            stopAutoPlay();
-            startAutoPlay(); // Restart auto-play
-        });
-    });
-    
-    // Pause auto-play on hover
-    slider.addEventListener('mouseenter', stopAutoPlay);
-    slider.addEventListener('mouseleave', startAutoPlay);
-    
-    // Touch/swipe support for mobile
-    let touchStartX = 0;
-    let touchEndX = 0;
-    
-    slider.addEventListener('touchstart', (e) => {
-        touchStartX = e.changedTouches[0].screenX;
-        stopAutoPlay();
-    });
-    
-    slider.addEventListener('touchend', (e) => {
-        touchEndX = e.changedTouches[0].screenX;
-        const swipeThreshold = 50;
         
-        if (touchStartX - touchEndX > swipeThreshold) {
-            nextSlide(); // Swipe left - next slide
-        } else if (touchEndX - touchStartX > swipeThreshold) {
-            prevSlide(); // Swipe right - previous slide
+        slider.addEventListener('mouseenter', stopAutoPlay);
+        slider.addEventListener('mouseleave', startAutoPlay);
+        
+        // Touch support
+        let touchStartX = 0;
+        slider.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+            stopAutoPlay();
+        });
+        
+        slider.addEventListener('touchend', (e) => {
+            const touchEndX = e.changedTouches[0].screenX;
+            const swipeThreshold = 50;
+            
+            if (touchStartX - touchEndX > swipeThreshold) {
+                nextSlide();
+            } else if (touchEndX - touchStartX > swipeThreshold) {
+                prevSlide();
+            }
+            startAutoPlay();
+        });
+        
+        updateSlider();
+        startAutoPlay();
+    }
+    
+    // Search Functionality
+    function initSearchFunctionality() {
+        const searchInput = document.getElementById('news-search');
+        const searchBtn = document.getElementById('search-btn');
+        const searchResults = document.getElementById('search-results');
+        let searchTimeout;
+        
+        function performSearch(query) {
+            if (query.length < 2) {
+                searchResults.classList.add('hidden');
+                return;
+            }
+            
+            // Re-query articles to include newly loaded ones
+            const articles = document.querySelectorAll('.news-article');
+            const results = [];
+            
+            articles.forEach(article => {
+                const titleElement = article.querySelector('h3 a');
+                const excerptElement = article.querySelector('.text-slate-600');
+                
+                if (titleElement && excerptElement) {
+                    const title = titleElement.textContent.toLowerCase();
+                    const excerpt = excerptElement.textContent.toLowerCase();
+                    
+                    if (title.includes(query.toLowerCase()) || excerpt.includes(query.toLowerCase())) {
+                        results.push({
+                            title: titleElement.textContent,
+                            url: titleElement.href,
+                            excerpt: excerptElement.textContent
+                        });
+                    }
+                }
+            });
+            
+            // Display results
+            if (results.length > 0) {
+                const resultsHTML = results.slice(0, 5).map(result => `
+                    <a href="${result.url}" class="block p-4 hover:bg-gray-50 border-b border-gray-100">
+                        <h4 class="font-semibold text-gray-900 mb-1">${result.title}</h4>
+                        <p class="text-sm text-gray-600 line-clamp-2">${result.excerpt}</p>
+                    </a>
+                `).join('');
+                
+                searchResults.innerHTML = resultsHTML;
+                searchResults.classList.remove('hidden');
+            } else {
+                searchResults.innerHTML = `
+                    <div class="p-4 text-center text-gray-500">
+                        <i class="fas fa-search mb-2"></i>
+                        <p>Tidak ada hasil untuk "${query}"</p>
+                    </div>
+                `;
+                searchResults.classList.remove('hidden');
+            }
         }
         
-        startAutoPlay(); // Restart auto-play
-    });
-    
-    // Keyboard navigation
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'ArrowLeft') {
-            prevSlide();
-            stopAutoPlay();
-            startAutoPlay();
-        } else if (e.key === 'ArrowRight') {
-            nextSlide();
-            stopAutoPlay();
-            startAutoPlay();
-        }
-    });
-    
-    // Initialize
-    updateSlider();
-    startAutoPlay();
-    
-    // Intersection Observer for animations
-    const observerOptions = {
-        threshold: 0.1,
-        rootMargin: '0px 0px -50px 0px'
-    };
-    
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('animate-fade-in');
+        searchInput.addEventListener('input', function() {
+            clearTimeout(searchTimeout);
+            searchTimeout = setTimeout(() => {
+                performSearch(this.value);
+            }, 300);
+        });
+        
+        searchInput.addEventListener('focus', function() {
+            if (this.value.length >= 2) {
+                searchResults.classList.remove('hidden');
             }
         });
-    }, observerOptions);
+        
+        // Hide results when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!searchInput.contains(e.target) && !searchResults.contains(e.target)) {
+                searchResults.classList.add('hidden');
+            }
+        });
+        
+        searchBtn.addEventListener('click', function() {
+            performSearch(searchInput.value);
+        });
+    }
     
-    // Observe animated elements
-    document.querySelectorAll('.fade-in, .fade-in-delay, .fade-in-delay-2, .fade-in-delay-3').forEach(el => {
-        observer.observe(el);
-    });
+    // Load More Functionality
+    function initLoadMore() {
+        const loadMoreBtn = document.getElementById('load-more-news');
+        if (!loadMoreBtn) return;
+        
+        loadMoreBtn.addEventListener('click', function() {
+            const button = this;
+            const currentPage = parseInt(button.dataset.page);
+            const nonce = button.dataset.nonce;
+            const articlesContainer = document.getElementById('articles-container');
+            
+            // Show loading state
+            const loadMoreText = button.querySelector('.load-more-text');
+            const loadMoreSpinner = button.querySelector('.load-more-spinner');
+            
+            loadMoreText.textContent = 'Memuat...';
+            loadMoreSpinner.classList.remove('hidden');
+            button.disabled = true;
+            
+            // AJAX request
+            fetch('<?php echo admin_url('admin-ajax.php'); ?>', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: new URLSearchParams({
+                    action: 'load_more_news_page',
+                    page: currentPage + 1,
+                    nonce: nonce
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    articlesContainer.insertAdjacentHTML('beforeend', data.data.html);
+                    
+                    if (data.data.has_more) {
+                        button.dataset.page = currentPage + 1;
+                        loadMoreText.textContent = 'Muat Lebih Banyak';
+                        loadMoreSpinner.classList.add('hidden');
+                        button.disabled = false;
+                    } else {
+                        button.style.display = 'none';
+                    }
+                } else {
+                    loadMoreText.textContent = 'Gagal memuat';
+                    loadMoreSpinner.classList.add('hidden');
+                    button.disabled = false;
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                loadMoreText.textContent = 'Gagal memuat';
+                loadMoreSpinner.classList.add('hidden');
+                button.disabled = false;
+            });
+        });
+    }
+    
+    // Newsletter Form
+    function initNewsletterForm() {
+        const form = document.getElementById('newsletter-form');
+        if (!form) return;
+        
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const email = document.getElementById('newsletter-email').value;
+            const submitBtn = form.querySelector('button[type="submit"]');
+            const originalText = submitBtn.innerHTML;
+            
+            // Show loading state
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Memproses...';
+            submitBtn.disabled = true;
+            
+            // Simulate API call (replace with actual implementation)
+            setTimeout(() => {
+                // Show success message
+                submitBtn.innerHTML = '<i class="fas fa-check mr-2"></i>Berhasil!';
+                submitBtn.classList.add('bg-green-600');
+                
+                // Reset form
+                form.reset();
+                
+                // Reset button after 3 seconds
+                setTimeout(() => {
+                    submitBtn.innerHTML = originalText;
+                    submitBtn.classList.remove('bg-green-600');
+                    submitBtn.disabled = false;
+                }, 3000);
+            }, 1500);
+        });
+    }
+    
+    // Animation Observers
+    function initAnimations() {
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-fade-in');
+                }
+            });
+        }, observerOptions);
+        
+        // Observe animated elements
+        document.querySelectorAll('.fade-in, .fade-in-delay, .fade-in-delay-2, .fade-in-delay-3').forEach(el => {
+            observer.observe(el);
+        });
+    }
 });
 </script>
 
 <style>
-/* Custom animations for the headline slider */
-.headlines-slider {
-    position: relative;
-}
-
-.headlines-track {
-    will-change: transform;
-}
-
-.headlines-slide {
-    opacity: 1;
-    transition: opacity 0.5s ease-in-out;
-}
-
-/* Fade in animations */
+/* Enhanced animations and styles */
 @keyframes fadeIn {
     from {
         opacity: 0;
@@ -531,8 +759,23 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 }
 
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
 .animate-fade-in {
     animation: fadeIn 0.8s ease-out forwards;
+}
+
+.fade-in-animation {
+    animation: slideIn 0.5s ease-out forwards;
 }
 
 .fade-in {
@@ -554,31 +797,21 @@ document.addEventListener('DOMContentLoaded', function() {
     animation-delay: 0.6s;
 }
 
-/* Hover effects for slider navigation */
-.headlines-prev:hover,
-.headlines-next:hover {
-    transform: translateY(-50%) scale(1.1);
+/* Search container enhanced */
+.search-container input:focus {
+    box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1);
 }
 
-.headlines-dot:hover {
-    transform: scale(1.2);
+/* News articles enhanced hover effects */
+.news-article:hover {
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
 }
 
-/* Responsive adjustments */
-@media (max-width: 768px) {
-    .headlines-prev,
-    .headlines-next {
-        width: 40px;
-        height: 40px;
-    }
-    
-    .headlines-dot {
-        width: 8px;
-        height: 8px;
-    }
+.news-article .group-hover\:scale-105:hover {
+    transform: scale(1.1);
 }
 
-/* Line clamp utility */
+/* Line clamp utilities */
 .line-clamp-2 {
     display: -webkit-box;
     -webkit-line-clamp: 2;
@@ -593,6 +826,92 @@ document.addEventListener('DOMContentLoaded', function() {
     line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;
+}
+
+/* Headlines slider enhanced */
+.headlines-slider {
+    position: relative;
+}
+
+.headlines-track {
+    will-change: transform;
+}
+
+.headlines-slide {
+    opacity: 1;
+    transition: opacity 0.5s ease-in-out;
+}
+
+/* Newsletter section enhanced */
+#newsletter-form input:focus {
+    box-shadow: 0 0 0 3px rgba(251, 146, 60, 0.3);
+}
+
+/* Load more button enhanced */
+#load-more-news:hover {
+    transform: scale(1.05);
+    box-shadow: 0 10px 30px rgba(220, 38, 38, 0.3);
+}
+
+#load-more-news:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* Search results dropdown */
+#search-results {
+    backdrop-filter: blur(10px);
+    background: rgba(255, 255, 255, 0.95);
+}
+
+/* Responsive design enhancements */
+@media (max-width: 768px) {
+    .search-container {
+        width: 100%;
+    }
+    
+    .search-container input {
+        width: 100%;
+    }
+}
+
+/* Smooth transitions for all interactive elements */
+* {
+    transition: all 0.2s ease-in-out;
+}
+
+/* Custom scrollbar for search results */
+#search-results::-webkit-scrollbar {
+    width: 6px;
+}
+
+#search-results::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 3px;
+}
+
+#search-results::-webkit-scrollbar-thumb {
+    background: #dc2626;
+    border-radius: 3px;
+}
+
+#search-results::-webkit-scrollbar-thumb:hover {
+    background: #b91c1c;
+}
+
+/* Enhanced card shadows on hover */
+.news-article:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+}
+
+/* Gradient text effect for main titles */
+.gradient-text {
+    background: linear-gradient(135deg, #dc2626, #ea580c);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
 }
 </style>
 
