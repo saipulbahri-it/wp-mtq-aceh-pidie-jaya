@@ -26,6 +26,156 @@ get_header();
         </div>
     </section>
 
+    <!-- Headlines Slider Section -->
+    <section class="py-8 bg-white border-b border-gray-100 section-animate">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-8 fade-in">
+                <h2 class="text-2xl md:text-3xl font-bold text-slate-800 mb-2">
+                    Berita Utama
+                </h2>
+                <p class="text-gray-600">
+                    Sorotan berita terkini dan terpenting seputar MTQ Aceh XXXVII
+                </p>
+            </div>
+            
+            <!-- Slider Container -->
+            <div class="relative overflow-hidden rounded-2xl bg-gradient-to-br from-gray-900 to-gray-800 shadow-2xl fade-in-delay">
+                <div class="headlines-slider relative">
+                    <div class="headlines-track flex transition-transform duration-500 ease-in-out">
+                        <?php
+                        // Get featured/recent posts for the slider
+                        $headline_query = new WP_Query([
+                            'post_type' => 'post',
+                            'posts_per_page' => 5,
+                            'meta_query' => [
+                                'relation' => 'OR',
+                                [
+                                    'key' => '_featured_post',
+                                    'value' => '1',
+                                    'compare' => '='
+                                ],
+                                [
+                                    'key' => '_featured_post',
+                                    'compare' => 'NOT EXISTS'
+                                ]
+                            ],
+                            'orderby' => 'date',
+                            'order' => 'DESC'
+                        ]);
+                        
+                        if ($headline_query->have_posts()) :
+                            $slide_index = 0;
+                            while ($headline_query->have_posts()) : $headline_query->the_post();
+                                $slide_index++;
+                        ?>
+                            <div class="headlines-slide min-w-full relative">
+                                <div class="grid lg:grid-cols-2 gap-8 items-center p-8 lg:p-12">
+                                    <!-- Content Side -->
+                                    <div class="order-2 lg:order-1 space-y-6">
+                                        <!-- Category Badge -->
+                                        <?php 
+                                        $categories = get_the_category();
+                                        if (!empty($categories)) :
+                                        ?>
+                                        <div class="inline-flex items-center px-4 py-2 bg-red-600 text-white text-sm font-semibold rounded-full">
+                                            <i class="fas fa-newspaper mr-2"></i>
+                                            <?php echo esc_html($categories[0]->name); ?>
+                                        </div>
+                                        <?php endif; ?>
+                                        
+                                        <!-- Title -->
+                                        <h3 class="text-2xl lg:text-4xl font-bold text-white leading-tight">
+                                            <a href="<?php the_permalink(); ?>" class="hover:text-orange-300 transition-colors duration-200">
+                                                <?php the_title(); ?>
+                                            </a>
+                                        </h3>
+                                        
+                                        <!-- Excerpt -->
+                                        <p class="text-gray-300 text-lg leading-relaxed">
+                                            <?php echo wp_trim_words(get_the_excerpt(), 25, '...'); ?>
+                                        </p>
+                                        
+                                        <!-- Meta Info -->
+                                        <div class="flex items-center gap-6 text-gray-400 text-sm">
+                                            <div class="flex items-center gap-2">
+                                                <i class="fas fa-calendar text-orange-400"></i>
+                                                <time datetime="<?php echo get_the_date('c'); ?>">
+                                                    <?php echo get_the_date('d M Y'); ?>
+                                                </time>
+                                            </div>
+                                            <div class="flex items-center gap-2">
+                                                <i class="fas fa-user text-orange-400"></i>
+                                                <span><?php the_author(); ?></span>
+                                            </div>
+                                            <div class="flex items-center gap-2">
+                                                <i class="fas fa-eye text-orange-400"></i>
+                                                <span><?php echo get_post_meta(get_the_ID(), 'post_views_count', true) ?: '0'; ?></span>
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- Read More Button -->
+                                        <div class="pt-4">
+                                            <a href="<?php the_permalink(); ?>" 
+                                               class="inline-flex items-center gap-3 px-6 py-3 bg-gradient-to-r from-red-600 to-orange-600 text-white font-semibold rounded-xl hover:from-red-700 hover:to-orange-700 transform hover:scale-105 transition-all duration-200 shadow-lg">
+                                                Baca Selengkapnya
+                                                <i class="fas fa-arrow-right"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Image Side -->
+                                    <div class="order-1 lg:order-2 relative">
+                                        <?php if (has_post_thumbnail()) : ?>
+                                            <div class="relative overflow-hidden rounded-xl shadow-2xl">
+                                                <?php the_post_thumbnail('large', [
+                                                    'class' => 'w-full h-64 lg:h-80 object-cover transition-transform duration-700 hover:scale-105',
+                                                    'loading' => 'lazy'
+                                                ]); ?>
+                                                <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+                                            </div>
+                                        <?php else : ?>
+                                            <div class="w-full h-64 lg:h-80 bg-gradient-to-br from-gray-700 to-gray-800 rounded-xl flex items-center justify-center">
+                                                <i class="fas fa-newspaper text-gray-500 text-6xl"></i>
+                                            </div>
+                                        <?php endif; ?>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php 
+                            endwhile;
+                        else :
+                        ?>
+                            <div class="headlines-slide min-w-full relative">
+                                <div class="text-center py-16 text-white">
+                                    <i class="fas fa-newspaper text-6xl text-gray-600 mb-4"></i>
+                                    <h3 class="text-2xl font-bold mb-2">Belum Ada Berita Utama</h3>
+                                    <p class="text-gray-400">Berita utama akan segera ditambahkan</p>
+                                </div>
+                            </div>
+                        <?php endif; wp_reset_postdata(); ?>
+                    </div>
+                </div>
+                
+                <!-- Navigation Arrows -->
+                <?php if ($headline_query->have_posts() && $headline_query->found_posts > 1) : ?>
+                <button class="headlines-prev absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-black/50 hover:bg-black/70 text-white rounded-full flex items-center justify-center transition-all duration-200 hover:scale-110 z-10">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <button class="headlines-next absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-black/50 hover:bg-black/70 text-white rounded-full flex items-center justify-center transition-all duration-200 hover:scale-110 z-10">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+                
+                <!-- Dots Indicator -->
+                <div class="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-2 z-10">
+                    <?php for ($i = 0; $i < $headline_query->found_posts; $i++) : ?>
+                    <button class="headlines-dot w-3 h-3 rounded-full bg-white/30 hover:bg-white/70 transition-all duration-200 <?php echo $i === 0 ? 'bg-white' : ''; ?>" data-slide="<?php echo $i; ?>"></button>
+                    <?php endfor; ?>
+                </div>
+                <?php endif; ?>
+            </div>
+        </div>
+    </section>
+
     <!-- Daftar Berita Section -->
     <section class="py-16 bg-slate-50 section-animate">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -209,4 +359,241 @@ get_header();
         </div>
     </section>
 </main>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const slider = document.querySelector('.headlines-slider');
+    const track = document.querySelector('.headlines-track');
+    const slides = document.querySelectorAll('.headlines-slide');
+    const prevBtn = document.querySelector('.headlines-prev');
+    const nextBtn = document.querySelector('.headlines-next');
+    const dots = document.querySelectorAll('.headlines-dot');
+    
+    if (!track || slides.length === 0) return;
+    
+    let currentSlide = 0;
+    const totalSlides = slides.length;
+    
+    // Auto-play settings
+    let autoPlayInterval;
+    const autoPlayDelay = 5000; // 5 seconds
+    
+    function updateSlider() {
+        const translateX = -currentSlide * 100;
+        track.style.transform = `translateX(${translateX}%)`;
+        
+        // Update dots
+        dots.forEach((dot, index) => {
+            dot.classList.toggle('bg-white', index === currentSlide);
+            dot.classList.toggle('bg-white/30', index !== currentSlide);
+        });
+    }
+    
+    function nextSlide() {
+        currentSlide = (currentSlide + 1) % totalSlides;
+        updateSlider();
+    }
+    
+    function prevSlide() {
+        currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+        updateSlider();
+    }
+    
+    function goToSlide(index) {
+        currentSlide = index;
+        updateSlider();
+    }
+    
+    // Auto-play functionality
+    function startAutoPlay() {
+        if (totalSlides > 1) {
+            autoPlayInterval = setInterval(nextSlide, autoPlayDelay);
+        }
+    }
+    
+    function stopAutoPlay() {
+        clearInterval(autoPlayInterval);
+    }
+    
+    // Event listeners
+    if (prevBtn) {
+        prevBtn.addEventListener('click', () => {
+            prevSlide();
+            stopAutoPlay();
+            startAutoPlay(); // Restart auto-play
+        });
+    }
+    
+    if (nextBtn) {
+        nextBtn.addEventListener('click', () => {
+            nextSlide();
+            stopAutoPlay();
+            startAutoPlay(); // Restart auto-play
+        });
+    }
+    
+    dots.forEach((dot, index) => {
+        dot.addEventListener('click', () => {
+            goToSlide(index);
+            stopAutoPlay();
+            startAutoPlay(); // Restart auto-play
+        });
+    });
+    
+    // Pause auto-play on hover
+    slider.addEventListener('mouseenter', stopAutoPlay);
+    slider.addEventListener('mouseleave', startAutoPlay);
+    
+    // Touch/swipe support for mobile
+    let touchStartX = 0;
+    let touchEndX = 0;
+    
+    slider.addEventListener('touchstart', (e) => {
+        touchStartX = e.changedTouches[0].screenX;
+        stopAutoPlay();
+    });
+    
+    slider.addEventListener('touchend', (e) => {
+        touchEndX = e.changedTouches[0].screenX;
+        const swipeThreshold = 50;
+        
+        if (touchStartX - touchEndX > swipeThreshold) {
+            nextSlide(); // Swipe left - next slide
+        } else if (touchEndX - touchStartX > swipeThreshold) {
+            prevSlide(); // Swipe right - previous slide
+        }
+        
+        startAutoPlay(); // Restart auto-play
+    });
+    
+    // Keyboard navigation
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowLeft') {
+            prevSlide();
+            stopAutoPlay();
+            startAutoPlay();
+        } else if (e.key === 'ArrowRight') {
+            nextSlide();
+            stopAutoPlay();
+            startAutoPlay();
+        }
+    });
+    
+    // Initialize
+    updateSlider();
+    startAutoPlay();
+    
+    // Intersection Observer for animations
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    };
+    
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('animate-fade-in');
+            }
+        });
+    }, observerOptions);
+    
+    // Observe animated elements
+    document.querySelectorAll('.fade-in, .fade-in-delay, .fade-in-delay-2, .fade-in-delay-3').forEach(el => {
+        observer.observe(el);
+    });
+});
+</script>
+
+<style>
+/* Custom animations for the headline slider */
+.headlines-slider {
+    position: relative;
+}
+
+.headlines-track {
+    will-change: transform;
+}
+
+.headlines-slide {
+    opacity: 1;
+    transition: opacity 0.5s ease-in-out;
+}
+
+/* Fade in animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate-fade-in {
+    animation: fadeIn 0.8s ease-out forwards;
+}
+
+.fade-in {
+    opacity: 0;
+}
+
+.fade-in-delay {
+    opacity: 0;
+    animation-delay: 0.2s;
+}
+
+.fade-in-delay-2 {
+    opacity: 0;
+    animation-delay: 0.4s;
+}
+
+.fade-in-delay-3 {
+    opacity: 0;
+    animation-delay: 0.6s;
+}
+
+/* Hover effects for slider navigation */
+.headlines-prev:hover,
+.headlines-next:hover {
+    transform: translateY(-50%) scale(1.1);
+}
+
+.headlines-dot:hover {
+    transform: scale(1.2);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .headlines-prev,
+    .headlines-next {
+        width: 40px;
+        height: 40px;
+    }
+    
+    .headlines-dot {
+        width: 8px;
+        height: 8px;
+    }
+}
+
+/* Line clamp utility */
+.line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.line-clamp-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+</style>
+
 <?php get_footer(); ?>
