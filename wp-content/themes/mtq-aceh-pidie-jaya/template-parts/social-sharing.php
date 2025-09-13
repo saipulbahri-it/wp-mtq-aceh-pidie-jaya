@@ -98,40 +98,48 @@ $social_networks = array(
         </div>
 
         <!-- Social Buttons Grid -->
-        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 mb-8">
+        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-8 gap-3 sm:gap-4 mb-8">
             <?php foreach ($social_networks as $network_key => $network) : ?>
             <button 
-                class="social-share-btn group relative flex flex-col items-center justify-center p-4 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 <?php echo $network['color']; ?> text-white overflow-hidden"
+                class="social-share-btn group relative flex flex-col items-center justify-center w-14 h-14 sm:w-16 sm:h-16 lg:w-18 lg:h-18 rounded-full shadow-lg text-white <?php echo $network['color']; ?>"
                 data-network="<?php echo $network_key; ?>"
                 data-url="<?php echo esc_attr($network['url']); ?>"
                 data-analytics-label="<?php echo $network['analytics_label']; ?>"
                 <?php if ($network_key === 'copy') : ?>
                 data-copy-url="<?php echo esc_attr($post_url); ?>"
                 <?php endif; ?>
+                aria-label="Bagikan ke <?php echo esc_attr($network['name']); ?>"
+                title="<?php echo esc_attr($network['name']); ?>"
             >
                 <!-- Background Pattern -->
-                <div class="absolute inset-0 opacity-10">
-                    <div class="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent"></div>
+                <div class="absolute inset-0 opacity-10 rounded-full">
+                    <div class="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent rounded-full"></div>
                 </div>
                 
                 <!-- Icon -->
-                <div class="relative z-10 mb-3">
-                    <svg class="w-8 h-8 transition-transform duration-300 group-hover:scale-110" fill="currentColor" viewBox="0 0 24 24">
+                <div class="relative z-10 flex-shrink-0">
+                    <svg class="w-5 h-5 sm:w-6 sm:h-6 lg:w-7 lg:h-7 transition-transform duration-300 group-hover:scale-110" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                         <path d="<?php echo $network['icon']; ?>"/>
                     </svg>
                 </div>
                 
-                <!-- Label -->
-                <span class="relative z-10 text-sm font-semibold text-center leading-tight"><?php echo $network['name']; ?></span>
-                
                 <!-- Hover effect -->
-                <div class="absolute inset-0 bg-white/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl"></div>
+                <div class="absolute inset-0 bg-white/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-full"></div>
                 
                 <!-- Ripple effect -->
-                <div class="absolute inset-0 rounded-2xl overflow-hidden">
+                <div class="absolute inset-0 rounded-full overflow-hidden">
                     <div class="ripple-effect absolute inset-0 transform scale-0 bg-white/30 rounded-full transition-transform duration-500"></div>
                 </div>
             </button>
+            <?php endforeach; ?>
+        </div>
+
+        <!-- Platform Names -->
+        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-8 gap-3 sm:gap-4 mb-8">
+            <?php foreach ($social_networks as $network_key => $network) : ?>
+            <div class="text-center">
+                <span class="text-xs sm:text-sm font-medium text-slate-600"><?php echo $network['name']; ?></span>
+            </div>
             <?php endforeach; ?>
         </div>
 

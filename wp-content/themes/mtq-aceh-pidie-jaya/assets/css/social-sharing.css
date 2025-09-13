@@ -1,9 +1,9 @@
 /**
- * Social Sharing Buttons - Additional Styles
- * Enhanced animations and interactions for MTQ Social Sharing
+ * Social Sharing Buttons - Clean Styles
+ * Compatible with Tailwind CSS
  */
 
-/* Social Sharing Section Animations */
+/* Social Sharing Section Animation */
 .mtq-social-sharing {
     position: relative;
     overflow: hidden;
@@ -26,11 +26,16 @@
     100% { left: 100%; }
 }
 
-/* Enhanced Button Hover Effects */
+/* Button Hover Effects */
 .social-share-btn {
-    position: relative;
-    overflow: hidden;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative !important;
+    overflow: hidden !important;
+    cursor: pointer !important;
+    user-select: none !important;
+    -webkit-tap-highlight-color: transparent !important;
+    touch-action: manipulation !important;
+    aspect-ratio: 1 / 1 !important;
+    border-radius: 50% !important;
 }
 
 .social-share-btn::before {
@@ -48,28 +53,43 @@
 }
 
 .social-share-btn:hover::before {
-    width: 200px;
-    height: 200px;
+    width: 100%;
+    height: 100%;
 }
 
-.social-share-btn:hover {
-    transform: translateY(-2px) scale(1.02);
-    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+/* Focus States */
+.social-share-btn:focus {
+    outline: 2px solid #fff !important;
+    outline-offset: 2px !important;
+    box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.5) !important;
 }
 
-/* Floating Animation for Icons */
+.social-share-btn:focus-visible {
+    outline: 2px solid #fff !important;
+    outline-offset: 2px !important;
+    box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.5) !important;
+}
+
+/* Ensure proper z-index */
+.social-share-btn span,
 .social-share-btn svg {
-    transition: all 0.3s ease;
+    position: relative !important;
+    z-index: 10 !important;
+    pointer-events: none !important;
 }
 
+/* Animation for icons */
 .social-share-btn:hover svg {
-    transform: scale(1.1) rotate(5deg);
     animation: float 2s ease-in-out infinite;
 }
 
 @keyframes float {
-    0%, 100% { transform: scale(1.1) rotate(5deg) translateY(0px); }
-    50% { transform: scale(1.1) rotate(-5deg) translateY(-3px); }
+    0%, 100% { 
+        transform: scale(1.1) rotate(5deg) translateY(0px); 
+    }
+    50% { 
+        transform: scale(1.1) rotate(-5deg) translateY(-3px); 
+    }
 }
 
 /* Counter Animation */
@@ -85,20 +105,49 @@
 }
 
 @keyframes bounceCount {
-    0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
-    40% { transform: translateY(-5px); }
-    60% { transform: translateY(-3px); }
+    0%, 20%, 50%, 80%, 100% { 
+        transform: translateY(0); 
+    }
+    40% { 
+        transform: translateY(-5px); 
+    }
+    60% { 
+        transform: translateY(-3px); 
+    }
 }
 
-/* Share Success Animation */
-.share-success {
+/* Copy Success State */
+.social-share-btn.copy-success {
+    background-color: #10b981 !important;
     animation: successPulse 0.6s ease;
 }
 
 @keyframes successPulse {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.1); background-color: #10b981 !important; }
-    100% { transform: scale(1); }
+    0% { 
+        transform: scale(1); 
+    }
+    50% { 
+        transform: scale(1.1); 
+    }
+    100% { 
+        transform: scale(1); 
+    }
+}
+
+/* Ripple Effect */
+.ripple-effect {
+    pointer-events: none;
+}
+
+.social-share-btn:hover .ripple-effect {
+    animation: ripple 0.6s linear;
+}
+
+@keyframes ripple {
+    to {
+        transform: scale(4);
+        opacity: 0;
+    }
 }
 
 /* Loading State for Buttons */
@@ -128,31 +177,88 @@
     100% { background-color: inherit; }
 }
 
-/* Mobile Optimizations */
+/* Mobile Responsive Enhancements */
 @media (max-width: 640px) {
+    .mtq-social-sharing {
+        padding: 1.5rem 0;
+    }
+    
     .social-share-btn {
-        padding: 12px;
-        margin-bottom: 8px;
+        width: 3.5rem !important;
+        height: 3.5rem !important;
+        border-radius: 50% !important;
     }
     
     .social-share-btn svg {
-        width: 1.5rem;
-        height: 1.5rem;
+        width: 1.25rem !important;
+        height: 1.25rem !important;
+    }
+}
+
+@media (min-width: 641px) and (max-width: 1023px) {
+    .social-share-btn {
+        width: 4rem !important;
+        height: 4rem !important;
+        border-radius: 50% !important;
     }
     
-    .social-share-btn span {
-        font-size: 0.75rem;
+    .social-share-btn svg {
+        width: 1.5rem !important;
+        height: 1.5rem !important;
+    }
+}
+
+/* Large screen optimizations */
+@media (min-width: 1024px) {
+    .social-share-btn {
+        width: 4.5rem !important;
+        height: 4.5rem !important;
+        border-radius: 50% !important;
+    }
+    
+    .social-share-btn svg {
+        width: 1.75rem !important;
+        height: 1.75rem !important;
     }
 }
 
 /* Accessibility Focus States */
+/* Fix accessibility and interaction issues */
 .social-share-btn:focus {
-    outline: 2px solid #3b82f6;
+    outline: 2px solid #fff;
     outline-offset: 2px;
+    box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.5);
 }
 
 .social-share-btn:focus-visible {
-    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.5);
+    outline: 2px solid #fff;
+    outline-offset: 2px;
+    box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.5);
+}
+
+.social-share-btn:active {
+    transform: translateY(0) scale(0.98);
+    transition: transform 0.1s ease;
+}
+
+/* Ensure buttons are properly clickable */
+.social-share-btn {
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    touch-action: manipulation;
+}
+
+/* Fix z-index issues */
+.social-share-btn * {
+    pointer-events: none;
+}
+
+.social-share-btn {
+    pointer-events: all;
 }
 
 /* Print Styles */
