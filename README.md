@@ -1,12 +1,42 @@
-# 🕌 MTQ Aceh Pidie Jaya 2025
+# 🕌 M## 📋 **Deskripsi**
+
+Website resmi untuk event MTQ (Musabaqah Tilawatil Quran) ke-37 tingkat Aceh yang diselenggarakan di Kabupaten Pidie Jaya tahun 2025. Website ini menyediakan informasi lengkap tentang kompetisi, peserta, jadwal, hasil, dan dokumentasi kegiatan.
+
+## 📁 **Repository Structure**
+
+```
+wp-mtq-aceh-pidie-jaya/
+├── 📄 README.md              # Project documentation
+├── 📄 CHANGELOG.md           # Version history
+├── 📄 THEME_DEVELOPMENT_PLAN.md  # Development roadmap
+├── 📄 DEPLOYMENT_GUIDE.md    # Deployment instructions
+├── 📦 package.json           # Node.js dependencies
+├── 🎨 tailwind.config.js     # Tailwind CSS configuration
+├── 📂 wp-content/themes/mtq-aceh-pidie-jaya/  # Main theme
+├── 📂 scripts/               # Development scripts
+├── 📂 docs/                  # Additional documentation
+└── 📂 archive/               # Archived files and documentation
+```aya 2025
 
 > **Musabaqah Tilawatil Quran (MTQ) ke-37 Aceh di Kabupaten Pidie Jaya**
 
 ![MTQ Aceh Pidie Jaya](https://mtq.pidiejayakab.go.id/wp-content/themes/mtq-aceh-pidie-jaya/screenshot.png)
 
-## 📋 **Deskripsi**
+## � **Repository Structure**
 
-Website resmi untuk event MTQ (Musabaqah Tilawatil Quran) ke-37 tingkat Aceh yang diselenggarakan di Kabupaten Pidie Jaya tahun 2025. Website ini menyediakan informasi lengkap tentang kompetisi, peserta, jadwal, hasil, dan dokumentasi kegiatan.
+```
+wp-mtq-aceh-pidie-jaya/
+├── 📄 README.md              # Project documentation
+├── 📄 CHANGELOG.md           # Version history
+├── 📄 THEME_DEVELOPMENT_PLAN.md  # Development roadmap
+├── 📄 DEPLOYMENT_GUIDE.md    # Deployment instructions
+├── 📦 package.json           # Node.js dependencies
+├── 🎨 tailwind.config.js     # Tailwind CSS configuration
+├── 📂 wp-content/themes/mtq-aceh-pidie-jaya/  # Main theme
+├── 📂 scripts/               # Development scripts
+├── 📂 docs/                  # Additional documentation
+└── 📂 archive/               # Archived files and documentation
+```
 
 ## ✨ **Fitur Utama**
 

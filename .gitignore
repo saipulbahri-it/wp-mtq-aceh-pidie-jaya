@@ -116,3 +116,20 @@ composer.lock
 
 # Ignore WordPress config sample if not needed
 wp-config-sample.php
+
+# Data directory (contains large media files - 20MB+)
+data/Foto/
+data/Video/
+!data/.htaccess
+!data/berita-dummy.json
+
+# Archive and backup directories
+archive/
+*backup*
+prototype-backup-*
+
+# Large files and dumps
+*.tar.gz
+*.zip
+*.sql
+*.dump
