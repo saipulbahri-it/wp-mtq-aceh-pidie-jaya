@@ -102,6 +102,30 @@ class MTQ_YouTube_Live_Admin {
             'mtq_youtube_live_section'
         );
         
+        add_settings_field(
+            'mtq_youtube_background_type',
+            __('Background Type', 'mtq-aceh-pidie-jaya'),
+            array($this, 'youtube_background_type_callback'),
+            'mtq_youtube_live_settings',
+            'mtq_youtube_live_section'
+        );
+        
+        add_settings_field(
+            'mtq_youtube_background_color',
+            __('Background Color', 'mtq-aceh-pidie-jaya'),
+            array($this, 'youtube_background_color_callback'),
+            'mtq_youtube_live_settings',
+            'mtq_youtube_live_section'
+        );
+        
+        add_settings_field(
+            'mtq_youtube_background_gradient',
+            __('Background Gradient', 'mtq-aceh-pidie-jaya'),
+            array($this, 'youtube_background_gradient_callback'),
+            'mtq_youtube_live_settings',
+            'mtq_youtube_live_section'
+        );
+        
         // Register settings
         register_setting('mtq_youtube_live_settings', 'mtq_youtube_url', array(
             'sanitize_callback' => array($this, 'sanitize_youtube_url')
@@ -133,6 +157,18 @@ class MTQ_YouTube_Live_Admin {
         
         register_setting('mtq_youtube_live_settings', 'mtq_youtube_chat', array(
             'sanitize_callback' => 'rest_sanitize_boolean'
+        ));
+        
+        register_setting('mtq_youtube_live_settings', 'mtq_youtube_background_type', array(
+            'sanitize_callback' => 'sanitize_text_field'
+        ));
+        
+        register_setting('mtq_youtube_live_settings', 'mtq_youtube_background_color', array(
+            'sanitize_callback' => 'sanitize_hex_color'
+        ));
+        
+        register_setting('mtq_youtube_live_settings', 'mtq_youtube_background_gradient', array(
+            'sanitize_callback' => 'sanitize_text_field'
         ));
     }
     
@@ -278,6 +314,78 @@ class MTQ_YouTube_Live_Admin {
         echo '<label><input type="checkbox" name="mtq_youtube_chat" value="1"' . checked(1, $value, false) . ' /> ';
         echo __('Tampilkan chat live YouTube di samping video', 'mtq-aceh-pidie-jaya') . '</label>';
         echo '<p class="description">' . __('Chat akan muncul di layout desktop, tersembunyi di mobile untuk menghemat ruang', 'mtq-aceh-pidie-jaya') . '</p>';
+    }
+    
+    /**
+     * YouTube background type field callback
+     */
+    public function youtube_background_type_callback() {
+        $value = get_option('mtq_youtube_background_type', 'transparent');
+        echo '<select name="mtq_youtube_background_type">';
+        echo '<option value="transparent"' . selected('transparent', $value, false) . '>' . __('Transparent', 'mtq-aceh-pidie-jaya') . '</option>';
+        echo '<option value="solid"' . selected('solid', $value, false) . '>' . __('Solid Color', 'mtq-aceh-pidie-jaya') . '</option>';
+        echo '<option value="gradient"' . selected('gradient', $value, false) . '>' . __('Gradient', 'mtq-aceh-pidie-jaya') . '</option>';
+        echo '</select>';
+        echo '<p class="description">' . __('Pilih jenis background untuk section YouTube Live', 'mtq-aceh-pidie-jaya') . '</p>';
+    }
+    
+    /**
+     * YouTube background color field callback
+     */
+    public function youtube_background_color_callback() {
+        $value = get_option('mtq_youtube_background_color', '#f8fafc');
+        echo '<input type="color" name="mtq_youtube_background_color" value="' . esc_attr($value) . '" />';
+        echo '<input type="text" name="mtq_youtube_background_color_text" value="' . esc_attr($value) . '" style="margin-left: 10px; width: 100px;" readonly />';
+        echo '<p class="description">' . __('Pilih warna background solid (hanya berlaku jika Background Type = Solid Color)', 'mtq-aceh-pidie-jaya') . '</p>';
+        ?>
+        <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const colorInput = document.querySelector('input[name="mtq_youtube_background_color"]');
+            const textInput = document.querySelector('input[name="mtq_youtube_background_color_text"]');
+            
+            colorInput.addEventListener('input', function() {
+                textInput.value = this.value;
+            });
+        });
+        </script>
+        <?php
+    }
+    
+    /**
+     * YouTube background gradient field callback
+     */
+    public function youtube_background_gradient_callback() {
+        $value = get_option('mtq_youtube_background_gradient', 'from-blue-50 to-indigo-50');
+        $gradients = array(
+            'from-blue-50 to-indigo-50' => 'Blue to Indigo',
+            'from-red-50 to-pink-50' => 'Red to Pink',
+            'from-green-50 to-emerald-50' => 'Green to Emerald',
+            'from-yellow-50 to-orange-50' => 'Yellow to Orange',
+            'from-purple-50 to-violet-50' => 'Purple to Violet',
+            'from-gray-50 to-slate-50' => 'Gray to Slate',
+            'from-teal-50 to-cyan-50' => 'Teal to Cyan',
+            'from-rose-50 to-pink-50' => 'Rose to Pink'
+        );
+        
+        echo '<select name="mtq_youtube_background_gradient">';
+        foreach ($gradients as $gradient_class => $gradient_name) {
+            echo '<option value="' . esc_attr($gradient_class) . '"' . selected($gradient_class, $value, false) . '>' . esc_html($gradient_name) . '</option>';
+        }
+        echo '</select>';
+        echo '<p class="description">' . __('Pilih gradient background (hanya berlaku jika Background Type = Gradient)', 'mtq-aceh-pidie-jaya') . '</p>';
+        
+        // Preview gradients
+        echo '<div style="margin-top: 10px;">';
+        echo '<p><strong>Preview Gradients:</strong></p>';
+        echo '<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; margin-top: 10px;">';
+        foreach ($gradients as $gradient_class => $gradient_name) {
+            $bg_class = 'bg-gradient-to-r ' . $gradient_class;
+            echo '<div style="padding: 20px; border-radius: 8px; text-align: center; font-size: 12px; color: #333;" class="' . $bg_class . '">';
+            echo $gradient_name;
+            echo '</div>';
+        }
+        echo '</div>';
+        echo '</div>';
     }
     
     /**

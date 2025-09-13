@@ -20,13 +20,37 @@ $youtube_url = get_option('mtq_youtube_url', '');
 $youtube_title = get_option('mtq_youtube_title', 'Live Streaming MTQ Aceh XXXVII Pidie Jaya 2025');
 $youtube_description = get_option('mtq_youtube_description', '');
 
+// Get background settings
+$background_type = get_option('mtq_youtube_background_type', 'transparent');
+$background_color = get_option('mtq_youtube_background_color', '#f8fafc');
+$background_gradient = get_option('mtq_youtube_background_gradient', 'from-blue-50 to-indigo-50');
+
+// Build background classes
+$background_classes = '';
+$background_styles = '';
+
+switch ($background_type) {
+    case 'solid':
+        $background_styles = 'background-color: ' . esc_attr($background_color) . ';';
+        break;
+    case 'gradient':
+        $background_classes = 'bg-gradient-to-br ' . esc_attr($background_gradient);
+        break;
+    case 'transparent':
+    default:
+        // No background
+        break;
+}
+
 if (empty($youtube_url)) {
     return;
 }
 ?>
 
 <!-- YouTube Live Stream Section -->
-<section class="py-20 section-animate relative" id="live-stream">
+<section class="py-20 section-animate relative <?php echo esc_attr($background_classes); ?>" 
+         id="live-stream"
+         <?php if (!empty($background_styles)): ?>style="<?php echo esc_attr($background_styles); ?>"<?php endif; ?>>
 
     <div class="max-w-7xl mx-auto px-4 relative z-10">
         
