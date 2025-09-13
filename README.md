@@ -7,21 +7,25 @@
 [![WordPress](https://img.shields.io/badge/WordPress-5.0%2B-blue.svg)](https://wordpress.org/)
 [![PHP](https://img.shields.io/badge/PHP-7.4%2B-purple.svg)](https://php.net/)
 [![License](https://img.shields.io/badge/License-GPL%20v2%2B-green.svg)](https://www.gnu.org/licenses/gpl-2.0.html)
-[![Version](https://img.shields.io/badge/Version-1.1.0-orange.svg)](https://github.com/saipulbahri-it/wp-mtq-aceh-pidie-jaya/releases)
+[![Version](https://img.shields.io/badge/Version-1.0.0-orange.svg)](https://github.com/saipulbahri-it/mtq-aceh-pidie-jaya-theme/releases)
 
 ## � **Quick Download (For WordPress Users)**
 
 ### **🎯 Install Theme Only:**
-1. **[📦 Download Latest Theme](https://github.com/saipulbahri-it/wp-mtq-aceh-pidie-jaya/releases/download/theme-v1.1.0/mtq-aceh-pidie-jaya-theme-clean-v1.1.0.zip)** (84MB)
+1. **[📦 Download Latest Theme](https://github.com/saipulbahri-it/mtq-aceh-pidie-jaya-theme/releases/download/v1.0.0/mtq-aceh-pidie-jaya-theme-v1.0.0.zip)** (~12MB)
 2. **Upload**: WordPress Admin → `Appearance` → `Themes` → `Add New` → `Upload Theme`
 3. **Activate** the theme
-4. **Follow**: [📚 Installation Guide](THEME_INSTALLATION_GUIDE.md)
+4. **Follow**: [📚 Installation Guide](https://github.com/saipulbahri-it/mtq-aceh-pidie-jaya-theme/blob/main/README.md)
 
 ### **🔧 For Developers:**
 ```bash
-# Clone repository
+# Clone main repository (full WordPress)
 git clone https://github.com/saipulbahri-it/wp-mtq-aceh-pidie-jaya.git
 cd wp-mtq-aceh-pidie-jaya
+
+# OR clone theme only
+git clone https://github.com/saipulbahri-it/mtq-aceh-pidie-jaya-theme.git
+cd mtq-aceh-pidie-jaya-theme
 
 # Install dependencies & build
 npm install && npm run build
