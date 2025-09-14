@@ -4,7 +4,9 @@
     "version": "1.0.0",
     "scripts": {
         "dev": "tailwindcss -c tailwind.config.js -i ./wp-content/themes/mtq-aceh-pidie-jaya/assets/css/app.css -o ./wp-content/themes/mtq-aceh-pidie-jaya/dist/app.css --watch",
-        "build": "NODE_ENV=production tailwindcss -c tailwind.config.js -i ./wp-content/themes/mtq-aceh-pidie-jaya/assets/css/app.css -o ./wp-content/themes/mtq-aceh-pidie-jaya/dist/app.css --minify"
+        "build": "NODE_ENV=production tailwindcss -c tailwind.config.js -i ./wp-content/themes/mtq-aceh-pidie-jaya/assets/css/app.css -o ./wp-content/themes/mtq-aceh-pidie-jaya/dist/app.css --minify",
+        "zip:theme": "bash ./scripts/release-theme.sh zip",
+        "release:theme": "bash ./scripts/release-theme.sh release"
     },
     "devDependencies": {
         "@tailwindcss/typography": "^0.5.16",
