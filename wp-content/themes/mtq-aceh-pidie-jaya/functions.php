@@ -247,9 +247,9 @@ function mtq_aceh_pidie_jaya_widgets_init()
 			'name'          => esc_html__('Sidebar', 'mtq-aceh-pidie-jaya'),
 			'id'            => 'sidebar-1',
 			'description'   => esc_html__('Add widgets here.', 'mtq-aceh-pidie-jaya'),
-			'before_widget' => '<section id="%1$s" class="widget %2$s">',
-			'after_widget'  => '</section>',
-			'before_title'  => '<h2 class="widget-title">',
+			'before_widget' => '<section id="%1$s" class="widget %2$s rounded-xl bg-white ring-1 ring-slate-200/60 shadow-sm overflow-hidden">\n<div class="p-5">',
+			'after_widget'  => '</div></section>',
+			'before_title'  => '<h2 class="widget-title text-base font-semibold text-slate-800 mb-3 flex items-center gap-2"><span class="inline-block w-1.5 h-1.5 rounded-full bg-blue-600"></span>',
 			'after_title'   => '</h2>',
 		)
 	);
