@@ -29,7 +29,7 @@ get_header();
 			<?php $has_sidebar = is_active_sidebar('sidebar-1'); ?>
 			<div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
 				<!-- Main Content -->
-				<div class="<?php echo $has_sidebar ? 'lg:col-span-8' : 'lg:col-span-12'; ?>">
+				<div class="order-1 lg:order-1 <?php echo $has_sidebar ? 'lg:col-span-8' : 'lg:col-span-12'; ?>">
 
 		<?php
 		if ( have_posts() ) :
@@ -75,7 +75,7 @@ get_header();
 
 				<!-- Sidebar -->
 				<?php if ( $has_sidebar ) : ?>
-					<div class="lg:col-span-4">
+					<div class="order-2 lg:order-2 lg:col-span-4">
 						<?php get_sidebar(); ?>
 					</div>
 				<?php endif; ?>
