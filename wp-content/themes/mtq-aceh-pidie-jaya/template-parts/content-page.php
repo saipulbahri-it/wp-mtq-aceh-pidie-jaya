@@ -22,111 +22,44 @@ if (!defined('ABSPATH')) {
 		$reading_time = max(1, ceil($word_count / 200));
 		?>
 		
-		<!-- Featured Image Hero -->
-		<?php if (has_post_thumbnail()) : ?>
-			<section class="pt-28 pb-16">
-			<div class="relative h-72 md:h-80 lg:h-96 overflow-hidden">
-				<?php the_post_thumbnail('full', [
-					'class' => 'w-full h-full object-cover transition-transform duration-700 hover:scale-105',
-					'alt' => get_the_title()
-				]); ?>
-				
-				<!-- Sophisticated Overlay -->
-				<div class="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-slate-900/40 to-transparent"></div>
-				
-				<!-- Title Overlay with Enhanced Design -->
-				<div class="absolute bottom-0 left-0 right-0 p-6 md:p-8 lg:p-12">
-					<header class="entry-header">
-						<div class="inline-flex items-center px-4 py-2 bg-blue-100 text-blue-800 rounded-full text-sm font-medium mb-6">
-							<svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
-								<path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+		<!-- Hero ala Arena & Lokasi -->
+		<section class="pt-28 pb-16 bg-gradient-to-br from-blue-50 via-white to-slate-50 section-animate">
+			<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+				<div class="fade-in-delay">
+					<div class="inline-flex items-center px-4 py-2 bg-blue-100 text-blue-800 rounded-full text-sm font-medium mb-6">
+						<svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+						</svg>
+						Halaman Resmi MTQ Aceh Pidie Jaya
+					</div>
+					<h1 class="text-4xl md:text-6xl font-bold text-slate-800 mb-6">
+						<?php the_title(); ?>
+					</h1>
+					<?php if (has_excerpt()) : ?>
+						<p class="text-xl text-slate-600 max-w-3xl mx-auto mb-8"><?php echo esc_html(get_the_excerpt()); ?></p>
+					<?php endif; ?>
+					<div class="flex justify-center items-center gap-4 text-sm text-slate-500">
+						<span class="flex items-center">
+							<svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
+								<path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"></path>
 							</svg>
-							Halaman Resmi MTQ
-						</div>
-						
-						<h1 class="text-4xl md:text-6xl font-bold text-white leading-tight mb-4">
-							<?php the_title(); ?>
-						</h1>
-						
-						<!-- Arena-like Info Line -->
-						<div class="flex justify-center items-center gap-4 text-sm text-slate-200">
-							<span class="flex items-center">
-								<svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
-									<path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"></path>
-								</svg>
-								Kabupaten Pidie Jaya
-							</span>
-							<span>•</span>
-							<span class="flex items-center">
-								<svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
-									<path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"></path>
-								</svg>
-								<?php echo esc_html(get_the_date('j F Y')); ?>
-							</span>
-						</div>
-					</header>
+							Kabupaten Pidie Jaya
+						</span>
+						<span>•</span>
+						<span class="flex items-center">
+							<svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
+								<path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"></path>
+							</svg>
+							<?php echo esc_html(get_the_date('j F Y')); ?>
+						</span>
+					</div>
 				</div>
 			</div>
-			</section>
-		<?php else : ?>
-			<!-- Enhanced No Featured Image Header -->
-			<section class="pt-28 pb-16">
-			<div class="relative bg-gradient-to-br from-blue-600 via-blue-700 to-indigo-800 overflow-hidden">
-				<!-- Sophisticated Background Pattern -->
-				<div class="absolute inset-0 opacity-10">
-					<div class="absolute inset-0" style="background-image: radial-gradient(circle at 25% 25%, #ffffff 2px, transparent 2px), radial-gradient(circle at 75% 75%, #ffffff 2px, transparent 2px); background-size: 50px 50px; background-position: 0 0, 25px 25px;"></div>
-				</div>
-				
-				<!-- Islamic Pattern Overlay -->
-				<div class="absolute inset-0 opacity-5">
-					<svg class="w-full h-full" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-						<defs>
-							<pattern id="islamic-pattern" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
-								<circle cx="10" cy="10" r="8" fill="none" stroke="white" stroke-width="0.5"/>
-								<circle cx="10" cy="10" r="4" fill="none" stroke="white" stroke-width="0.5"/>
-								<path d="M10,2 L10,18 M2,10 L18,10" stroke="white" stroke-width="0.5"/>
-							</pattern>
-						</defs>
-						<rect width="100%" height="100%" fill="url(#islamic-pattern)"/>
-					</svg>
-				</div>
-				
-		<div class="relative px-6 md:px-8 lg:px-12 text-center">
-					<header class="entry-header max-w-4xl mx-auto">
-						<div class="inline-flex items-center px-4 py-2 bg-blue-100 text-blue-800 rounded-full text-sm font-medium mb-6">
-							<svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
-								<path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-							</svg>
-							Halaman Resmi MTQ Aceh Pidie Jaya
-						</div>
-						
-			<h1 class="text-4xl md:text-6xl font-bold text-white leading-tight mb-6">
-							<?php the_title(); ?>
-						</h1>
-						<!-- Arena-like Info Line -->
-						<div class="flex justify-center items-center gap-4 text-sm text-blue-100">
-							<span class="flex items-center">
-								<svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
-									<path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"></path>
-								</svg>
-								Kabupaten Pidie Jaya
-							</span>
-							<span>•</span>
-							<span class="flex items-center">
-								<svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
-									<path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"></path>
-								</svg>
-								<?php echo esc_html(get_the_date('j F Y')); ?>
-							</span>
-						</div>
-					</header>
-				</div>
-			</div>
-			</section>
-		<?php endif; ?>
+		</section>
 
-		<!-- Enhanced Content Body -->
-		<div class="px-6 py-12 md:px-10 md:py-16 lg:px-16 lg:py-20">
+	<!-- Enhanced Content Body -->
+	<section class="py-16 section-animate">
 			<div class="max-w-4xl mx-auto">
 				<!-- Content with Better Typography -->
 				<div class="entry-content prose prose-lg prose-slate max-w-none">
@@ -147,11 +80,11 @@ if (!defined('ABSPATH')) {
 					</div>
 				</div>
 				
-				<!-- Enhanced Content Features -->
-				<div class="mt-12 pt-8 border-t border-slate-200">
+		<!-- Enhanced Content Features -->
+		<div class="mt-16 pt-10 border-t border-slate-200/80 section-animate">
 					<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
 						<!-- Page Stats -->
-						<div class="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl p-6 border border-blue-100">
+			<div class="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl p-6 border border-blue-100 fade-in">
 							<div class="flex items-center gap-3 mb-3">
 								<div class="w-10 h-10 bg-blue-100 rounded-xl flex items-center justify-center">
 									<svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -166,7 +99,7 @@ if (!defined('ABSPATH')) {
 						</div>
 						
 						<!-- Last Updated -->
-						<div class="bg-gradient-to-br from-green-50 to-emerald-50 rounded-2xl p-6 border border-green-100">
+			<div class="bg-gradient-to-br from-green-50 to-emerald-50 rounded-2xl p-6 border border-green-100 fade-in">
 							<div class="flex items-center gap-3 mb-3">
 								<div class="w-10 h-10 bg-green-100 rounded-xl flex items-center justify-center">
 									<svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -181,7 +114,7 @@ if (!defined('ABSPATH')) {
 						</div>
 						
 						<!-- Page ID -->
-						<div class="bg-gradient-to-br from-purple-50 to-violet-50 rounded-2xl p-6 border border-purple-100">
+			<div class="bg-gradient-to-br from-purple-50 to-violet-50 rounded-2xl p-6 border border-purple-100 fade-in">
 							<div class="flex items-center gap-3 mb-3">
 								<div class="w-10 h-10 bg-purple-100 rounded-xl flex items-center justify-center">
 									<svg class="w-5 h-5 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -197,11 +130,11 @@ if (!defined('ABSPATH')) {
 					</div>
 				</div>
 			</div>
-		</div>
+	</section>
 
 		
 		<!-- Enhanced Social Sharing & Edit Section -->
-		<div class="bg-gradient-to-r from-slate-50 via-gray-50 to-slate-50 border-t border-slate-200">
+	<div class="bg-gradient-to-r from-slate-50 via-gray-50 to-slate-50 border-t border-slate-200 section-animate">
 			<div class="px-6 py-8 md:px-10 md:py-10 lg:px-16 lg:py-12">
 				<div class="max-w-4xl mx-auto">
 					<div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-8">
