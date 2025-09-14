@@ -1,10 +1,4 @@
 <?php
-// Register navigation menus
-add_action('after_setup_theme', function() {
-	register_nav_menus([
-		'top-header-menu' => __('Top Header Menu', 'mtq-aceh-pidie-jaya'),
-	]);
-});
 
 /**
  * MTQ Aceh Pidie Jaya functions and definitions
@@ -31,6 +25,7 @@ require get_template_directory() . '/inc/social-analytics-dashboard.php';
 require get_template_directory() . '/inc/countdown-admin.php';
 require get_template_directory() . '/inc/youtube-live-admin.php';
 require get_template_directory() . '/inc/youtube-live-display.php';
+require get_template_directory() . '/inc/menus.php';
 
 // Include gallery system files
 require get_template_directory() . '/inc/gallery-post-type.php';
