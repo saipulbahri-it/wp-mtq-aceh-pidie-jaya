@@ -16,6 +16,11 @@ if (!defined('ABSPATH')) {
 
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
 	<article id="post-<?php the_ID(); ?>" <?php post_class('bg-white'); ?>>
+		<?php
+		// Precompute stats for reuse in page (used later in stats card)
+		$word_count = str_word_count(strip_tags(get_the_content()));
+		$reading_time = max(1, ceil($word_count / 200));
+		?>
 		
 		<!-- Featured Image Hero -->
 		<?php if (has_post_thumbnail()) : ?>
@@ -32,8 +37,8 @@ if (!defined('ABSPATH')) {
 				<!-- Title Overlay with Enhanced Design -->
 				<div class="absolute bottom-0 left-0 right-0 p-6 md:p-8 lg:p-12">
 					<header class="entry-header">
-						<div class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-blue-500/20 text-blue-100 backdrop-blur-sm mb-4">
-							<svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
+						<div class="inline-flex items-center px-4 py-2 bg-blue-100 text-blue-800 rounded-full text-sm font-medium mb-6">
+							<svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
 								<path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
 							</svg>
 							Halaman Resmi MTQ
@@ -43,28 +48,20 @@ if (!defined('ABSPATH')) {
 							<?php the_title(); ?>
 						</h1>
 						
-						<!-- Enhanced Page Meta -->
-						<div class="flex flex-wrap items-center gap-6 text-white/90">
-							<span class="inline-flex items-center gap-2 text-sm font-medium">
-								<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+						<!-- Arena-like Info Line -->
+						<div class="flex justify-center items-center gap-4 text-sm text-slate-200">
+							<span class="flex items-center">
+								<svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
+									<path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"></path>
 								</svg>
-								<?php printf(
-									esc_html__('Diperbarui %s', 'mtq-aceh-pidie-jaya'),
-									get_the_modified_date('j F Y')
-								); ?>
+								Kabupaten Pidie Jaya
 							</span>
-							
-							<!-- Reading Time Estimate -->
-							<span class="inline-flex items-center gap-2 text-sm font-medium">
-								<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+							<span>•</span>
+							<span class="flex items-center">
+								<svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
+									<path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"></path>
 								</svg>
-								<?php
-								$word_count = str_word_count(strip_tags(get_the_content()));
-								$reading_time = ceil($word_count / 200);
-								printf(esc_html__('%d menit baca', 'mtq-aceh-pidie-jaya'), $reading_time);
-								?>
+								<?php echo esc_html(get_the_date('j F Y')); ?>
 							</span>
 						</div>
 					</header>
@@ -96,7 +93,7 @@ if (!defined('ABSPATH')) {
 				
 		<div class="relative px-6 md:px-8 lg:px-12 text-center">
 					<header class="entry-header max-w-4xl mx-auto">
-						<div class="inline-flex items-center px-4 py-2 rounded-full text-sm font-medium bg-white/20 text-blue-100 backdrop-blur-sm mb-6">
+						<div class="inline-flex items-center px-4 py-2 bg-blue-100 text-blue-800 rounded-full text-sm font-medium mb-6">
 							<svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
 								<path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
 							</svg>
@@ -106,28 +103,20 @@ if (!defined('ABSPATH')) {
 			<h1 class="text-4xl md:text-6xl font-bold text-white leading-tight mb-6">
 							<?php the_title(); ?>
 						</h1>
-						
-						<!-- Enhanced Page Meta -->
-						<div class="flex flex-wrap items-center justify-center gap-8 text-blue-100">
-							<span class="inline-flex items-center gap-2 text-sm font-medium">
-								<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+						<!-- Arena-like Info Line -->
+						<div class="flex justify-center items-center gap-4 text-sm text-blue-100">
+							<span class="flex items-center">
+								<svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
+									<path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"></path>
 								</svg>
-								<?php printf(
-									esc_html__('Diperbarui %s', 'mtq-aceh-pidie-jaya'),
-									get_the_modified_date('j F Y')
-								); ?>
+								Kabupaten Pidie Jaya
 							</span>
-							
-							<span class="inline-flex items-center gap-2 text-sm font-medium">
-								<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+							<span>•</span>
+							<span class="flex items-center">
+								<svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
+									<path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"></path>
 								</svg>
-								<?php
-								$word_count = str_word_count(strip_tags(get_the_content()));
-								$reading_time = ceil($word_count / 200);
-								printf(esc_html__('%d menit baca', 'mtq-aceh-pidie-jaya'), $reading_time);
-								?>
+								<?php echo esc_html(get_the_date('j F Y')); ?>
 							</span>
 						</div>
 					</header>
