@@ -20,34 +20,6 @@ window.addEventListener("scroll", function () {
   }
 });
 
-// Mobile menu toggle
-const mobileMenuBtn = document.getElementById("mobile-menu-btn");
-const mobileMenu = document.getElementById("mobile-menu");
-
-mobileMenuBtn.addEventListener("click", function () {
-  mobileMenu.classList.toggle("hidden");
-
-  const svg = mobileMenuBtn.querySelector("svg");
-  const path = svg.querySelector("path");
-
-  if (mobileMenu.classList.contains("hidden")) {
-    path.setAttribute("d", "M4 6h16M4 12h16M4 18h16");
-  } else {
-    path.setAttribute("d", "M6 18L18 6M6 6l12 12");
-  }
-});
-
-// Close mobile menu when clicking on links
-const mobileLinks = mobileMenu.querySelectorAll("a");
-mobileLinks.forEach((link) => {
-  link.addEventListener("click", function () {
-    mobileMenu.classList.add("hidden");
-    const svg = mobileMenuBtn.querySelector("svg");
-    const path = svg.querySelector("path");
-    path.setAttribute("d", "M4 6h16M4 12h16M4 18h16");
-  });
-});
-
 // Fade in animation observer
 const fadeElements = document.querySelectorAll(".fade-in");
 const observer = new IntersectionObserver(

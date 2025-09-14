@@ -162,12 +162,6 @@ if (!defined('ABSPATH')) {
 						'link_after' => '</span>',
 					]);
 					?>
-							echo '<a href="' . esc_url( get_home_url() ) . '#live-stream" class="nav-link text-orange-600 font-bold flex items-center gap-1"><span class="relative flex items-center"><span class="live-dot animate-pulse"></span><svg class="w-4 h-4 ml-1 text-orange-500" fill="currentColor" viewBox="0 0 20 20"><circle cx="10" cy="10" r="6" fill="currentColor"></circle></svg></span>Live</a>';
-						},
-						'link_before' => '<span class="nav-link">',
-						'link_after' => '</span>',
-					]);
-					?>
 				</div>
 			</nav>
 		</div>
