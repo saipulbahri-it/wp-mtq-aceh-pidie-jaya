@@ -1,14 +1,20 @@
 <?php
 /**
- * Simple Gallery Import - MTQ Aceh Pidie Jaya
+ * Simple Gallery Import - MTQ Aceh Pidie Jaya (Admin only)
  * Script sederhana untuk mengimport gallery data ke database
  */
 
 // Load WordPress
-require_once('./wp-load.php');
+require_once dirname(__FILE__) . '/../../wp-load.php';
 
-// Simple authentication bypass for development
-define('WP_DEBUG', true);
+if (!defined('ABSPATH')) {
+    http_response_code(403);
+    exit('Forbidden');
+}
+
+if (!is_user_logged_in() || !current_user_can('manage_options')) {
+    wp_die('Anda tidak memiliki permission untuk menjalankan script ini!');
+}
 
 class Simple_Gallery_Import {
     

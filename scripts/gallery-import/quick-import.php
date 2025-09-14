@@ -1,12 +1,21 @@
 <?php
 /**
- * Quick Gallery Import - MTQ Aceh Pidie Jaya
+ * Quick Gallery Import - MTQ Aceh Pidie Jaya (Admin only)
  * Script cepat untuk mengimport dummy data gallery
  */
 
 // WordPress Bootstrap
 define('WP_USE_THEMES', false);
-require('./wp-load.php');
+require_once dirname(__FILE__) . '/../../wp-load.php';
+
+if (!defined('ABSPATH')) {
+    http_response_code(403);
+    exit('Forbidden');
+}
+
+if (!is_user_logged_in() || !current_user_can('manage_options')) {
+    wp_die('Anda tidak memiliki permission untuk menjalankan script ini!');
+}
 
 echo "<h1>🚀 Quick Gallery Import</h1>";
 

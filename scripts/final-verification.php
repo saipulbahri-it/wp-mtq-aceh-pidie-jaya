@@ -1,10 +1,15 @@
 <?php
 /**
  * Final verification of categories, tags and post assignments
+ * Run via CLI only.
  */
 
-require_once dirname(__FILE__) . '/../wp-config.php';
-require_once dirname(__FILE__) . '/../wp-load.php';
+if (php_sapi_name() !== 'cli') {
+    http_response_code(403);
+    exit("CLI only.\n");
+}
+
+require_once dirname(__DIR__) . '/wp-load.php';
 
 echo "=== FINAL VERIFICATION: Categories, Tags & Post Assignments ===\n\n";
 

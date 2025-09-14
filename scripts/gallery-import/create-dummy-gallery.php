@@ -1,26 +1,31 @@
 <?php
 /**
- * Dummy Gallery Generator untuk MTQ Aceh Pidie Jaya
- * Script untuk membuat dummy data gallery untuk testing
- * 
+ * Create Dummy Gallery - MTQ Aceh Pidie Jaya (Admin + Dev only)
+ * Membuat data dummy untuk gallery
  * PERINGATAN: Script ini hanya untuk development/testing!
  * Jangan jalankan di production server!
- * 
- * Usage: Akses melalui browser atau jalankan via WP-CLI
- * URL: /wp-content/themes/mtq-aceh-pidie-jaya/create-dummy-gallery.php
+ *
+ * Usage: Akses melalui browser sebagai Admin (manage_options)
+ * Path file: wp-content/themes/mtq-aceh-pidie-jaya/scripts/gallery-import/create-dummy-gallery.php
  */
 
-// Security check - hanya bisa dijalankan di development
-if (!defined('WP_DEBUG') || !WP_DEBUG) {
-    die('Script ini hanya dapat dijalankan dalam mode development!');
+// Bootstrap WordPress from theme/scripts path
+require_once dirname(__FILE__) . '/../../wp-load.php';
+
+// Basic hardening
+if (!defined('ABSPATH')) {
+    http_response_code(403);
+    exit('Forbidden');
 }
 
-// Load WordPress
-require_once('./wp-load.php');
+// Require logged-in Admin
+if (!is_user_logged_in() || !current_user_can('manage_options')) {
+    wp_die('Anda tidak memiliki permission untuk menjalankan script ini!');
+}
 
-// Check if user has admin capability
-if (!current_user_can('manage_options')) {
-    die('Anda tidak memiliki permission untuk menjalankan script ini!');
+// Dev-only safeguard
+if (!defined('WP_DEBUG') || !WP_DEBUG) {
+    wp_die('Script ini hanya dapat dijalankan dalam mode development (WP_DEBUG = true).');
 }
 
 class MTQ_Dummy_Gallery_Generator {
