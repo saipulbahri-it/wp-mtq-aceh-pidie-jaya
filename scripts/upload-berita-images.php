@@ -1,8 +1,13 @@
 <?php
 /**
  * Upload images for existing berita posts
- * Place this file in WordPress root and run via CLI: php scripts/upload-berita-images.php
+ * Run via CLI only: php scripts/upload-berita-images.php
  */
+
+if (php_sapi_name() !== 'cli') {
+    http_response_code(403);
+    exit("CLI only.\n");
+}
 
 require_once dirname(__DIR__) . '/wp-load.php';
 

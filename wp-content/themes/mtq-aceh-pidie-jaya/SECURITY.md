@@ -32,6 +32,20 @@ File `.htaccess` di direktori tema memberikan perlindungan server-level:
 - Security headers untuk XSS dan clickjacking protection
 - Perlindungan terhadap file sensitif
 
+#### 4. **Non-Theme Scripts Hardening**
+Beberapa skrip utilitas di root repo dan folder `scripts/` telah diamankan:
+- Skrip CLI (import/list/assign) sekarang HANYA bisa dijalankan via CLI dan akan menolak akses web dengan HTTP 403.
+- Skrip dev/diagnostik berisiko (phpinfo, debug upload, handler upload alternatif) dinonaktifkan di produksi dan mengembalikan HTTP 403 jika diakses.
+- Skrip import gallery untuk browser memerlukan login admin dan memuat WordPress dengan benar; akses tanpa WP/izin akan ditolak.
+
+Contoh pola untuk skrip CLI:
+```php
+if (php_sapi_name() !== 'cli') {
+    http_response_code(403);
+    exit('CLI only.');
+}
+```
+
 ### 🛡️ Tingkat Keamanan
 
 | Aspek Keamanan | Status | Deskripsi |

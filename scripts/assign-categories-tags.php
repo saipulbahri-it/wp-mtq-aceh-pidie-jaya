@@ -1,12 +1,17 @@
 <?php
 /**
  * Script untuk menambahkan categories dan tags pada berita yang sudah ada
- * Jalankan dari root WordPress
+ * Jalankan via CLI: php scripts/assign-categories-tags.php
  */
+
+if (php_sapi_name() !== 'cli') {
+    http_response_code(403);
+    exit("CLI only.\n");
+}
 
 // Load WordPress
 define('WP_USE_THEMES', false);
-require_once(dirname(__FILE__) . '/../wp-load.php');
+require_once dirname(__FILE__) . '/../wp-load.php';
 
 echo "🏷️ Menambahkan Categories dan Tags pada Berita MTQ...\n\n";
 

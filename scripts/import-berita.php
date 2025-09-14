@@ -1,11 +1,15 @@
 <?php
 /**
  * Simple import script for berita-dummy.json
- * Place this file in WordPress root and run via CLI: php scripts/import-berita.php
- * or run via browser (only for local/dev environments).
+ * Run via CLI only: php scripts/import-berita.php
  */
 
-require_once dirname(__DIR__) . '/wp-load.php'; // Adjust path if needed
+if (php_sapi_name() !== 'cli') {
+    http_response_code(403);
+    exit("CLI only.\n");
+}
+
+require_once dirname(__DIR__) . '/wp-load.php';
 
 // Load required WordPress files for media handling
 require_once ABSPATH . 'wp-admin/includes/file.php';

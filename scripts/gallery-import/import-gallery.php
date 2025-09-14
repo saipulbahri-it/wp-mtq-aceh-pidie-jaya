@@ -10,10 +10,16 @@
  */
 
 // Load WordPress
-require_once('./wp-load.php');
+require_once dirname(__FILE__) . '/../../wp-load.php';
+
+// Prevent direct access if WordPress failed to load
+if (!defined('ABSPATH')) {
+    http_response_code(403);
+    exit('Forbidden');
+}
 
 // Check if user has admin capability
-if (!current_user_can('manage_options')) {
+if (!is_user_logged_in() || !current_user_can('manage_options')) {
     wp_die('Anda tidak memiliki permission untuk menjalankan script ini!');
 }
 

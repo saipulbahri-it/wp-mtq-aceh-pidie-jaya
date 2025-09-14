@@ -1,11 +1,15 @@
 <?php
+// CLI only
+if (php_sapi_name() !== 'cli') {
+    http_response_code(403);
+    exit("CLI only.\n");
+}
+
 // Load WordPress
-require_once dirname(__FILE__) . '/../wp-config.php';
-require_once dirname(__FILE__) . '/../wp-includes/wp-db.php';
-require_once dirname(__FILE__) . '/../wp-admin/includes/media.php';
-require_once dirname(__FILE__) . '/../wp-admin/includes/file.php';
-require_once dirname(__FILE__) . '/../wp-admin/includes/image.php';
-require_once dirname(__FILE__) . '/../wp-includes/pluggable.php';
+require_once dirname(__DIR__) . '/wp-load.php';
+require_once ABSPATH . 'wp-admin/includes/media.php';
+require_once ABSPATH . 'wp-admin/includes/file.php';
+require_once ABSPATH . 'wp-admin/includes/image.php';
 
 echo "Menambah artikel berita tambahan untuk test pagination...\n";
 

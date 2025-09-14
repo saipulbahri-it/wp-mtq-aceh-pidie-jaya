@@ -4,9 +4,14 @@
  * Jalankan dengan: php scripts/list-categories-tags.php
  */
 
+if (php_sapi_name() !== 'cli') {
+    http_response_code(403);
+    exit("CLI only.\n");
+}
+
 // Simple WordPress connection
 define('WP_USE_THEMES', false);
-require_once(dirname(__FILE__) . '/../wp-load.php');
+require_once dirname(__FILE__) . '/../wp-load.php';
 
 echo "=== DAFTAR CATEGORIES DAN TAGS MTQ ===\n\n";
 
