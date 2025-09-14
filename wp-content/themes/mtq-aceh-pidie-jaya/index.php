@@ -22,41 +22,53 @@ get_header();
 
 	<main id="primary" class="site-main">
 
+		<?php // Breadcrumbs (auto-hide on front page)
+		get_template_part('template-parts/breadcrumbs'); ?>
+
+		<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+			<div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+				<!-- Main Content -->
+				<div class="lg:col-span-8">
+
 		<?php
 		if ( have_posts() ) :
 
-			if ( is_home() && ! is_front_page() ) :
-				?>
-				<header>
-					<h1 class="page-title screen-reader-text"><?php single_post_title(); ?></h1>
+			if ( is_home() && ! is_front_page() ) : ?>
+				<header class="mb-6">
+					<h1 class="text-2xl font-bold text-slate-800"><?php single_post_title(); ?></h1>
 				</header>
-				<?php
-			endif;
+			<?php endif; ?>
 
-			/* Start the Loop */
-			while ( have_posts() ) :
-				the_post();
+			<div class="space-y-8">
+				<?php /* Start the Loop */
+				while ( have_posts() ) :
+					the_post();
+					get_template_part( 'template-parts/content', get_post_type() );
+				endwhile; ?>
+			</div>
 
-				/*
-				 * Include the Post-Type-specific template for the content.
-				 * If you want to override this in a child theme, then include a file
-				 * called content-___.php (where ___ is the Post Type name) and that will be used instead.
-				 */
-				get_template_part( 'template-parts/content', get_post_type() );
+			<div class="mt-8">
+				<?php the_posts_pagination( array(
+					'mid_size'  => 1,
+					'prev_text' => __('← Sebelumnya', 'mtq-aceh-pidie-jaya'),
+					'next_text' => __('Berikutnya →', 'mtq-aceh-pidie-jaya'),
+				) ); ?>
+			</div>
 
-			endwhile;
+		<?php else : ?>
 
-			the_posts_navigation();
+			<?php get_template_part( 'template-parts/content', 'none' ); ?>
 
-		else :
+		<?php endif; ?>
+				</div>
 
-			get_template_part( 'template-parts/content', 'none' );
-
-		endif;
-		?>
-
+				<!-- Sidebar -->
+				<div class="lg:col-span-4">
+					<?php get_sidebar(); ?>
+				</div>
+			</div>
+		</div>
 	</main><!-- #main -->
 
 <?php
-get_sidebar();
 get_footer();
