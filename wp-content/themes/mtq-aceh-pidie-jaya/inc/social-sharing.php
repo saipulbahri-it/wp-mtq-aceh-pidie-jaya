@@ -161,14 +161,22 @@ function mtq_add_opengraph_meta() {
 	$description = trim( wp_html_excerpt( $raw_desc, 200, '…' ) );
 	$url = get_permalink($post);
 
-	// Determine image with fallbacks
+	// Determine image with fallbacks (featured > filter > site icon > theme og-default.jpg > theme logo.png)
 	$image = get_the_post_thumbnail_url($post->ID, 'full');
+	// Allow external override via filter
+	$image = apply_filters('mtq_og_image_url', $image, $post);
 	if (!$image) {
 		$site_icon = get_site_icon_url(512);
 		if ($site_icon) { $image = $site_icon; }
 		else {
+			// Prefer explicit og-default.jpg if present
 			$theme_default = get_theme_file_uri('assets/images/og-default.jpg');
 			if ($theme_default && $theme_default !== get_theme_file_uri()) { $image = $theme_default; }
+			else {
+				// Fallback to theme logo if available
+				$theme_logo = get_theme_file_uri('assets/images/logo.png');
+				if ($theme_logo && $theme_logo !== get_theme_file_uri()) { $image = $theme_logo; }
+			}
 		}
 	}
 
