@@ -19,6 +19,7 @@ get_header();
 
 <main id="primary" class="site-main">
 	<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+		<?php $search_query = get_search_query(); ?>
 		
 		<!-- Search Header -->
 		<header class="search-header mb-12">
@@ -45,10 +46,9 @@ get_header();
 					
 					<h1 class="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4">
 						<?php
-						$search_query = get_search_query();
 						if ($search_query) :
 							printf(
-								esc_html__('"%s"', 'mtq-aceh-pidie-jaya'),
+								esc_html__('%s', 'mtq-aceh-pidie-jaya'),
 								'<span class="text-indigo-200">' . esc_html($search_query) . '</span>'
 							);
 						else :
@@ -79,137 +79,11 @@ get_header();
 		</header>
 
 		<?php if (have_posts()) : ?>
-			
-			<!-- Search Results -->
-			<div class="space-y-8 mb-12">
-				<?php
-				while (have_posts()) :
-					the_post();
-					?>
-					<article id="post-<?php the_ID(); ?>" <?php post_class('group'); ?>>
-						<div class="bg-white rounded-2xl shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden border border-gray-100 hover:border-gray-200">
-							<div class="md:flex">
-								
-								<!-- Featured Image -->
-								<div class="md:w-1/3 lg:w-1/4 aspect-video md:aspect-square overflow-hidden">
-									<?php if (has_post_thumbnail()) : ?>
-										<a href="<?php the_permalink(); ?>" class="block">
-											<?php the_post_thumbnail('medium_large', [
-												'class' => 'w-full h-full object-cover group-hover:scale-105 transition-transform duration-300',
-												'alt' => get_the_title()
-											]); ?>
-										</a>
-									<?php else : ?>
-										<a href="<?php the_permalink(); ?>" class="block">
-											<div class="w-full h-full bg-gradient-to-br from-indigo-50 to-indigo-100 flex items-center justify-center group-hover:from-indigo-100 group-hover:to-indigo-200 transition-colors duration-300">
-												<img src="<?php echo get_template_directory_uri(); ?>/assets/images/default-thumbnail.svg" 
-													 alt="<?php echo esc_attr(get_the_title()); ?>" 
-													 class="w-20 h-20 opacity-60">
-											</div>
-										</a>
-									<?php endif; ?>
-								</div>
-
-								<!-- Content -->
-								<div class="md:w-2/3 lg:w-3/4 p-6 md:p-8">
-									<!-- Meta Tags -->
-									<div class="flex flex-wrap gap-2 mb-4">
-										<!-- Post Type -->
-										<span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-700">
-											<?php 
-											$post_type_object = get_post_type_object(get_post_type());
-											echo esc_html($post_type_object->labels->singular_name);
-											?>
-										</span>
-										
-										<!-- Categories -->
-										<?php
-										$categories = get_the_category();
-										if ($categories) :
-											foreach (array_slice($categories, 0, 2) as $cat) : ?>
-												<a href="<?php echo esc_url(get_category_link($cat->term_id)); ?>" 
-												   class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800 hover:bg-blue-200 transition-colors">
-													<?php echo esc_html($cat->name); ?>
-												</a>
-											<?php endforeach;
-										endif; ?>
-										
-										<!-- Tags -->
-										<?php
-										$tags = get_the_tags();
-										if ($tags) :
-											foreach (array_slice($tags, 0, 2) as $tag) : ?>
-												<a href="<?php echo esc_url(get_tag_link($tag->term_id)); ?>" 
-												   class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-indigo-100 text-indigo-800 hover:bg-indigo-200 transition-colors">
-													<svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-														<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"></path>
-													</svg>
-													<?php echo esc_html($tag->name); ?>
-												</a>
-											<?php endforeach;
-										endif; ?>
-									</div>
-
-									<!-- Title -->
-									<h2 class="text-2xl md:text-3xl font-bold text-gray-900 mb-3 group-hover:text-indigo-600 transition-colors">
-										<a href="<?php the_permalink(); ?>" class="hover:underline">
-											<?php 
-											// Highlight search terms in title
-											$title = get_the_title();
-											if ($search_query) {
-												$title = preg_replace('/(' . preg_quote($search_query, '/') . ')/i', '<mark class="bg-yellow-200 text-yellow-800 px-1 rounded">$1</mark>', $title);
-											}
-											echo $title;
-											?>
-										</a>
-									</h2>
-
-									<!-- Excerpt with highlighted search terms -->
-									<div class="text-gray-600 leading-relaxed mb-6">
-										<?php 
-										$excerpt = wp_trim_words(get_the_excerpt(), 40, '...');
-										if ($search_query) {
-											$excerpt = preg_replace('/(' . preg_quote($search_query, '/') . ')/i', '<mark class="bg-yellow-200 text-yellow-800 px-1 rounded">$1</mark>', $excerpt);
-										}
-										echo $excerpt;
-										?>
-									</div>
-
-									<!-- Meta Info -->
-									<div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pt-4 border-t border-gray-100">
-										<div class="flex items-center gap-4 text-sm text-gray-500">
-											<!-- Author -->
-											<a href="<?php echo esc_url(get_author_posts_url(get_the_author_meta('ID'))); ?>" class="flex items-center gap-2 hover:text-indigo-600 transition-colors">
-												<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-													<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
-												</svg>
-												<?php the_author(); ?>
-											</a>
-											
-											<!-- Date -->
-											<time datetime="<?php echo esc_attr(get_the_date('c')); ?>" class="flex items-center gap-1">
-												<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-													<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
-												</svg>
-												<?php echo get_the_date(); ?>
-											</time>
-										</div>
-										
-										<a href="<?php the_permalink(); ?>" 
-										   class="inline-flex items-center gap-2 text-indigo-600 hover:text-indigo-700 font-medium text-sm transition-colors group">
-											Baca Selengkapnya
-											<svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-												<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
-											</svg>
-										</a>
-									</div>
-								</div>
-							</div>
-						</div>
-					</article>
-					<?php
-				endwhile;
-				?>
+			<!-- Search Results as Card Grid -->
+			<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+				<?php while (have_posts()) : the_post(); ?>
+					<?php get_template_part('template-parts/content', 'archive'); ?>
+				<?php endwhile; ?>
 			</div>
 
 			<!-- Pagination -->
@@ -246,7 +120,6 @@ get_header();
 			</div>
 
 		<?php else : ?>
-			
 			<!-- No Results Found -->
 			<div class="text-center py-16">
 				<div class="max-w-lg mx-auto">
