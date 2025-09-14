@@ -39,7 +39,7 @@ get_header();
 				</header>
 			<?php endif; ?>
 
-			<div class="space-y-8">
+			<div class="grid gap-6 sm:gap-8 grid-cols-1 sm:grid-cols-2 xl:grid-cols-3">
 				<?php /* Start the Loop */
 				while ( have_posts() ) :
 					the_post();
@@ -51,7 +51,7 @@ get_header();
 				endwhile; ?>
 			</div>
 
-			<div class="mt-8">
+			<div class="mt-10">
 				<?php the_posts_pagination( array(
 					'mid_size'  => 1,
 					'prev_text' => __('← Sebelumnya', 'mtq-aceh-pidie-jaya'),
