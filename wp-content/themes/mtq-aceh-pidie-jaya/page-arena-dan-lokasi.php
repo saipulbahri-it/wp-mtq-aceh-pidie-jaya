@@ -1135,7 +1135,7 @@ get_header();
                             class="bg-blue-100 text-blue-800 text-xs font-semibold px-2 py-1 rounded-full">6 Halaman</span>
                     </div>
                     <a
-                        href="<?php echo esc_url( get_template_directory_uri() ); ?>/assets/documents/Peta_MTQ.pdf"
+                        href="<?php echo esc_url( get_template_directory_uri() ); ?>/assets/documents/Peta-MTQ.pdf"
                         download
                         class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-4 rounded-lg transition-colors flex items-center justify-center">
                         <svg
@@ -1190,7 +1190,7 @@ get_header();
                             class="bg-green-100 text-green-800 text-xs font-semibold px-2 py-1 rounded-full">1 Halaman</span>
                     </div>
                     <a
-                        href="<?php echo esc_url( get_template_directory_uri() ); ?>/assets/documents/Titik_Rumah_Kafilah.pdf"
+                        href="<?php echo esc_url( get_template_directory_uri() ); ?>/assets/documents/Titik-Rumah-Kafilah.pdf"
                         download
                         class="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-3 px-4 rounded-lg transition-colors flex items-center justify-center">
                         <svg

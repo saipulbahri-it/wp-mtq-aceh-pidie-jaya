@@ -61,24 +61,7 @@ function mtq_init_gallery_system() {
 }
 add_action('init', 'mtq_init_gallery_system', 5); // Earlier priority to ensure registration
 
-// Debug function to check gallery registration
-function mtq_debug_gallery_registration() {
-    if (is_admin() && current_user_can('manage_options')) {
-        if (!post_type_exists('mtq_gallery')) {
-            add_action('admin_notices', function() {
-                echo '<div class="notice notice-error"><p><strong>MTQ Gallery:</strong> Post type tidak terdaftar! Check theme files.</p></div>';
-            });
-        } else {
-            // Gallery registered successfully
-            if (isset($_GET['debug_gallery'])) {
-                add_action('admin_notices', function() {
-                    echo '<div class="notice notice-success"><p><strong>MTQ Gallery:</strong> Post type berhasil terdaftar!</p></div>';
-                });
-            }
-        }
-    }
-}
-add_action('admin_init', 'mtq_debug_gallery_registration');
+// Debug gallery admin checks removed (legacy)
 
 // Flush permalinks on theme activation
 function mtq_theme_activation() {
@@ -116,12 +99,11 @@ function mtq_gallery_admin_notice() {
     // Check if gallery post type is registered
     if (!post_type_exists('mtq_gallery')) {
         ?>
-        <div class="notice notice-error is-dismissible">
-            <p><strong>❌ MTQ Gallery System Error:</strong> 
-            Gallery post type tidak terdaftar! Periksa file theme atau hubungi developer.
-            <a href="<?php echo admin_url('admin.php?page=debug_gallery'); ?>">Debug Gallery</a>
-            </p>
-        </div>
+		<div class="notice notice-error is-dismissible">
+			<p><strong>❌ MTQ Gallery System Error:</strong> 
+			Gallery post type tidak terdaftar! Periksa file theme atau hubungi developer.
+			</p>
+		</div>
         <?php
     } elseif (!get_option('mtq_gallery_permalinks_flushed')) {
         ?>
