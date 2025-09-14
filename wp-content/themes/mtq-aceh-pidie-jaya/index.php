@@ -26,9 +26,10 @@ get_header();
 		get_template_part('template-parts/breadcrumbs'); ?>
 
 		<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+			<?php $has_sidebar = is_active_sidebar('sidebar-1'); ?>
 			<div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
 				<!-- Main Content -->
-				<div class="lg:col-span-8">
+				<div class="<?php echo $has_sidebar ? 'lg:col-span-8' : 'lg:col-span-12'; ?>">
 
 		<?php
 		if ( have_posts() ) :
@@ -37,6 +38,12 @@ get_header();
 				<header class="mb-6">
 					<h1 class="text-2xl font-bold text-slate-800"><?php single_post_title(); ?></h1>
 				</header>
+			<?php endif; ?>
+
+			<?php if ( is_home() || is_front_page() ) : ?>
+				<div class="mb-6">
+					<h2 class="text-2xl sm:text-3xl font-bold text-slate-900">Pos-pos Terbaru</h2>
+				</div>
 			<?php endif; ?>
 
 			<div class="grid gap-6 sm:gap-8 grid-cols-1 sm:grid-cols-2 xl:grid-cols-3">
@@ -67,9 +74,11 @@ get_header();
 				</div>
 
 				<!-- Sidebar -->
-				<div class="lg:col-span-4">
-					<?php get_sidebar(); ?>
-				</div>
+				<?php if ( $has_sidebar ) : ?>
+					<div class="lg:col-span-4">
+						<?php get_sidebar(); ?>
+					</div>
+				<?php endif; ?>
 			</div>
 		</div>
 	</main><!-- #main -->
