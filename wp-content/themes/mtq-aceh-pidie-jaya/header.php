@@ -66,7 +66,11 @@ if (!defined('ABSPATH')) {
 		<div class="max-w-7xl mx-auto header-padding px-4 py-4">
 			<div class="flex justify-between items-center">
 				<div class="flex items-center space-x-3">
-					<img src="<?php echo get_template_directory_uri(); ?>/assets/images/logo.png" alt="Logo MTQ Aceh XXXVII" class="logo-img h-16 transition-all duration-300" decoding="async" fetchpriority="high">
+					<?php if (function_exists('the_custom_logo') && has_custom_logo()) : ?>
+						<?php the_custom_logo(); ?>
+					<?php else : ?>
+						<img src="<?php echo esc_url( get_template_directory_uri() . '/assets/images/logo.png' ); ?>" alt="Logo MTQ Aceh XXXVII" class="logo-img h-16 transition-all duration-300" decoding="async" fetchpriority="high">
+					<?php endif; ?>
 					<div class="hidden sm:block">
 						<h1 class="text-xl font-bold text-blue-600"><?php bloginfo( 'name' ); ?></h1>
 						<p class="text-sm text-slate-600"><?php bloginfo( 'description' ); ?></p>

@@ -223,6 +223,27 @@ endif;
 add_action('after_setup_theme', 'mtq_aceh_pidie_jaya_setup');
 
 /**
+ * Pastikan custom logo menyertakan class tampilan default.
+ * WordPress menambahkan class 'custom-logo' pada tag IMG.
+ * Kita tambahkan class 'logo-img h-16 transition-all duration-300' agar konsisten.
+ */
+add_filter('get_custom_logo', function ($html) {
+	if (empty($html)) return $html;
+	// Sisipkan kelas tambahan pada <img ...>
+	$html = preg_replace(
+		'/<img(\s+[^>]*class=\"[^\"]*)\"/i',
+		'<img$1 logo-img h-16 transition-all duration-300"',
+		$html,
+		1
+	);
+	// Jika tidak ada class sama sekali
+	if (strpos($html, 'class=') === false) {
+		$html = str_replace('<img', '<img class="logo-img h-16 transition-all duration-300"', $html);
+	}
+	return $html;
+});
+
+/**
  * Set the content width in pixels, based on the theme's design and stylesheet.
  *
  * Priority 0 to make it available to lower priority callbacks.
