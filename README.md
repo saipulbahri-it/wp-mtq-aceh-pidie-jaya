@@ -1,8 +1,11 @@
-# 🕌 M## 📋 **Deskripsi**
+# 🕌 MTQ Aceh Pidie Jaya WordPress Theme
 
-Website resmi untuk event MTQ (Musabaqah Tilawatil Quran) ke-37 tingkat Aceh yang diselenggarakan di Kabupaten Pidie Jaya tahun 2025. Website ini menyediakan informasi lengkap tentang kompetisi, peserta, jadwal, hasil, dan dokumentasi kegiatan.
+> **Premium WordPress Theme untuk Musabaqah Tilawatil Quran (MTQ) dan Event Islamic**
+Website dan tema khusus untuk event MTQ (Musabaqah Tilawatil Quran) ke-37 tingkat Aceh yang diselenggarakan di Kabupaten Pidie Jaya tahun 2025. Tema ini dirancang untuk event Islamic, competition, dan website pemerintahan dengan fitur lengkap dan fokus keamanan.
 
-## 📁 **Repository Structure**
+## Tentang Tema
+
+## Fitur Tema
 
 ```
 wp-mtq-aceh-pidie-jaya/
@@ -24,18 +27,19 @@ wp-mtq-aceh-pidie-jaya/
 
 ## � **Repository Structure**
 
+## 📁 **Struktur Proyek**
+
 ```
 wp-mtq-aceh-pidie-jaya/
-├── 📄 README.md              # Project documentation
-├── 📄 CHANGELOG.md           # Version history
-├── 📄 THEME_DEVELOPMENT_PLAN.md  # Development roadmap
-├── 📄 DEPLOYMENT_GUIDE.md    # Deployment instructions
-├── 📦 package.json           # Node.js dependencies
-├── 🎨 tailwind.config.js     # Tailwind CSS configuration
-├── 📂 wp-content/themes/mtq-aceh-pidie-jaya/  # Main theme
-├── 📂 scripts/               # Development scripts
-├── 📂 docs/                  # Additional documentation
-└── 📂 archive/               # Archived files and documentation
+├── wp-content/themes/mtq-aceh-pidie-jaya/   # Theme utama
+│   ├── inc/                                  # Custom functionality
+│   ├── template-parts/                       # Template components
+│   ├── assets/                              # Source CSS/JS
+│   └── dist/                                # Compiled assets
+├── scripts/                                 # Utility scripts
+│   └── gallery-import/                      # Gallery import tools
+├── docs/                                    # Dokumentasi
+└── data/                                    # Sample data
 ```
 
 ## ✨ **Fitur Utama**
@@ -58,68 +62,140 @@ wp-mtq-aceh-pidie-jaya/
 ## 🚀 **Quick Start**
 
 ### **Untuk Pengembang:**
+=======
+# 🕌 MTQ Aceh Pidie Jaya WordPress Theme
 
+> **Premium WordPress Theme untuk Musabaqah Tilawatil Quran (MTQ) dan Event Islamic**
+
+![MTQ Aceh Pidie Jaya](https://mtq.pidiejayakab.go.id/wp-content/themes/mtq-aceh-pidie-jaya/screenshot.png)
+
+[![WordPress](https://img.shields.io/badge/WordPress-5.0%2B-blue.svg)](https://wordpress.org/)
+[![PHP](https://img.shields.io/badge/PHP-7.4%2B-purple.svg)](https://php.net/)
+[![License](https://img.shields.io/badge/License-GPL%20v2%2B-green.svg)](https://www.gnu.org/licenses/gpl-2.0.html)
+[![Version](https://img.shields.io/badge/Version-1.0.0-orange.svg)](https://github.com/saipulbahri-it/mtq-aceh-pidie-jaya-theme/releases)
+
+## � **Quick Download (For WordPress Users)**
+
+### **🎯 Install Theme Only:**
+1. **[📦 Download Latest Theme](https://github.com/saipulbahri-it/mtq-aceh-pidie-jaya-theme/releases/download/v1.0.0/mtq-aceh-pidie-jaya-theme-v1.0.0.zip)** (~12MB)
+2. **Upload**: WordPress Admin → `Appearance` → `Themes` → `Add New` → `Upload Theme`
+3. **Activate** the theme
+4. **Follow**: [📚 Installation Guide](https://github.com/saipulbahri-it/mtq-aceh-pidie-jaya-theme/blob/main/README.md)
+
+### **🔧 For Developers:**
 ```bash
-# Clone repository
+# Clone main repository (full WordPress)
 git clone https://github.com/saipulbahri-it/wp-mtq-aceh-pidie-jaya.git
 cd wp-mtq-aceh-pidie-jaya
 
-# Install dependencies
-npm install
+# OR clone theme only
+git clone https://github.com/saipulbahri-it/mtq-aceh-pidie-jaya-theme.git
+cd mtq-aceh-pidie-jaya-theme
 
-# Development mode
+# Install dependencies & build
+npm install && npm run build
+
+# Start development
 npm run dev
+```
 
-# Production build
+---
+
+## 📋 **Tentang Tema**
+
+Website dan tema khusus untuk event MTQ (Musabaqah Tilawatil Quran) ke-37 tingkat Aceh yang diselenggarakan di Kabupaten Pidie Jaya tahun 2025. Tema ini dirancang khusus untuk event Islamic, competition, dan website pemerintahan dengan fitur lengkap dan keamanan tingkat tinggi.
+
+## ✨ **Fitur Tema**
+
+### 🎯 **Core Features**
+- **🏠 Homepage Dinamis** dengan countdown timer dan live updates
+- **📰 Sistem Berita** untuk pengumuman dan update terkini  
+- **🖼️ Gallery Multimedia** untuk foto dan video dokumentasi
+- **🏟️ Arena & Lokasi** dengan informasi detail venue dan maps
+- **📺 Live Streaming** integration untuk siaran langsung
+- **📱 Social Sharing** (WhatsApp, Facebook, Twitter)
+
+### � **Security Features**
+- **🛡️ ABSPATH Protection** pada semua file PHP
+- **🔐 Server-level Security** dengan .htaccess headers
+- **🚫 XSS & Clickjacking Protection**
+- **🔒 Direct Access Prevention**
+- **✅ WordPress Security Standards** compliant
+
+### 🎨 **Design Features**
+- **📱 Mobile-First Responsive** design
+- **🕌 Islamic-themed Styling** dengan government branding
+- **🎨 Modern Gradient Backgrounds** 
+- **👆 Touch-friendly Interface** untuk mobile
+- **🌍 Arabic Typography Support**
+- **⚡ Smooth Animations** dan hover effects
+
+## 🚀 **Quick Start**
+
+### **📦 Untuk Pengguna WordPress:**
+>>>>>>> main
+
+```bash
+## 📋 **Tentang Tema**
+git clone https://github.com/saipulbahri-it/wp-mtq-aceh-pidie-jaya.git
+## ✨ **Fitur Tema**
+
+### 🎯 **Core Features**
+- Homepage dinamis dengan countdown timer dan live updates
+- Sistem Berita untuk pengumuman dan update terkini  
+- Gallery multimedia untuk foto dan video dokumentasi
+- Arena & Lokasi dengan informasi detail venue dan maps
+- Live Streaming integration untuk siaran langsung
+- Social Sharing (WhatsApp, Facebook, Twitter)
 npm run build
-```
-
-### **Untuk Admin:**
-
-1. **Access Admin Panel:** `https://mtq.pidiejayakab.go.id/wp-admin`
-2. **Buat Berita Baru:** Gallery MTQ → Add New Gallery
+### Security Features
+- ABSPATH protection pada semua file PHP
+- Server-level security dengan .htaccess headers
+- XSS & Clickjacking protection
+- Direct access prevention
+- WordPress Security Standards compliant
 3. **Upload Media:** Media → Add New
-4. **Kelola Gallery:** Gallery MTQ → All Galleries
+## 🚀 **Quick Start**
 
-## 📁 **Struktur Proyek**
+### **📦 Untuk Pengguna WordPress:**
 
-```
+### **🔧 For Developers:**
 wp-mtq-aceh-pidie-jaya/
-├── wp-content/themes/mtq-aceh-pidie-jaya/   # Theme utama
+## 📁 **Struktur Proyek**
 │   ├── inc/                                  # Custom functionality
-│   ├── template-parts/                       # Template components
-│   ├── assets/                              # Source CSS/JS
-│   └── dist/                                # Compiled assets
-├── scripts/                                 # Utility scripts
-│   └── gallery-import/                      # Gallery import tools
-├── docs/                                    # Dokumentasi
-└── data/                                    # Sample data
-```
-
 ## 🔧 **Instalasi & Deployment**
-
+│   ├── assets/                              # Source CSS/JS
 ### **Development Setup:**
-
+├── scripts/                                 # Utility scripts
+### **Production Deployment:**
+├── docs/                                    # Dokumentasi
+## 📚 **Dokumentasi**
+```
+### **User Guides:**
+## 🔧 **Instalasi & Deployment**
+### **Technical Docs:**
+### **Development Setup:**
+### **Troubleshooting:**
 1. **WordPress Requirements:**
-   - PHP 7.4+
+## 🎨 **Gallery System**
    - MySQL 5.7+
-   - WordPress 5.8+
+### **Features:**
 
-2. **Theme Installation:**
+### **Usage:**
    ```bash
-   # Navigate to WordPress themes directory
+## 🛡️ **Security & Performance**
    cd wp-content/themes/
-   
+## 🌐 **Browser Support**
    # Activate theme via WP Admin
-   # Appearance → Themes → MTQ Aceh Pidie Jaya → Activate
+## 🤝 **Contributing**
    ```
-
+## 📄 **License**
 3. **Dependencies:**
-   ```bash
+## 👥 **Team**
    # Install Node.js dependencies
-   npm install
+## 📞 **Support**
    
-   # Build assets
+🕌 Pidie Jaya - Bumi Pejuang Meumakmu
    npm run build
    ```
 
