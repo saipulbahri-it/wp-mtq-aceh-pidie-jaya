@@ -41,6 +41,11 @@ Comprehensive documentation suite untuk tema WordPress MTQ Aceh Pidie Jaya, menc
 - **Scope**: Distribution channels, package creation, user installation, maintenance
 
 #### **✅ DEPLOYMENT_CHECKLIST.md**
+#### **🧪 docs/RELEASE_WORKFLOW.md**
+- **Purpose**: Praktik rilis template-only yang terotomasi
+- **Audience**: Release managers, developers
+- **Content**: Prasyarat, dry-run, rilis nyata, artifact, deploy, rollback, troubleshooting
+- **Scope**: Otomasi rilis via script, Git tag & GitHub Release
 - **Purpose**: Pre-deployment quality assurance dan validation
 - **Audience**: QA team, release managers, developers
 - **Content**: Code quality checks, security verification, testing requirements, launch preparation
