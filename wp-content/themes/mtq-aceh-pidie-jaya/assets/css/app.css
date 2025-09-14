@@ -284,10 +284,11 @@ h6 {
 /* Animasi section masuk dari bawah dengan fade dan sedikit zoom */
 .section-animate {
   opacity: 0;
-  transform: translateY(60px) scale(0.97);
-  filter: blur(6px);
-  transition: opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1.1),
-    transform 0.9s cubic-bezier(0.22, 1, 0.36, 1.1), filter 0.9s;
+  transform: translateY(40px) scale(0.98);
+  filter: blur(2px);
+  transition: opacity 0.8s cubic-bezier(0.25, 0.8, 0.25, 1),
+    transform 0.8s cubic-bezier(0.25, 0.8, 0.25, 1), 
+    filter 0.8s cubic-bezier(0.25, 0.8, 0.25, 1);
   will-change: opacity, transform, filter;
 }
 .section-animate.visible {
