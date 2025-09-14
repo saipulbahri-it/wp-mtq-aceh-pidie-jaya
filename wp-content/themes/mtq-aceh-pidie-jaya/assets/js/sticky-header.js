@@ -5,6 +5,8 @@
 
 document.addEventListener('DOMContentLoaded', function() {
     const header = document.getElementById('main-header');
+    // Mark body to enable sticky header CSS adjustments
+    document.body.classList.add('has-sticky-header');
     const mobileMenuBtn = document.getElementById('mobile-menu-btn');
     const mobileMenu = document.getElementById('mobile-menu');
     let lastScrollTop = 0;

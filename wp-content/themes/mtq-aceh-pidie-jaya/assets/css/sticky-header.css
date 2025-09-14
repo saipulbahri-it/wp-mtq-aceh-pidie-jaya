@@ -46,16 +46,21 @@ html.wp-toolbar body #main-header {
     position: sticky !important;
 }
 
-/* Content padding adjustments for admin bar */
-.admin-bar .hero-section,
-.admin-bar main section:first-child {
+/* Content padding adjustments for admin bar (apply only to hero sections) */
+.admin-bar .hero-section {
     padding-top: calc(2rem + 32px) !important; /* pt-24 + admin bar height */
 }
 
 @media screen and (max-width: 782px) {
-    .admin-bar .hero-section,
-    .admin-bar main section:first-child {
+    .admin-bar .hero-section {
         padding-top: calc(5rem + 46px) !important; /* pt-20 + mobile admin bar height */
+    }
+}
+
+/* Prevent first section (non-hero) from being hidden under sticky header on mobile */
+@media screen and (max-width: 782px) {
+    .admin-bar.has-sticky-header main > section:first-child:not(.hero-section) {
+        padding-top: var(--header-height, 64px) !important;
     }
 }
 
