@@ -1,5 +1,25 @@
 # Changelog - MTQ Aceh Pidie Jaya Template
 
+## [2025-09-14] Refactor: Modularization & Default Menu
+
+### Changed
+- Split large feature blocks from `functions.php` into dedicated modules under `inc/` without changing behavior:
+  - `inc/security.php` (HTTPS + headers + logging)
+  - `inc/reading-time.php` (reading time helpers + shortcode)
+  - `inc/breadcrumbs.php` (breadcrumb schema in head)
+  - `inc/related-posts.php` (related/popular/trending helpers + shortcode + view tracking)
+  - `inc/social-sharing.php` (AJAX share tracking, admin meta box, widget, shortcode, OG/Twitter meta)
+  - `inc/ajax.php` (AJAX: track_post_view, load_more_posts, load_more_category, load_more_news_page)
+  - `inc/featured-post.php` (featured post meta box + save)
+- Remove duplicated implementations from `functions.php` and require the new modules.
+
+### Added
+- Auto-create and assign a default header menu (“Menu Header”) on first theme activation; idempotent and bound to `top-header-menu`.
+
+### Validation
+- PHP lint checks passed for `functions.php` and all new `inc/*` modules.
+- No functional changes intended; behavior parity verified via static smoke checks (hooks, shortcodes, actions, meta boxes, widgets).
+
 ## [v2.1.0] - 2024-01-15
 
 ### ✨ Features Added
