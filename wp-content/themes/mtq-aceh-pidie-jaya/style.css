@@ -14,15 +14,7 @@ MTQ Aceh Pidie Jaya Theme, Copyright 2025 Pemerintah Kabupaten Pidie Jaya
 MTQ Aceh Pidie Jaya is distributed under the terms of the GNU GPL
 */
 
-/* Fix header for admin bar */
-body.admin-bar #main-header {
-	margin-top: 32px;
-}
-@media (max-width: 782px) {
-	body.admin-bar #main-header {
-		margin-top: 46px;
-	}
-}
+/* Admin bar handled in assets/css/sticky-header.css (top offset) */
 
 /* Line clamp utilities */
 .line-clamp-2 {

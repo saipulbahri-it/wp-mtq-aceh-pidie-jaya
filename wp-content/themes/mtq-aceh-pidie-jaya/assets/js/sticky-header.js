@@ -10,12 +10,18 @@ document.addEventListener('DOMContentLoaded', function() {
     let lastScrollTop = 0;
     let isScrolling = false;
     
-    // Admin bar height calculation
+    // Admin bar height calculation (robust)
     function getAdminBarHeight() {
         const adminBar = document.getElementById('wpadminbar');
-        if (adminBar && document.body.classList.contains('admin-bar')) {
-            // WordPress admin bar heights: 32px desktop, 46px mobile
-            return window.innerWidth > 782 ? 32 : 46;
+        const hasAdminFlag = document.body.classList.contains('admin-bar') ||
+            document.documentElement.classList.contains('admin-bar') ||
+            document.documentElement.classList.contains('wp-toolbar');
+        if (adminBar && hasAdminFlag) {
+            const rectH = Math.round(adminBar.getBoundingClientRect().height || 0);
+            const offH = Math.round(adminBar.offsetHeight || 0);
+            const h = rectH || offH;
+            // Fallback to known WP heights
+            return h > 0 ? h : (window.innerWidth > 782 ? 32 : 46);
         }
         return 0;
     }
@@ -23,23 +29,25 @@ document.addEventListener('DOMContentLoaded', function() {
     // Update header position using CSS custom properties
     function updateHeaderPosition() {
         const adminBarHeight = getAdminBarHeight();
+        const scrollTop = window.pageYOffset || document.documentElement.scrollTop || 0;
+        const isMobile = window.innerWidth <= 782;
+        // Expose CSS vars for use in CSS
         document.documentElement.style.setProperty('--admin-bar-height', adminBarHeight + 'px');
-        
-        // Ensure header uses the correct top position with higher specificity
-        if (document.body.classList.contains('admin-bar') || adminBarHeight > 0) {
+        document.documentElement.style.setProperty('--header-height', (header?.offsetHeight || 0) + 'px');
+
+        // On mobile while scrolling down, keep header at top: 0
+        if (isMobile && scrollTop > 0) {
+            header.style.setProperty('top', '0px', 'important');
+            if (adminBarHeight > 0) header.classList.add('with-admin-bar');
+        } else if (document.body.classList.contains('admin-bar') || adminBarHeight > 0) {
+            // At top of page (or desktop), respect admin bar height
             header.style.setProperty('top', adminBarHeight + 'px', 'important');
             header.classList.add('with-admin-bar');
-            
-            // Debug logging (remove in production)
-            console.log('Admin bar detected, header top:', adminBarHeight + 'px');
         } else {
             header.style.setProperty('top', '0px', 'important');
             header.classList.remove('with-admin-bar');
-            
-            // Debug logging (remove in production)
-            console.log('No admin bar, header top: 0px');
         }
-        
+
         // Force repaint
         header.style.transform = 'translateZ(0)';
     }
@@ -273,7 +281,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (sections.length > 0) {
             const observerOptions = {
                 root: null,
-                rootMargin: `-${header.offsetHeight}px 0px -50% 0px`,
+                rootMargin: `${-(header.offsetHeight + getAdminBarHeight())}px 0px -50% 0px`,
                 threshold: 0
             };
             
