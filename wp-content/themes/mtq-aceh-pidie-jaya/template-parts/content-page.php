@@ -14,8 +14,8 @@ if (!defined('ABSPATH')) {
 
 ?>
 
-<div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
-	<article id="post-<?php the_ID(); ?>" <?php post_class('bg-white rounded-3xl shadow-xl overflow-hidden border border-slate-200/50'); ?>>
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
+	<article id="post-<?php the_ID(); ?>" <?php post_class('bg-white'); ?>>
 		
 		<!-- Featured Image Hero -->
 		<?php if (has_post_thumbnail()) : ?>
@@ -253,7 +253,7 @@ if (!defined('ABSPATH')) {
 								</a>
 								
 								<!-- Copy Link -->
-								<button onclick="copyToClipboard('<?php echo esc_js(get_permalink()); ?>')" 
+								<button onclick="copyToClipboard(event, '<?php echo esc_js(get_permalink()); ?>')" 
 								        class="inline-flex items-center gap-2 px-4 py-2.5 bg-slate-600 hover:bg-slate-700 text-white rounded-xl font-medium transition-all duration-200 hover:scale-105 shadow-sm hover:shadow-md">
 									<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 										<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
@@ -299,11 +299,11 @@ if (!defined('ABSPATH')) {
 
 <!-- Enhanced JavaScript for Copy to Clipboard -->
 <script>
-function copyToClipboard(text) {
+function copyToClipboard(e, text) {
 	if (navigator.clipboard) {
 		navigator.clipboard.writeText(text).then(function() {
 			// Success feedback
-			const button = event.target.closest('button');
+			const button = (e && e.target ? e.target : null) ? e.target.closest('button') : document.activeElement;
 			const originalText = button.innerHTML;
 			button.innerHTML = `
 				<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -319,16 +319,16 @@ function copyToClipboard(text) {
 				button.classList.remove('bg-green-600', 'hover:bg-green-700');
 				button.classList.add('bg-slate-600', 'hover:bg-slate-700');
 			}, 2000);
-		}).catch(function() {
+	}).catch(function() {
 			// Fallback
-			copyToClipboardFallback(text);
+	    copyToClipboardFallback(e, text);
 		});
 	} else {
-		copyToClipboardFallback(text);
+	copyToClipboardFallback(e, text);
 	}
 }
 
-function copyToClipboardFallback(text) {
+function copyToClipboardFallback(e, text) {
 	const textArea = document.createElement('textarea');
 	textArea.value = text;
 	textArea.style.position = 'fixed';
@@ -340,7 +340,7 @@ function copyToClipboardFallback(text) {
 	try {
 		document.execCommand('copy');
 		// Success feedback for fallback
-		const button = event.target.closest('button');
+	const button = (e && e.target ? e.target : null) ? e.target.closest('button') : document.activeElement;
 		const originalText = button.innerHTML;
 		button.innerHTML = `
 			<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">

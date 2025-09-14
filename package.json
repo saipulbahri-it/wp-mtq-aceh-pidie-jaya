@@ -7,8 +7,9 @@
         "build": "NODE_ENV=production tailwindcss -c tailwind.config.js -i ./wp-content/themes/mtq-aceh-pidie-jaya/assets/css/app.css -o ./wp-content/themes/mtq-aceh-pidie-jaya/dist/app.css --minify"
     },
     "devDependencies": {
-        "tailwindcss": "^3.4.10",
+        "@tailwindcss/typography": "^0.5.16",
+        "autoprefixer": "^10.4.20",
         "postcss": "^8.4.41",
-        "autoprefixer": "^10.4.20"
+        "tailwindcss": "^3.4.10"
     }
 }
