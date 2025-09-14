@@ -30,6 +30,7 @@ class MTQ_Gallery_Shortcodes {
             'columns' => '',
             'show_captions' => '',
             'enable_lightbox' => '',
+            'show_header' => '',
             'limit' => '',
             'category' => '',
             'tag' => '',
@@ -152,28 +153,42 @@ class MTQ_Gallery_Shortcodes {
         $images = get_post_meta($gallery_post->ID, '_mtq_gallery_images', true);
         $videos = get_post_meta($gallery_post->ID, '_mtq_gallery_videos', true);
         
-        // Get settings (use shortcode atts or saved meta)
+    // Get settings (use shortcode atts or saved meta)
         $layout = !empty($atts['layout']) ? $atts['layout'] : get_post_meta($gallery_post->ID, '_mtq_gallery_layout', true);
         $columns = !empty($atts['columns']) ? $atts['columns'] : get_post_meta($gallery_post->ID, '_mtq_gallery_columns', true);
         $show_captions = !empty($atts['show_captions']) ? $atts['show_captions'] : get_post_meta($gallery_post->ID, '_mtq_gallery_show_captions', true);
         $enable_lightbox = !empty($atts['enable_lightbox']) ? $atts['enable_lightbox'] : get_post_meta($gallery_post->ID, '_mtq_gallery_enable_lightbox', true);
+    $show_header = isset($atts['show_header']) ? $atts['show_header'] : '';
         
         // Set defaults
         $layout = !empty($layout) ? $layout : 'grid';
         $columns = !empty($columns) ? $columns : '3';
-        $show_captions = $show_captions === 'no' ? false : true;
-        $enable_lightbox = $enable_lightbox === 'no' ? false : true;
+    $show_captions = $show_captions === 'no' ? false : true;
+        $enable_lightbox = $enable_lightbox === 'no' ? false : true; // Default to true
+    $show_header = $show_header === 'no' ? false : true; // Default to true
+        
+        // Debug logging
+        error_log('Gallery shortcode settings: ' . json_encode([
+            'layout' => $layout,
+            'columns' => $columns,
+            'show_captions' => $show_captions,
+            'enable_lightbox' => $enable_lightbox,
+            'gallery_id' => $gallery_post->ID,
+            'show_header' => $show_header
+        ]));
         
         $output = '<div class="mtq-gallery-container" data-gallery-id="' . $gallery_post->ID . '">';
         
-        // Gallery title and description
-        $output .= '<div class="mtq-gallery-header mb-6">';
-        $output .= '<h3 class="mtq-gallery-title text-2xl font-bold text-slate-800 mb-2">' . esc_html($gallery_post->post_title) . '</h3>';
-        
-        if (!empty($gallery_post->post_excerpt)) {
-            $output .= '<p class="mtq-gallery-description text-slate-600">' . esc_html($gallery_post->post_excerpt) . '</p>';
+        // Gallery title and description (optional)
+        if ($show_header) {
+            $output .= '<div class="mtq-gallery-header mb-6">';
+            $output .= '<h3 class="mtq-gallery-title text-2xl font-bold text-slate-800 mb-2">' . esc_html($gallery_post->post_title) . '</h3>';
+            
+            if (!empty($gallery_post->post_excerpt)) {
+                $output .= '<p class="mtq-gallery-description text-slate-600">' . esc_html($gallery_post->post_excerpt) . '</p>';
+            }
+            $output .= '</div>';
         }
-        $output .= '</div>';
         
         // Render based on layout
         switch ($layout) {
@@ -426,7 +441,7 @@ class MTQ_Gallery_Shortcodes {
         
         // First few images load immediately, rest use lazy loading
         if ($index < 3) {
-            $img_src = 'src="' . esc_url($item['thumbnail']) . '"';
+            $img_src = 'src="' . esc_url($item['thumbnail']) . '" fetchpriority="high"';
         } else {
             $img_src = 'src="data:image/svg+xml,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 400 300\'><rect width=\'400\' height=\'300\' fill=\'%23f3f4f6\'/><text x=\'50%\' y=\'50%\' text-anchor=\'middle\' dy=\'.3em\' fill=\'%239ca3af\' font-size=\'14\'>Loading...</text></svg>"';
             $lazy_attrs = 'data-src="' . esc_url($item['thumbnail']) . '" loading="lazy"';
@@ -438,7 +453,7 @@ class MTQ_Gallery_Shortcodes {
             $output .= '<div class="image-gallery-item cursor-pointer" ' . $lightbox_attrs . '>';
         }
         
-        $output .= '<img ' . $img_src . ' ' . $lazy_attrs . ' alt="' . esc_attr($item['caption']) . '" class="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-300">';
+    $output .= '<img ' . $img_src . ' ' . $lazy_attrs . ' decoding="async" alt="' . esc_attr($item['caption']) . '" class="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-300">';
         
         // Overlay icon
         if ($enable_lightbox) {

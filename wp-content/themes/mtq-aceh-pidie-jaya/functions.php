@@ -320,10 +320,8 @@ function mtq_aceh_pidie_jaya_scripts() {
 		wp_enqueue_script('mtq-aceh-pidie-jaya-arena-js', get_template_directory_uri() . '/assets/js/arena.js', array(), _S_VERSION, true);
 	}
 	
-	// Enqueue gallery JavaScript for gallery pages and posts
-	if (is_post_type_archive('mtq_gallery') || is_singular('mtq_gallery') || is_tax('mtq_gallery_category') || is_search()) {
-		wp_enqueue_script('mtq-aceh-pidie-jaya-gallery-js', get_template_directory_uri() . '/assets/js/gallery.js', array(), _S_VERSION, true);
-	}
+    // Enqueue gallery JavaScript site-wide so any gallery markup works (CPT, blocks, or templates)
+    wp_enqueue_script('mtq-aceh-pidie-jaya-gallery-js', get_template_directory_uri() . '/assets/js/gallery.js', array(), _S_VERSION, true);
 	
 	// Countdown with dynamic configuration
 	wp_enqueue_script('mtq-aceh-pidie-jaya-countdown', get_template_directory_uri() . '/assets/js/countdown.js', array(), _S_VERSION, true);

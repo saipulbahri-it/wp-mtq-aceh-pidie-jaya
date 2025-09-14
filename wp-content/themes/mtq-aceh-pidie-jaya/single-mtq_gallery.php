@@ -12,7 +12,7 @@ if (!defined('ABSPATH')) {
 
 get_header(); ?>
 
-<main class="container mx-auto px-4 py-8">
+<main class="container mx-auto px-4 py-8 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <?php if (have_posts()) : ?>
         <?php while (have_posts()) : the_post(); ?>
             <article id="post-<?php the_ID(); ?>" <?php post_class('mtq-single-gallery'); ?>>
@@ -109,13 +109,13 @@ get_header(); ?>
                 <div class="mtq-gallery-content">
                     <?php
                     // Use the shortcode to display the gallery
-                    echo do_shortcode('[mtq_gallery id="' . get_the_ID() . '"]');
+                    echo do_shortcode('[mtq_gallery id="' . get_the_ID() . '" show_header="no"]');
                     ?>
                 </div>
                 
                 <!-- Full Description -->
                 <?php if (get_the_content()) : ?>
-                <div class="mtq-gallery-description mt-12 max-w-4xl mx-auto">
+                <div class="mtq-gallery-description mt-12 mx-auto max-w-7xl">
                     <div class="prose prose-lg prose-slate max-w-none">
                         <?php the_content(); ?>
                     </div>
@@ -189,6 +189,6 @@ get_header(); ?>
             </a>
         </div>
     <?php endif; ?>
-</main>
+ </main>
 
 <?php get_footer(); ?>

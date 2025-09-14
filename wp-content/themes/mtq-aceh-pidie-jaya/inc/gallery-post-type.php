@@ -179,6 +179,15 @@ class MTQ_Gallery_Post_Type {
             'side',
             'default'
         );
+        
+        add_meta_box(
+            'mtq_gallery_help',
+            '📚 Gallery Help & Features',
+            array($this, 'gallery_help_meta_box'),
+            'mtq_gallery',
+            'side',
+            'low'
+        );
     }
     
     /**
@@ -387,13 +396,53 @@ class MTQ_Gallery_Post_Type {
                 </td>
             </tr>
             <tr>
-                <th><label for="mtq_gallery_enable_lightbox">Enable Lightbox</label></th>
+                <th><label for="mtq_gallery_enable_lightbox">Enhanced Modal Gallery</label></th>
                 <td>
                     <input type="checkbox" name="mtq_gallery_enable_lightbox" id="mtq_gallery_enable_lightbox" value="yes" <?php checked($enable_lightbox, 'yes'); ?>>
-                    <label for="mtq_gallery_enable_lightbox">Enable lightbox modal</label>
+                    <label for="mtq_gallery_enable_lightbox">Enable enhanced modal gallery</label>
+                    <p class="description">
+                        🚀 <strong>Features:</strong> Navigation arrows, zoom controls, fullscreen mode, touch gestures, dan keyboard shortcuts (←/→ arrows, ESC to close)
+                    </p>
                 </td>
             </tr>
         </table>
+        <?php
+    }
+    
+    /**
+     * Gallery Help Meta Box
+     */
+    public function gallery_help_meta_box($post) {
+        ?>
+        <div style="font-size: 13px; line-height: 1.5;">
+            <h4 style="margin-top: 0;">🎯 Enhanced Modal Features</h4>
+            <ul style="margin: 0; padding-left: 20px;">
+                <li><strong>Navigation:</strong> Arrow buttons & keyboard (←/→)</li>
+                <li><strong>Zoom:</strong> Mouse wheel & zoom buttons</li>
+                <li><strong>Fullscreen:</strong> Double-click or fullscreen button</li>
+                <li><strong>Touch:</strong> Swipe gestures on mobile</li>
+                <li><strong>Exit:</strong> ESC key, close button, or backdrop click</li>
+            </ul>
+            
+            <h4>💡 Quick Tips</h4>
+            <ul style="margin: 0; padding-left: 20px;">
+                <li>Drag images to reorder gallery sequence</li>
+                <li>Mixed content (images + videos) supported</li>
+                <li>Captions appear in modal overlay</li>
+                <li>Test gallery by using shortcode: <code>[mtq_gallery id="<?php echo $post->ID; ?>"]</code></li>
+            </ul>
+            
+            <h4>🔧 Display Options</h4>
+            <p style="margin: 10px 0;">
+                <strong>Shortcode:</strong><br>
+                <code>[mtq_gallery id="<?php echo $post->ID; ?>" columns="3" show_title="true"]</code>
+            </p>
+            
+            <div style="background: #f0f6fc; padding: 10px; border-radius: 4px; margin-top: 15px;">
+                <strong>🚀 Ready to use!</strong><br>
+                Gallery dengan enhanced modal sudah siap. Enable lightbox di settings untuk mengaktifkan semua fitur.
+            </div>
+        </div>
         <?php
     }
     
@@ -473,6 +522,98 @@ class MTQ_Gallery_Post_Type {
         
         wp_enqueue_media();
         wp_enqueue_script('jquery-ui-sortable');
+        
+        // Add admin CSS
+        wp_add_inline_style('wp-admin', '
+            .mtq-gallery-item, .mtq-gallery-video-item {
+                position: relative;
+                display: inline-block;
+                margin: 5px;
+                border: 2px solid #ddd;
+                border-radius: 8px;
+                overflow: hidden;
+                transition: all 0.3s ease;
+            }
+            .mtq-gallery-item:hover, .mtq-gallery-video-item:hover {
+                border-color: #0073aa;
+                box-shadow: 0 2px 8px rgba(0,115,170,0.2);
+            }
+            .mtq-gallery-item-preview {
+                position: relative;
+                background: #f5f5f5;
+            }
+            .mtq-gallery-item-preview img {
+                display: block;
+                max-width: 100%;
+                height: auto;
+            }
+            .mtq-gallery-item-actions {
+                position: absolute;
+                top: 5px;
+                right: 5px;
+                opacity: 0;
+                transition: opacity 0.3s ease;
+            }
+            .mtq-gallery-item:hover .mtq-gallery-item-actions,
+            .mtq-gallery-video-item:hover .mtq-gallery-item-actions {
+                opacity: 1;
+            }
+            .mtq-remove-item, .mtq-remove-video {
+                background: #dc3232;
+                color: white;
+                border: none;
+                border-radius: 50%;
+                width: 24px;
+                height: 24px;
+                font-size: 16px;
+                line-height: 1;
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            .mtq-remove-item:hover, .mtq-remove-video:hover {
+                background: #a00;
+            }
+            .mtq-gallery-item-caption input {
+                width: 100%;
+                padding: 8px;
+                border: 1px solid #ddd;
+                border-radius: 0 0 6px 6px;
+                font-size: 12px;
+            }
+            #youtube-url-modal {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0,0,0,0.7);
+                z-index: 9999;
+                display: none;
+                align-items: center;
+                justify-content: center;
+            }
+            .youtube-modal-content {
+                background: white;
+                padding: 20px;
+                border-radius: 8px;
+                max-width: 400px;
+                width: 90%;
+            }
+            .enhanced-modal-info {
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                color: white;
+                padding: 15px;
+                border-radius: 8px;
+                margin: 10px 0;
+            }
+            .enhanced-modal-info h4 {
+                margin: 0 0 10px 0;
+                color: white;
+            }
+        ');
+        
         
         wp_add_inline_script('jquery', '
             jQuery(document).ready(function($) {

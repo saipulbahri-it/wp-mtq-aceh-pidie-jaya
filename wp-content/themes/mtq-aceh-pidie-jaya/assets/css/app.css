@@ -880,6 +880,85 @@ h6 {
   }
 }
 
+/* Enhanced Navigation and Control Styling */
+.image-modal #modal-prev,
+.image-modal #modal-next {
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+  border: 2px solid rgba(255, 255, 255, 0.1);
+}
+
+.image-modal #modal-prev:hover,
+.image-modal #modal-next:hover {
+  background-color: rgba(0, 0, 0, 0.7) !important;
+  transform: scale(1.1);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.image-modal #modal-prev:active,
+.image-modal #modal-next:active {
+  transform: scale(0.95);
+}
+
+.image-modal #modal-prev:disabled,
+.image-modal #modal-next:disabled {
+  opacity: 0.3 !important;
+  cursor: not-allowed;
+  transform: none !important;
+}
+
+/* Enhanced Control Panel */
+.image-modal .absolute.top-4.right-4 button {
+  transition: all 0.2s ease;
+  backdrop-filter: blur(5px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.image-modal .absolute.top-4.right-4 button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.image-modal .absolute.top-4.right-4 button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  transform: none !important;
+}
+
+/* Close button special styling */
+.image-modal #modal-close {
+  background: linear-gradient(135deg, #ef4444, #dc2626) !important;
+}
+
+.image-modal #modal-close:hover {
+  background: linear-gradient(135deg, #dc2626, #b91c1c) !important;
+}
+
+/* Zoom level indicator */
+.image-modal #modal-zoom-reset {
+  position: relative;
+}
+
+.image-modal #modal-zoom-reset::after {
+  content: attr(data-zoom);
+  position: absolute;
+  top: -25px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 10px;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  pointer-events: none;
+}
+
+.image-modal #modal-zoom-reset:hover::after {
+  opacity: 1;
+}
+
 /* Navigation arrows styling */
 .image-modal button[onclick*="navigateGallery"] {
   transition: all 0.3s ease;

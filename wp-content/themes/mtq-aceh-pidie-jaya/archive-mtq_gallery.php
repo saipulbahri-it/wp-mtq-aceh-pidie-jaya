@@ -143,23 +143,8 @@ get_header(); ?>
                     </div>
                 </div>
                 
-                <!-- View & Sort Options -->
-                <div class="flex items-center gap-4">
-                    <!-- View Toggle -->
-                    <div class="flex items-center bg-gray-100 rounded-xl p-1">
-                        <button class="view-toggle p-2 rounded-lg transition-all duration-200" data-view="grid" title="Grid View">
-                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                                <path d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM11 13a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path>
-                            </svg>
-                        </button>
-                        <button class="view-toggle p-2 rounded-lg transition-all duration-200" data-view="list" title="List View">
-                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                                <path fill-rule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd"></path>
-                            </svg>
-                        </button>
-                    </div>
-                    
-                    <!-- Sort Dropdown -->
+                <!-- Sort Options only -->
+                <div class="flex items-center">
                     <select class="sort-select px-4 py-2 bg-white border border-gray-200 rounded-xl text-sm font-medium text-gray-700 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200">
                         <option value="date-desc">Terbaru</option>
                         <option value="date-asc">Terlama</option>
@@ -186,7 +171,7 @@ get_header(); ?>
         </div>
     </div>
     <!-- Main Content -->
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+    <div class="max-w-7xl mx-auto py-4">
         
         <!-- Results Info -->
         <div class="mb-6">
@@ -221,9 +206,26 @@ get_header(); ?>
                     // Get featured image or first gallery image
                     $thumbnail = '';
                     if (has_post_thumbnail()) {
-                        $thumbnail = get_the_post_thumbnail(get_the_ID(), 'large', array('class' => 'w-full h-72 object-cover'));
+                        $thumbnail = get_the_post_thumbnail(
+                            get_the_ID(),
+                            'large',
+                            array(
+                                'class' => 'w-full aspect-video object-cover rounded-t-3xl',
+                                'loading' => 'lazy',
+                                'decoding' => 'async'
+                            )
+                        );
                     } elseif (!empty($images)) {
-                        $thumbnail = wp_get_attachment_image($images[0], 'large', false, array('class' => 'w-full h-72 object-cover'));
+                        $thumbnail = wp_get_attachment_image(
+                            $images[0],
+                            'large',
+                            false,
+                            array(
+                                'class' => 'w-full aspect-video object-cover rounded-t-3xl',
+                                'loading' => 'lazy',
+                                'decoding' => 'async'
+                            )
+                        );
                     }
                     
                     // Get categories
@@ -453,65 +455,51 @@ get_header(); ?>
     
 </main>
 
-<!-- Enhanced Image Modal -->
-<div id="image-modal" class="image-modal fixed inset-0 bg-black bg-opacity-90 hidden z-50 flex items-center justify-center transition-all duration-300">
-    <div class="image-modal-overlay absolute inset-0"></div>
-    
-    <div class="image-modal-content relative max-w-[90vw] max-h-[85vh] lg:max-w-[75vw] lg:max-h-[80vh] flex items-center justify-center">
-        <!-- Navigation Arrows -->
-        <button id="modal-prev" class="absolute left-4 top-1/2 transform -translate-y-1/2 text-white hover:text-gray-300 transition-colors z-[1003] bg-black bg-opacity-30 rounded-full w-12 h-12 flex items-center justify-center hidden" aria-label="Gambar sebelumnya">
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
-            </svg>
-        </button>
-        <button id="modal-next" class="absolute right-4 top-1/2 transform -translate-y-1/2 text-white hover:text-gray-300 transition-colors z-[1003] bg-black bg-opacity-30 rounded-full w-12 h-12 flex items-center justify-center hidden" aria-label="Gambar selanjutnya">
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-            </svg>
-        </button>
-        
-        <!-- Enhanced Controls -->
-        <div class="absolute top-4 right-4 flex space-x-2 z-[1002]">
-            <button id="modal-zoom-in" class="bg-black bg-opacity-50 text-white p-2 rounded hover:bg-opacity-70 transition-colors" title="Zoom In">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"></path>
-                </svg>
-            </button>
-            <button id="modal-zoom-out" class="bg-black bg-opacity-50 text-white p-2 rounded hover:bg-opacity-70 transition-colors" title="Zoom Out">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
-                </svg>
-            </button>
-            <button id="modal-zoom-reset" class="bg-black bg-opacity-50 text-white p-2 rounded hover:bg-opacity-70 transition-colors" title="Reset Zoom">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
-                </svg>
-            </button>
-            <button id="modal-close" class="bg-black bg-opacity-50 text-white p-2 rounded hover:bg-opacity-70 transition-colors" aria-label="Tutup modal">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                </svg>
-            </button>
-        </div>
-        
-        <div class="image-modal-body relative">
-            <!-- Loading Spinner -->
-            <div id="modal-loading" class="modal-loading flex flex-col items-center justify-center">
-                <div class="loading-spinner animate-spin rounded-full h-8 w-8 border-b-2 border-white"></div>
-                <p class="text-white text-sm mt-3">Memuat gambar...</p>
-            </div>
-            <img id="modal-image" src="" alt="" class="max-w-full max-h-full object-contain w-auto h-auto" style="display: none; max-width: 100%; max-height: 90%;">
-            
-            <div class="image-modal-caption absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent text-white p-6" id="modal-caption" style="display: none;">
-                <h3 id="modal-title" class="text-lg font-semibold text-white mb-2"></h3>
-                <div id="modal-counter" class="text-gray-300 text-sm mb-2"></div>
-                <div class="text-gray-300 text-xs space-y-1">
-                    <p>🖱️ Klik gambar atau tekan Spasi untuk zoom</p>
-                    <p>⌨️ Gunakan ← → untuk navigasi | ESC untuk menutup</p>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+<!-- Inline modal removed; using global mtq-lightbox from gallery.js -->
+
+<script>
+// Enhance View toggle and Sort behavior for gallery archive
+(function() {
+    function ready(fn){ if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',fn);} else { fn(); } }
+
+    ready(function() {
+        const grid = document.getElementById('gallery-grid');
+        if (!grid) return;
+
+        const sortSelect = document.querySelector('.sort-select');
+
+        function sortItems(mode) {
+            const items = Array.from(grid.querySelectorAll('article.gallery-item'));
+            const getDate = el => new Date(el.getAttribute('data-date') || '1970-01-01');
+            const getTitle = el => (el.getAttribute('data-title') || '').toLowerCase();
+
+            items.sort((a,b)=>{
+                switch (mode) {
+                    case 'date-asc': return getDate(a) - getDate(b);
+                    case 'title-asc': return getTitle(a).localeCompare(getTitle(b));
+                    case 'title-desc': return getTitle(b).localeCompare(getTitle(a));
+                    case 'date-desc':
+                    default: return getDate(b) - getDate(a);
+                }
+            });
+
+            // Re-append in sorted order
+            const frag = document.createDocumentFragment();
+            items.forEach(el => frag.appendChild(el));
+            grid.appendChild(frag);
+        }
+
+
+        // Bind events
+        if (sortSelect) {
+            sortSelect.addEventListener('change', () => sortItems(sortSelect.value));
+            // Initial sort to reflect default selection
+            sortItems(sortSelect.value);
+        }
+
+        // No view toggle, grid remains as designed
+    });
+})();
+</script>
 
 <?php get_footer(); ?>
