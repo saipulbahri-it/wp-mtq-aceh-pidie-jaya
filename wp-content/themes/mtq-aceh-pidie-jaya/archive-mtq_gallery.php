@@ -85,23 +85,8 @@ get_header(); ?>
     <!-- Main Content -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
     
-    <!-- Enhanced Filter & Search Section -->
+    <!-- Enhanced Filter Section -->
     <div class="mb-12">
-        <!-- Search Bar -->
-        <div class="gallery-search max-w-2xl mx-auto mb-8">
-            <div class="relative">
-                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                    <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
-                    </svg>
-                </div>
-                <input type="text" 
-                       placeholder="Cari gallery berdasarkan judul, kategori, atau deskripsi..." 
-                       class="block w-full pl-10 pr-4 py-4 text-gray-900 placeholder-gray-500 bg-white border border-gray-200 rounded-2xl focus:ring-2 focus:ring-blue-500 focus:border-transparent shadow-lg transition-all duration-300 hover:shadow-xl"
-                       id="gallery-search-input">
-            </div>
-        </div>
-        
         <!-- Enhanced Filter Bar -->
         <div class="bg-white rounded-2xl shadow-lg border border-gray-100 p-6 mb-8">
             <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
@@ -182,10 +167,6 @@ get_header(); ?>
                     <?php if ($term->description) : ?>
                         <span class="block text-sm mt-1"><?php echo esc_html($term->description); ?></span>
                     <?php endif; ?>
-                </p>
-            <?php elseif (is_search()) : ?>
-                <p class="text-slate-600">
-                    Hasil pencarian untuk: <strong>"<?php echo get_search_query(); ?>"</strong>
                 </p>
             <?php endif; ?>
         </div>
@@ -411,13 +392,7 @@ get_header(); ?>
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 12h6m-6-4h6m2 5.291A7.962 7.962 0 0112 15c-2.34 0-4.291-1.002-5.824-2.651M15 17H9m6 0a3 3 0 01-3 3H9a3 3 0 01-3-3m6 0a3 3 0 003-3V9a3 3 0 00-3-3H9a3 3 0 00-3 3v5a3 3 0 003 3m6 0a3 3 0 003-3V9a3 3 0 00-3-3"></path>
             </svg>
             
-            <?php if (is_search()) : ?>
-                <h2 class="text-2xl font-bold text-slate-800 mb-4">Tidak Ada Hasil</h2>
-                <p class="text-slate-600 mb-8">
-                    Tidak ditemukan gallery untuk pencarian "<strong><?php echo get_search_query(); ?></strong>".
-                    <br>Coba kata kunci yang berbeda atau jelajahi semua gallery.
-                </p>
-            <?php elseif (is_tax()) : ?>
+            <?php if (is_tax()) : ?>
                 <?php $term = get_queried_object(); ?>
                 <h2 class="text-2xl font-bold text-slate-800 mb-4">Belum Ada Gallery</h2>
                 <p class="text-slate-600 mb-8">
