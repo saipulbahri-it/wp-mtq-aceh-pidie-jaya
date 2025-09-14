@@ -6,7 +6,9 @@
         "dev": "tailwindcss -c tailwind.config.js -i ./wp-content/themes/mtq-aceh-pidie-jaya/assets/css/app.css -o ./wp-content/themes/mtq-aceh-pidie-jaya/dist/app.css --watch",
         "build": "NODE_ENV=production tailwindcss -c tailwind.config.js -i ./wp-content/themes/mtq-aceh-pidie-jaya/assets/css/app.css -o ./wp-content/themes/mtq-aceh-pidie-jaya/dist/app.css --minify",
         "zip:theme": "bash ./scripts/release-theme.sh zip",
-        "release:theme": "bash ./scripts/release-theme.sh release"
+        "release:theme": "bash ./scripts/release-theme.sh release",
+        "release:dry": "bash scripts/release-theme.sh 1.0.1 --dry-run --no-release --no-tag",
+        "release": "bash scripts/release-theme.sh"
     },
     "devDependencies": {
         "@tailwindcss/typography": "^0.5.16",
