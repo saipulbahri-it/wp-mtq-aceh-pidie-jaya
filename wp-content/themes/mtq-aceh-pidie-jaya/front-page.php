@@ -141,21 +141,21 @@ get_header();
 								
 							<?php else: ?>
 								<!-- Active Countdown State -->
-								<div class="countdown-grid grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3 md:gap-4">
-									<div class="countdown-item bg-white/80 backdrop-blur-sm border-2 border-gray-200/60 rounded-xl p-3 sm:p-4 text-center transition-all duration-300 hover:shadow-lg hover:border-blue-300">
-										<div class="countdown-number text-xl sm:text-2xl md:text-3xl font-bold text-slate-800 font-mono leading-none mb-1" id="days">000</div>
+								<div class="countdown-grid grid grid-cols-4 gap-2 sm:gap-3 md:gap-4">
+									<div class="countdown-item bg-white/80 backdrop-blur-sm border-2 border-gray-200/60 rounded-xl p-2 sm:p-3 md:p-4 text-center transition-all duration-300 hover:shadow-lg hover:border-blue-300">
+										<div class="countdown-number text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold text-slate-800 font-mono leading-none mb-1" id="days">000</div>
 										<div class="countdown-label text-xs sm:text-sm text-gray-600 font-medium uppercase tracking-wide">Hari</div>
 									</div>
-									<div class="countdown-item bg-white/80 backdrop-blur-sm border-2 border-gray-200/60 rounded-xl p-3 sm:p-4 text-center transition-all duration-300 hover:shadow-lg hover:border-blue-300">
-										<div class="countdown-number text-xl sm:text-2xl md:text-3xl font-bold text-slate-800 font-mono leading-none mb-1" id="hours">00</div>
+									<div class="countdown-item bg-white/80 backdrop-blur-sm border-2 border-gray-200/60 rounded-xl p-2 sm:p-3 md:p-4 text-center transition-all duration-300 hover:shadow-lg hover:border-blue-300">
+										<div class="countdown-number text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold text-slate-800 font-mono leading-none mb-1" id="hours">00</div>
 										<div class="countdown-label text-xs sm:text-sm text-gray-600 font-medium uppercase tracking-wide">Jam</div>
 									</div>
-									<div class="countdown-item bg-white/80 backdrop-blur-sm border-2 border-gray-200/60 rounded-xl p-3 sm:p-4 text-center transition-all duration-300 hover:shadow-lg hover:border-blue-300">
-										<div class="countdown-number text-xl sm:text-2xl md:text-3xl font-bold text-slate-800 font-mono leading-none mb-1" id="minutes">00</div>
+									<div class="countdown-item bg-white/80 backdrop-blur-sm border-2 border-gray-200/60 rounded-xl p-2 sm:p-3 md:p-4 text-center transition-all duration-300 hover:shadow-lg hover:border-blue-300">
+										<div class="countdown-number text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold text-slate-800 font-mono leading-none mb-1" id="minutes">00</div>
 										<div class="countdown-label text-xs sm:text-sm text-gray-600 font-medium uppercase tracking-wide">Menit</div>
 									</div>
-									<div class="countdown-item bg-white/80 backdrop-blur-sm border-2 border-gray-200/60 rounded-xl p-3 sm:p-4 text-center transition-all duration-300 hover:shadow-lg hover:border-blue-300">
-										<div class="countdown-number text-xl sm:text-2xl md:text-3xl font-bold text-slate-800 font-mono leading-none mb-1" id="seconds">00</div>
+									<div class="countdown-item bg-white/80 backdrop-blur-sm border-2 border-gray-200/60 rounded-xl p-2 sm:p-3 md:p-4 text-center transition-all duration-300 hover:shadow-lg hover:border-blue-300">
+										<div class="countdown-number text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold text-slate-800 font-mono leading-none mb-1" id="seconds">00</div>
 										<div class="countdown-label text-xs sm:text-sm text-gray-600 font-medium uppercase tracking-wide">Detik</div>
 									</div>
 								</div>
