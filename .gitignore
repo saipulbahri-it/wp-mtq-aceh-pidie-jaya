@@ -9,6 +9,7 @@ wp-content/themes/*
 !wp-content/themes/twentytwentyfive/
 !wp-content/themes/twentytwentyfour/
 !wp-content/themes/twentytwentythree/
+!wp-content/themes/mtq-aceh-pidie-jaya/
 wp-content/plugins/*
 !wp-content/plugins/akismet/
 !wp-content/plugins/hello.php
@@ -17,6 +18,49 @@ wp-content/plugins/*
 wp-admin/
 wp-includes/
 /*.php
+
+# Project specific ignores
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Theme specific ignores
+wp-content/themes/mtq-aceh-pidie-jaya/node_modules/
+wp-content/themes/mtq-aceh-pidie-jaya/.sass-cache/
+wp-content/themes/mtq-aceh-pidie-jaya/dist/
+wp-content/themes/mtq-aceh-pidie-jaya/.npm/
+
+# Temporary and debug files
+*.log
+*.tmp
+*.temp
+*-debug.php
+*-fix.php
+debug-*.php
+test-*.php
+prototype-backup-*.tar.gz
+
+# IDE files
+.vscode/
+.idea/
+*.sublime-*
+
+# Build and dependency files
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Environment files
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
 /*.html
 /*.txt
 wp-*.php
@@ -72,3 +116,20 @@ composer.lock
 
 # Ignore WordPress config sample if not needed
 wp-config-sample.php
+
+# Data directory (contains large media files - 20MB+)
+data/Foto/
+data/Video/
+!data/.htaccess
+!data/berita-dummy.json
+
+# Archive and backup directories
+archive/
+*backup*
+prototype-backup-*
+
+# Large files and dumps
+*.tar.gz
+*.zip
+*.sql
+*.dump

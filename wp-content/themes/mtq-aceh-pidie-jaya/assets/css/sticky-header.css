@@ -1,0 +1,313 @@
+/**
+ * Sticky Header Enhanced Styles
+ * Additional styles for improved sticky header behavior
+ */
+
+/* CSS Custom Properties for admin bar */
+:root {
+    --admin-bar-height: 0px;
+}
+
+/* WordPress Admin Bar Compatibility - Higher specificity */
+body.admin-bar #main-header,
+html.admin-bar #main-header {
+    top: 32px !important; /* Desktop admin bar height */
+}
+
+/* Mobile admin bar adjustment - Higher specificity */
+@media screen and (max-width: 782px) {
+    body.admin-bar #main-header,
+    html.admin-bar #main-header {
+        top: 46px !important; /* Mobile admin bar height */
+    }
+}
+
+/* Additional class-based positioning */
+#main-header.with-admin-bar {
+    top: var(--admin-bar-height, 32px) !important;
+}
+
+/* Force positioning with highest specificity */
+html body.admin-bar #main-header,
+html.wp-toolbar body #main-header {
+    position: sticky !important;
+    top: 32px !important;
+}
+
+@media screen and (max-width: 782px) {
+    html body.admin-bar #main-header,
+    html.wp-toolbar body #main-header {
+        top: 46px !important;
+    }
+}
+
+/* Override any potential conflicts */
+#main-header[style*="top"] {
+    position: sticky !important;
+}
+
+/* Content padding adjustments for admin bar (apply only to hero sections) */
+.admin-bar .hero-section {
+    padding-top: calc(2rem + 32px) !important; /* pt-24 + admin bar height */
+}
+
+@media screen and (max-width: 782px) {
+    .admin-bar .hero-section {
+        padding-top: calc(5rem + 46px) !important; /* pt-20 + mobile admin bar height */
+    }
+}
+
+/* Prevent first section (non-hero) from being hidden under sticky header on mobile */
+@media screen and (max-width: 782px) {
+    .admin-bar.has-sticky-header main > section:first-child:not(.hero-section) {
+        padding-top: var(--header-height, 64px) !important;
+    }
+}
+
+/* Sidebar sticky position adjustment for admin bar */
+.admin-bar .sticky {
+    top: calc(6rem + 32px) !important; /* Original top + admin bar height */
+}
+
+@media screen and (max-width: 782px) {
+    .admin-bar .sticky {
+        top: calc(6rem + 46px) !important; /* Original top + mobile admin bar height */
+    }
+}
+
+/* Ensure admin bar doesn't cause layout issues */
+.admin-bar body {
+    margin-top: 0 !important;
+}
+
+/* Smooth scrolling adjustment for admin bar */
+html.admin-bar {
+    scroll-padding-top: calc(var(--header-height, 4rem) + 32px);
+}
+
+@media screen and (max-width: 782px) {
+    html.admin-bar {
+        scroll-padding-top: calc(var(--header-height, 4rem) + 46px);
+    }
+}
+
+/* Enhanced Sticky Header */
+#main-header {
+    position: sticky;
+    top: 0;
+    z-index: 999; /* Below admin bar (99999+) but above other content */
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    /* Ensure proper positioning regardless of transforms */
+    transform: translateZ(0);
+    will-change: transform, top;
+}
+
+/* Force correct positioning for admin bar scenarios */
+body.admin-bar #main-header,
+html.wp-toolbar #main-header {
+    position: sticky !important;
+}
+
+/* Prevent any margin/padding issues that might affect positioning */
+#main-header * {
+    box-sizing: border-box;
+}
+
+/* Header scroll behavior */
+#main-header.scrolled {
+    background: rgba(255, 255, 255, 0.98);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    border-bottom: 1px solid rgba(226, 232, 240, 0.8);
+}
+
+/* Logo animation on scroll */
+#main-header.scrolled .logo-img {
+    height: 3rem; /* h-12 */
+    transition: height 0.3s ease;
+}
+
+/* Navigation link hover effects */
+.nav-link {
+    position: relative;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    transition: all 0.2s ease;
+    color: #475569; /* text-slate-600 */
+    font-weight: 500;
+    text-decoration: none;
+}
+
+.nav-link:hover {
+    color: #3b82f6; /* text-blue-600 */
+    background-color: rgba(59, 130, 246, 0.1);
+    transform: translateY(-1px);
+}
+
+.nav-link.active {
+    color: #3b82f6;
+    background-color: rgba(59, 130, 246, 0.15);
+    font-weight: 600;
+}
+
+/* Mobile menu enhanced styling */
+#mobile-menu {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-top: 1px solid rgba(226, 232, 240, 0.5);
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-radius: 0 0 1rem 1rem;
+}
+
+#mobile-menu .nav-link {
+    padding: 0.75rem 1rem;
+    margin: 0.25rem 0;
+    border-radius: 0.5rem;
+    display: block;
+    width: 100%;
+}
+
+/* Mobile menu button animation */
+#mobile-menu-btn {
+    transition: all 0.2s ease;
+}
+
+#mobile-menu-btn:hover {
+    background-color: rgba(59, 130, 246, 0.1);
+    transform: scale(1.05);
+}
+
+/* Live button special styling */
+.nav-link.live-link {
+    background: linear-gradient(135deg, #f97316, #ea580c);
+    color: white !important;
+    font-weight: 700;
+    animation: livePulse 2s infinite;
+}
+
+.nav-link.live-link:hover {
+    background: linear-gradient(135deg, #ea580c, #dc2626);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(249, 115, 22, 0.4);
+}
+
+@keyframes livePulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(249, 115, 22, 0.4); }
+    50% { box-shadow: 0 0 0 8px rgba(249, 115, 22, 0); }
+}
+
+/* Live dot animation */
+.live-dot {
+    width: 8px;
+    height: 8px;
+    background-color: #f97316;
+    border-radius: 50%;
+    margin-right: 0.25rem;
+    animation: pulse 2s infinite;
+}
+
+/* Header container responsive padding */
+.header-padding {
+    padding-left: 1rem;
+    padding-right: 1rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+}
+
+@media (min-width: 640px) {
+    .header-padding {
+        padding-left: 1.5rem;
+        padding-right: 1.5rem;
+    }
+}
+
+@media (min-width: 1024px) {
+    .header-padding {
+        padding-left: 2rem;
+        padding-right: 2rem;
+    }
+}
+
+/* Smooth scroll behavior for anchor links */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Ensure content doesn't hide behind sticky header */
+body {
+    scroll-padding-top: 5rem;
+}
+
+/* Header shadow on scroll animation */
+@keyframes headerShadowGrow {
+    from {
+        box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+    }
+    to {
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    }
+}
+
+/* Mobile optimization */
+@media (max-width: 768px) {
+    #main-header {
+        background: rgba(255, 255, 255, 0.98);
+    }
+    
+    .logo-img {
+        height: 3rem;
+    }
+    
+    #main-header.scrolled .logo-img {
+        height: 2.5rem;
+    }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+    #main-header {
+        background: white;
+        border-bottom: 2px solid #000;
+    }
+    
+    .nav-link {
+        color: #000;
+    }
+    
+    .nav-link:hover {
+        background-color: #000;
+        color: #fff;
+    }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+    #main-header,
+    .logo-img,
+    .nav-link,
+    #mobile-menu-btn {
+        transition: none !important;
+        animation: none !important;
+    }
+    
+    .live-dot {
+        animation: none !important;
+    }
+}
+
+/* Focus styles for accessibility */
+.nav-link:focus {
+    outline: 2px solid #3b82f6;
+    outline-offset: 2px;
+}
+
+#mobile-menu-btn:focus {
+    outline: 2px solid #3b82f6;
+    outline-offset: 2px;
+}

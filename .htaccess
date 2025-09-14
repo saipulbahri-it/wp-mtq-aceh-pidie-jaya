@@ -1,0 +1,67 @@
+# BEGIN WordPress
+<IfModule mod_rewrite.c>
+RewriteEngine On
+
+# Force HTTPS
+RewriteCond %{HTTPS} off
+RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# WordPress permalink structure
+RewriteBase /
+RewriteRule ^index\.php$ - [L]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule . /index.php [L]
+</IfModule>
+
+# PHP Upload Settings for 50MB files
+<IfModule mod_php7.c>
+  php_value upload_max_filesize 50M
+  php_value post_max_size 50M
+  php_value memory_limit 128M
+  php_value max_execution_time 300
+  php_value max_input_time 300
+</IfModule>
+<IfModule mod_php8.c>
+  php_value upload_max_filesize 50M
+  php_value post_max_size 50M
+  php_value memory_limit 128M
+  php_value max_execution_time 300
+  php_value max_input_time 300
+</IfModule>
+
+# Security Headers
+<IfModule mod_headers.c>
+    # Force HTTPS
+    Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+    
+    # Prevent clickjacking
+    Header always set X-Frame-Options "SAMEORIGIN"
+    
+    # XSS Protection
+    Header always set X-XSS-Protection "1; mode=block"
+    
+    # Content Type Options
+    Header always set X-Content-Type-Options "nosniff"
+    
+    # Referrer Policy
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+</IfModule>
+
+# Compress files for better performance
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript application/javascript application/json
+</IfModule>
+
+# Browser caching
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresByType text/css "access plus 1 month"
+    ExpiresByType application/javascript "access plus 1 month"
+    ExpiresByType image/png "access plus 1 month"
+    ExpiresByType image/jpg "access plus 1 month"
+    ExpiresByType image/jpeg "access plus 1 month"
+    ExpiresByType image/gif "access plus 1 month"
+    ExpiresByType image/svg+xml "access plus 1 month"
+</IfModule>
+# END WordPress
