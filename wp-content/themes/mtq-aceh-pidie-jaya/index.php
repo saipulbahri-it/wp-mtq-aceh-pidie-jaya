@@ -42,7 +42,7 @@ get_header();
 
 			<?php if ( is_home() || is_front_page() ) : ?>
 				<div class="mb-6">
-					<h2 class="text-2xl sm:text-3xl font-bold text-slate-900">Pos-pos Terbaru</h2>
+					<h2 class="text-2xl sm:text-3xl font-bold text-slate-900">Berita Terbaru</h2>
 				</div>
 			<?php endif; ?>
 
@@ -58,13 +58,30 @@ get_header();
 				endwhile; ?>
 			</div>
 
-			<div class="mt-10">
-				<?php the_posts_pagination( array(
-					'mid_size'  => 1,
-					'prev_text' => __('← Sebelumnya', 'mtq-aceh-pidie-jaya'),
-					'next_text' => __('Berikutnya →', 'mtq-aceh-pidie-jaya'),
-				) ); ?>
-			</div>
+			<?php
+			// Accessible, Tailwind-styled pagination
+			$links = paginate_links(array(
+				'type'      => 'array',
+				'mid_size'  => 1,
+				'end_size'  => 1,
+				'prev_text' => __('←', 'mtq-aceh-pidie-jaya'),
+				'next_text' => __('→', 'mtq-aceh-pidie-jaya'),
+			));
+			if ($links) : ?>
+				<nav class="mt-10" aria-label="<?php esc_attr_e('Pagination', 'mtq-aceh-pidie-jaya'); ?>">
+					<ul class="flex flex-wrap items-center gap-2
+						[&>li>a]:inline-flex [&>li>a]:items-center [&>li>a]:justify-center
+						[&>li>a]:px-3 [&>li>a]:h-9 [&>li>a]:rounded-lg [&>li>a]:ring-1 [&>li>a]:ring-slate-200
+						[&>li>a]:bg-white [&>li>a]:text-slate-700 hover:[&>li>a]:ring-slate-300 hover:[&>li>a]:bg-slate-50
+						[&>li>span.current]:inline-flex [&>li>span.current]:items-center [&>li>span.current]:justify-center
+						[&>li>span.current]:px-3 [&>li>span.current]:h-9 [&>li>span.current]:rounded-lg [&>li>span.current]:bg-blue-600 [&>li>span.current]:text-white
+						[&>li>span.dots]:px-3 [&>li>span.dots]:h-9 [&>li>span.dots]:inline-flex [&>li>span.dots]:items-center">
+						<?php foreach ($links as $link) : ?>
+							<li><?php echo $link; ?></li>
+						<?php endforeach; ?>
+					</ul>
+				</nav>
+			<?php endif; ?>
 
 		<?php else : ?>
 
