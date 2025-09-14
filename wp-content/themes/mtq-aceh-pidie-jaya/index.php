@@ -43,7 +43,11 @@ get_header();
 				<?php /* Start the Loop */
 				while ( have_posts() ) :
 					the_post();
-					get_template_part( 'template-parts/content', get_post_type() );
+					if ( get_post_type() === 'post' ) {
+						get_template_part( 'template-parts/content', 'archive' );
+					} else {
+						get_template_part( 'template-parts/content', get_post_type() );
+					}
 				endwhile; ?>
 			</div>
 
