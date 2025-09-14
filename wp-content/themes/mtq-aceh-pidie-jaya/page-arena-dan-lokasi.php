@@ -746,112 +746,172 @@ get_header();
                     <h4 class="text-xl font-semibold text-slate-800 mb-6">
                         📍 Peta Arena MTQ
                     </h4>
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                        <div
-                            class="bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden cursor-pointer hover:shadow-lg transition-shadow image-gallery-item"
-                            data-image-src="<?php echo esc_url( get_template_directory_uri() ); ?>/assets/images/Peta_MTQ_page-0001.jpg"
-                            data-image-title="Jalan Akses Arena MTQ">
-                            <img
-                                src="<?php echo esc_url( get_template_directory_uri() ); ?>/assets/images/Peta_MTQ_page-0001.jpg"
-                                alt="Jalan Akses Arena MTQ"
-                                class="w-full h-32 object-cover"
-                                loading="lazy"
-                                decoding="async" />
-                            <div class="p-3">
-                                <p class="text-sm font-medium text-slate-800">
-                                    Jalan Akses Arena
-                                </p>
-                                <p class="text-xs text-slate-600">Peta akses utama</p>
+                    <div class="mtq-gallery-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <div class="mtq-gallery-item-wrapper">
+                            <div class="mtq-gallery-image-item relative group overflow-hidden rounded-lg shadow-md hover:shadow-lg transition-shadow">
+                                <div class="image-gallery-item cursor-pointer"
+                                     data-image-src="<?php echo esc_url( get_template_directory_uri() ); ?>/assets/images/Peta_MTQ_page-0001.jpg"
+                                     data-image-title="Jalan Akses Arena MTQ">
+                                    <img
+                                        src="<?php echo esc_url( get_template_directory_uri() ); ?>/assets/images/Peta_MTQ_page-0001.jpg"
+                                        alt="Jalan Akses Arena MTQ"
+                                        class="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-300"
+                                        loading="lazy"
+                                        decoding="async" />
+                                    
+                                    <!-- Overlay icon -->
+                                    <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 flex items-center justify-center transition-all duration-300">
+                                        <svg class="w-8 h-8 text-white opacity-0 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"></path>
+                                        </svg>
+                                    </div>
+                                </div>
+                                
+                                <!-- Caption overlay -->
+                                <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-4">
+                                    <p class="text-white text-sm font-medium">Jalan Akses Arena</p>
+                                    <p class="text-gray-300 text-xs">Peta akses utama</p>
+                                </div>
                             </div>
                         </div>
 
-                        <div
-                            class="bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden cursor-pointer hover:shadow-lg transition-shadow image-gallery-item"
-                            data-image-src="<?php echo esc_url( get_template_directory_uri() ); ?>/assets/images/Peta_MTQ_page-0002.jpg"
-                            data-image-title="Titik Arena MTQ">
-                            <img
-                                src="<?php echo esc_url( get_template_directory_uri() ); ?>/assets/images/Peta_MTQ_page-0002.jpg"
-                                alt="Titik Arena MTQ"
-                                class="w-full h-32 object-cover"
-                                loading="lazy"
-                                decoding="async" />
-                            <div class="p-3">
-                                <p class="text-sm font-medium text-slate-800">
-                                    Titik Arena MTQ
-                                </p>
-                                <p class="text-xs text-slate-600">11 Arena perlombaan</p>
+                        <div class="mtq-gallery-item-wrapper">
+                            <div class="mtq-gallery-image-item relative group overflow-hidden rounded-lg shadow-md hover:shadow-lg transition-shadow">
+                                <div class="image-gallery-item cursor-pointer"
+                                     data-image-src="<?php echo esc_url( get_template_directory_uri() ); ?>/assets/images/Peta_MTQ_page-0002.jpg"
+                                     data-image-title="Titik Arena MTQ">
+                                    <img
+                                        src="<?php echo esc_url( get_template_directory_uri() ); ?>/assets/images/Peta_MTQ_page-0002.jpg"
+                                        alt="Titik Arena MTQ"
+                                        class="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-300"
+                                        loading="lazy"
+                                        decoding="async" />
+                                    
+                                    <!-- Overlay icon -->
+                                    <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 flex items-center justify-center transition-all duration-300">
+                                        <svg class="w-8 h-8 text-white opacity-0 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"></path>
+                                        </svg>
+                                    </div>
+                                </div>
+                                
+                                <!-- Caption overlay -->
+                                <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-4">
+                                    <p class="text-white text-sm font-medium">Titik Arena MTQ</p>
+                                    <p class="text-gray-300 text-xs">11 Arena perlombaan</p>
+                                </div>
                             </div>
                         </div>
 
-                        <div
-                            class="bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden cursor-pointer hover:shadow-lg transition-shadow image-gallery-item"
-                            data-image-src="<?php echo esc_url( get_template_directory_uri() ); ?>/assets/images/Peta_MTQ_page-0003.jpg"
-                            data-image-title="Penginapan Dewan Hakim">
-                            <img
-                                src="<?php echo esc_url( get_template_directory_uri() ); ?>/assets/images/Peta_MTQ_page-0003.jpg"
-                                alt="Penginapan Dewan Hakim"
-                                class="w-full h-32 object-cover"
-                                loading="lazy"
-                                decoding="async" />
-                            <div class="p-3">
-                                <p class="text-sm font-medium text-slate-800">
-                                    Penginapan Hakim
-                                </p>
-                                <p class="text-xs text-slate-600">7 lokasi wisma</p>
+                        <div class="mtq-gallery-item-wrapper">
+                            <div class="mtq-gallery-image-item relative group overflow-hidden rounded-lg shadow-md hover:shadow-lg transition-shadow">
+                                <div class="image-gallery-item cursor-pointer"
+                                     data-image-src="<?php echo esc_url( get_template_directory_uri() ); ?>/assets/images/Peta_MTQ_page-0003.jpg"
+                                     data-image-title="Penginapan Dewan Hakim">
+                                    <img
+                                        src="<?php echo esc_url( get_template_directory_uri() ); ?>/assets/images/Peta_MTQ_page-0003.jpg"
+                                        alt="Penginapan Dewan Hakim"
+                                        class="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-300"
+                                        loading="lazy"
+                                        decoding="async" />
+                                    
+                                    <!-- Overlay icon -->
+                                    <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 flex items-center justify-center transition-all duration-300">
+                                        <svg class="w-8 h-8 text-white opacity-0 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"></path>
+                                        </svg>
+                                    </div>
+                                </div>
+                                
+                                <!-- Caption overlay -->
+                                <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-4">
+                                    <p class="text-white text-sm font-medium">Penginapan Hakim</p>
+                                    <p class="text-gray-300 text-xs">7 lokasi wisma</p>
+                                </div>
                             </div>
                         </div>
 
-                        <div
-                            class="bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden cursor-pointer hover:shadow-lg transition-shadow image-gallery-item"
-                            data-image-src="<?php echo esc_url( get_template_directory_uri() ); ?>/assets/images/Peta_MTQ_page-0004.jpg"
-                            data-image-title="Penginapan Kafilah Block 1">
-                            <img
-                                src="<?php echo esc_url( get_template_directory_uri() ); ?>/assets/images/Peta_MTQ_page-0004.jpg"
-                                alt="Penginapan Kafilah Block 1"
-                                class="w-full h-32 object-cover"
-                                loading="lazy"
-                                decoding="async" />
-                            <div class="p-3">
-                                <p class="text-sm font-medium text-slate-800">
-                                    Kafilah Block 1
-                                </p>
-                                <p class="text-xs text-slate-600">Area Meureudu</p>
+                        <div class="mtq-gallery-item-wrapper">
+                            <div class="mtq-gallery-image-item relative group overflow-hidden rounded-lg shadow-md hover:shadow-lg transition-shadow">
+                                <div class="image-gallery-item cursor-pointer"
+                                     data-image-src="<?php echo esc_url( get_template_directory_uri() ); ?>/assets/images/Peta_MTQ_page-0004.jpg"
+                                     data-image-title="Penginapan Kafilah Block 1">
+                                    <img
+                                        src="<?php echo esc_url( get_template_directory_uri() ); ?>/assets/images/Peta_MTQ_page-0004.jpg"
+                                        alt="Penginapan Kafilah Block 1"
+                                        class="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-300"
+                                        loading="lazy"
+                                        decoding="async" />
+                                    
+                                    <!-- Overlay icon -->
+                                    <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 flex items-center justify-center transition-all duration-300">
+                                        <svg class="w-8 h-8 text-white opacity-0 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"></path>
+                                        </svg>
+                                    </div>
+                                </div>
+                                
+                                <!-- Caption overlay -->
+                                <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-4">
+                                    <p class="text-white text-sm font-medium">Kafilah Block 1</p>
+                                    <p class="text-gray-300 text-xs">Area Meureudu</p>
+                                </div>
                             </div>
                         </div>
 
-                        <div
-                            class="bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden cursor-pointer hover:shadow-lg transition-shadow image-gallery-item"
-                            data-image-src="<?php echo esc_url( get_template_directory_uri() ); ?>/assets/images/Peta_MTQ_page-0005.jpg"
-                            data-image-title="Penginapan Kafilah Block 2">
-                            <img
-                                src="<?php echo esc_url( get_template_directory_uri() ); ?>/assets/images/Peta_MTQ_page-0005.jpg"
-                                alt="Penginapan Kafilah Block 2"
-                                class="w-full h-32 object-cover"
-                                loading="lazy"
-                                decoding="async" />
-                            <div class="p-3">
-                                <p class="text-sm font-medium text-slate-800">
-                                    Kafilah Block 2
-                                </p>
-                                <p class="text-xs text-slate-600">Area Timur</p>
+                        <div class="mtq-gallery-item-wrapper">
+                            <div class="mtq-gallery-image-item relative group overflow-hidden rounded-lg shadow-md hover:shadow-lg transition-shadow">
+                                <div class="image-gallery-item cursor-pointer"
+                                     data-image-src="<?php echo esc_url( get_template_directory_uri() ); ?>/assets/images/Peta_MTQ_page-0005.jpg"
+                                     data-image-title="Penginapan Kafilah Block 2">
+                                    <img
+                                        src="<?php echo esc_url( get_template_directory_uri() ); ?>/assets/images/Peta_MTQ_page-0005.jpg"
+                                        alt="Penginapan Kafilah Block 2"
+                                        class="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-300"
+                                        loading="lazy"
+                                        decoding="async" />
+                                    
+                                    <!-- Overlay icon -->
+                                    <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 flex items-center justify-center transition-all duration-300">
+                                        <svg class="w-8 h-8 text-white opacity-0 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"></path>
+                                        </svg>
+                                    </div>
+                                </div>
+                                
+                                <!-- Caption overlay -->
+                                <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-4">
+                                    <p class="text-white text-sm font-medium">Kafilah Block 2</p>
+                                    <p class="text-gray-300 text-xs">Area Timur</p>
+                                </div>
                             </div>
                         </div>
 
-                        <div
-                            class="bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden cursor-pointer hover:shadow-lg transition-shadow image-gallery-item"
-                            data-image-src="<?php echo esc_url( get_template_directory_uri() ); ?>/assets/images/Peta_MTQ_page-0006.jpg"
-                            data-image-title="Penginapan Kafilah Block 3">
-                            <img
-                                src="<?php echo esc_url( get_template_directory_uri() ); ?>/assets/images/Peta_MTQ_page-0006.jpg"
-                                alt="Penginapan Kafilah Block 3"
-                                class="w-full h-32 object-cover"
-                                loading="lazy"
-                                decoding="async" />
-                            <div class="p-3">
-                                <p class="text-sm font-medium text-slate-800">
-                                    Kafilah Block 3
-                                </p>
-                                <p class="text-xs text-slate-600">Area Barat</p>
+                        <div class="mtq-gallery-item-wrapper">
+                            <div class="mtq-gallery-image-item relative group overflow-hidden rounded-lg shadow-md hover:shadow-lg transition-shadow">
+                                <div class="image-gallery-item cursor-pointer"
+                                     data-image-src="<?php echo esc_url( get_template_directory_uri() ); ?>/assets/images/Peta_MTQ_page-0006.jpg"
+                                     data-image-title="Penginapan Kafilah Block 3">
+                                    <img
+                                        src="<?php echo esc_url( get_template_directory_uri() ); ?>/assets/images/Peta_MTQ_page-0006.jpg"
+                                        alt="Penginapan Kafilah Block 3"
+                                        class="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-300"
+                                        loading="lazy"
+                                        decoding="async" />
+                                    
+                                    <!-- Overlay icon -->
+                                    <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 flex items-center justify-center transition-all duration-300">
+                                        <svg class="w-8 h-8 text-white opacity-0 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"></path>
+                                        </svg>
+                                    </div>
+                                </div>
+                                
+                                <!-- Caption overlay -->
+                                <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-4">
+                                    <p class="text-white text-sm font-medium">Kafilah Block 3</p>
+                                    <p class="text-gray-300 text-xs">Area Barat</p>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -862,33 +922,37 @@ get_header();
                     <h4 class="text-xl font-semibold text-slate-800 mb-6">
                         🏨 Detail Rumah Kafilah
                     </h4>
-                    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-                        <div
-                            class="bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden cursor-pointer hover:shadow-lg transition-shadow image-gallery-item"
-                            data-image-src="<?php echo esc_url( get_template_directory_uri() ); ?>/assets/images/Titik_Rumah_Kafilah_page-0001.jpg"
-                            data-image-title="Titik Rumah Kafilah Detail">
-                            <img
-                                src="<?php echo esc_url( get_template_directory_uri() ); ?>/assets/images/Titik_Rumah_Kafilah_page-0001.jpg"
-                                alt="Titik Rumah Kafilah"
-                                class="w-full h-40 object-cover"
-                                loading="lazy"
-                                decoding="async" />
-                            <div class="p-4">
-                                <p class="text-sm font-medium text-slate-800">
-                                    Peta Lengkap Rumah Kafilah
-                                </p>
-                                <p class="text-xs text-slate-600 mt-1">
-                                    23 Kabupaten/Kota se-Aceh
-                                </p>
-                                <div class="flex items-center mt-2 text-xs text-green-600">
-                                    <svg
-                                        class="w-3 h-3 mr-1"
-                                        fill="currentColor"
-                                        viewBox="0 0 20 20">
-                                        <path
-                                            d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                                    </svg>
-                                    Detail lokasi semua kafilah
+                    <div class="mtq-gallery-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <div class="mtq-gallery-item-wrapper">
+                            <div class="mtq-gallery-image-item relative group overflow-hidden rounded-lg shadow-md hover:shadow-lg transition-shadow">
+                                <div class="image-gallery-item cursor-pointer"
+                                     data-image-src="<?php echo esc_url( get_template_directory_uri() ); ?>/assets/images/Titik_Rumah_Kafilah_page-0001.jpg"
+                                     data-image-title="Titik Rumah Kafilah Detail">
+                                    <img
+                                        src="<?php echo esc_url( get_template_directory_uri() ); ?>/assets/images/Titik_Rumah_Kafilah_page-0001.jpg"
+                                        alt="Titik Rumah Kafilah"
+                                        class="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-300"
+                                        loading="lazy"
+                                        decoding="async" />
+                                    
+                                    <!-- Overlay icon -->
+                                    <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 flex items-center justify-center transition-all duration-300">
+                                        <svg class="w-8 h-8 text-white opacity-0 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"></path>
+                                        </svg>
+                                    </div>
+                                </div>
+                                
+                                <!-- Caption overlay -->
+                                <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-4">
+                                    <p class="text-white text-sm font-medium">Peta Lengkap Rumah Kafilah</p>
+                                    <p class="text-gray-300 text-xs">23 Kabupaten/Kota se-Aceh</p>
+                                    <div class="flex items-center mt-2 text-xs text-green-400">
+                                        <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
+                                            <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                        </svg>
+                                        Detail lokasi semua kafilah
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -1041,15 +1105,37 @@ get_header();
         </div>
     </section>
 
-    <!-- Image Preview Modal -->
+    <!-- Enhanced Image Preview Modal -->
     <div id="image-modal" class="image-modal">
         <div class="image-modal-overlay" onclick="closeImageModal()"></div>
+        
         <div class="image-modal-content">
-            <button class="image-modal-close" onclick="closeImageModal()" aria-label="Tutup modal">
+            <!-- Navigation arrows - moved inside content for better control -->
+            <button class="absolute left-4 top-1/2 transform -translate-y-1/2 text-white hover:text-gray-300 transition-colors z-[1003] bg-black bg-opacity-30 rounded-full w-12 h-12 flex items-center justify-center" onclick="navigateGallery('prev')" aria-label="Gambar sebelumnya">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
                 </svg>
             </button>
+            <button class="absolute right-4 top-1/2 transform -translate-y-1/2 text-white hover:text-gray-300 transition-colors z-[1003] bg-black bg-opacity-30 rounded-full w-12 h-12 flex items-center justify-center" onclick="navigateGallery('next')" aria-label="Gambar selanjutnya">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                </svg>
+            </button>
+            
+            <!-- Enhanced controls -->
+            <div class="absolute top-4 right-4 flex space-x-2 z-[1002]">
+                <button onclick="toggleImageZoom()" class="bg-black bg-opacity-50 text-white p-2 rounded hover:bg-opacity-70 transition-colors" aria-label="Zoom gambar">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"></path>
+                    </svg>
+                </button>
+                <button class="image-modal-close" onclick="closeImageModal()" aria-label="Tutup modal">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>
+                </button>
+            </div>
+            
             <div class="image-modal-body">
                 <!-- Loading spinner -->
                 <div id="modal-loading" class="modal-loading">
@@ -1058,11 +1144,185 @@ get_header();
                 </div>
                 <img id="modal-image" src="" alt="" class="max-w-full max-h-full object-contain" style="display: none;">
                 <div class="image-modal-caption" id="modal-caption" style="display: none;">
-                    <h3 id="modal-title" class="text-lg font-semibold text-white"></h3>
-                    <p class="text-gray-300 text-sm mt-1">Klik di luar gambar atau tekan ESC untuk menutup</p>
+                    <h3 id="modal-title" class="text-lg font-semibold text-white mb-2"></h3>
+                    <div class="text-gray-300 text-xs space-y-1">
+                        <p>🖱️ Klik gambar atau tekan Spasi untuk zoom</p>
+                        <p>⌨️ Gunakan ← → untuk navigasi | ESC untuk menutup</p>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+
+    <script>
+    // Enhanced Gallery Image Modal Functions
+    let currentGalleryImages = [];
+    let currentImageIndex = 0;
+    let isZoomed = false;
+    
+    function openImageModal(imageSrc, imageTitle, galleryItems, clickedIndex) {
+        const modal = document.getElementById('image-modal');
+        const modalImage = document.getElementById('modal-image');
+        const modalTitle = document.getElementById('modal-title');
+        const modalCaption = document.getElementById('modal-caption');
+        const modalLoading = document.getElementById('modal-loading');
+        
+        // Store gallery data for navigation
+        currentGalleryImages = galleryItems || [];
+        currentImageIndex = clickedIndex || 0;
+        
+        // Show modal with smooth animation
+        modal.classList.add('open');
+        document.body.style.overflow = 'hidden';
+        
+        // Show loading
+        modalLoading.style.display = 'flex';
+        modalImage.style.display = 'none';
+        modalCaption.style.display = 'none';
+        
+        // Reset zoom state
+        isZoomed = false;
+        modalImage.style.transform = 'scale(1)';
+        modalImage.style.cursor = 'zoom-in';
+        
+        // Load image with better error handling
+        const img = new Image();
+        img.onload = function() {
+            modalImage.src = imageSrc;
+            modalImage.alt = imageTitle;
+            modalTitle.textContent = imageTitle;
+            
+            // Smooth transition to show image
+            modalLoading.style.display = 'none';
+            modalImage.style.display = 'block';
+            modalCaption.style.display = 'block';
+            
+            // Add fade-in animation
+            modalImage.style.opacity = '0';
+            setTimeout(() => {
+                modalImage.style.transition = 'opacity 0.3s ease';
+                modalImage.style.opacity = '1';
+            }, 50);
+        };
+        img.onerror = function() {
+            modalLoading.style.display = 'none';
+            modalImage.style.display = 'block';
+            modalImage.src = imageSrc;
+            modalImage.alt = imageTitle || 'Gambar';
+            modalTitle.textContent = imageTitle || 'Gambar tidak dapat dimuat';
+            modalCaption.style.display = 'block';
+        };
+        img.src = imageSrc;
+    }
+    
+    function closeImageModal() {
+        const modal = document.getElementById('image-modal');
+        const modalImage = document.getElementById('modal-image');
+        
+        // Reset zoom and transitions
+        isZoomed = false;
+        modalImage.style.transform = 'scale(1)';
+        modalImage.style.transition = '';
+        modalImage.style.opacity = '';
+        
+        modal.classList.remove('open');
+        document.body.style.overflow = '';
+    }
+    
+    function toggleImageZoom() {
+        const modalImage = document.getElementById('modal-image');
+        
+        if (!isZoomed) {
+            modalImage.style.transform = 'scale(1.5)';
+            modalImage.style.cursor = 'zoom-out';
+            modalImage.style.transition = 'transform 0.3s ease';
+            isZoomed = true;
+        } else {
+            modalImage.style.transform = 'scale(1)';
+            modalImage.style.cursor = 'zoom-in';
+            isZoomed = false;
+        }
+    }
+    
+    function navigateGallery(direction) {
+        if (currentGalleryImages.length <= 1) return;
+        
+        if (direction === 'next') {
+            currentImageIndex = (currentImageIndex + 1) % currentGalleryImages.length;
+        } else {
+            currentImageIndex = (currentImageIndex - 1 + currentGalleryImages.length) % currentGalleryImages.length;
+        }
+        
+        const nextImage = currentGalleryImages[currentImageIndex];
+        const imageSrc = nextImage.getAttribute('data-image-src');
+        const imageTitle = nextImage.getAttribute('data-image-title');
+        
+        // Update modal content
+        openImageModal(imageSrc, imageTitle, currentGalleryImages, currentImageIndex);
+    }
+    
+    // Initialize gallery click handlers
+    document.addEventListener('DOMContentLoaded', function() {
+        const galleryContainers = document.querySelectorAll('.mtq-gallery-grid');
+        
+        galleryContainers.forEach(function(container) {
+            const galleryItems = container.querySelectorAll('.image-gallery-item');
+            const galleryItemsArray = Array.from(galleryItems);
+            
+            galleryItems.forEach(function(item, index) {
+                item.addEventListener('click', function() {
+                    const imageSrc = this.getAttribute('data-image-src');
+                    const imageTitle = this.getAttribute('data-image-title');
+                    
+                    if (imageSrc) {
+                        openImageModal(imageSrc, imageTitle, galleryItemsArray, index);
+                    }
+                });
+            });
+        });
+        
+        // Enhanced keyboard navigation
+        document.addEventListener('keydown', function(e) {
+            const modal = document.getElementById('image-modal');
+            if (!modal.classList.contains('open')) return;
+            
+            switch(e.key) {
+                case 'Escape':
+                    closeImageModal();
+                    break;
+                case 'ArrowLeft':
+                    navigateGallery('prev');
+                    break;
+                case 'ArrowRight':
+                    navigateGallery('next');
+                    break;
+                case ' ': // Space key for zoom
+                    e.preventDefault();
+                    toggleImageZoom();
+                    break;
+            }
+        });
+        
+        // Image click to zoom
+        document.addEventListener('click', function(e) {
+            if (e.target.id === 'modal-image') {
+                toggleImageZoom();
+            }
+        });
+        
+        // Smooth hover effects for gallery items
+        const galleryItems = document.querySelectorAll('.mtq-gallery-image-item');
+        galleryItems.forEach(function(item) {
+            item.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-4px)';
+                this.style.transition = 'transform 0.3s ease';
+            });
+            
+            item.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0)';
+            });
+        });
+    });
+    </script>
 </main>
 <?php get_footer(); ?>

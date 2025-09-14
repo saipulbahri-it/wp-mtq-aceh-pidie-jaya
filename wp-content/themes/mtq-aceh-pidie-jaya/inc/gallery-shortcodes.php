@@ -412,12 +412,24 @@ class MTQ_Gallery_Shortcodes {
     }
     
     /**
-     * Render Image Item
+     * Render Image Item with Lazy Loading
      */
     private function render_image_item($item, $index, $show_captions, $enable_lightbox) {
         $lightbox_attrs = '';
         if ($enable_lightbox) {
             $lightbox_attrs = 'data-image-src="' . esc_attr($item['url']) . '" data-image-title="' . esc_attr($item['caption']) . '"';
+        }
+        
+        // Lazy loading attributes
+        $lazy_attrs = '';
+        $img_src = '';
+        
+        // First few images load immediately, rest use lazy loading
+        if ($index < 3) {
+            $img_src = 'src="' . esc_url($item['thumbnail']) . '"';
+        } else {
+            $img_src = 'src="data:image/svg+xml,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 400 300\'><rect width=\'400\' height=\'300\' fill=\'%23f3f4f6\'/><text x=\'50%\' y=\'50%\' text-anchor=\'middle\' dy=\'.3em\' fill=\'%239ca3af\' font-size=\'14\'>Loading...</text></svg>"';
+            $lazy_attrs = 'data-src="' . esc_url($item['thumbnail']) . '" loading="lazy"';
         }
         
         $output = '<div class="mtq-gallery-image-item relative group overflow-hidden rounded-lg shadow-md hover:shadow-lg transition-shadow">';
@@ -426,7 +438,7 @@ class MTQ_Gallery_Shortcodes {
             $output .= '<div class="image-gallery-item cursor-pointer" ' . $lightbox_attrs . '>';
         }
         
-        $output .= '<img src="' . esc_url($item['thumbnail']) . '" alt="' . esc_attr($item['caption']) . '" class="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-300">';
+        $output .= '<img ' . $img_src . ' ' . $lazy_attrs . ' alt="' . esc_attr($item['caption']) . '" class="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-300">';
         
         // Overlay icon
         if ($enable_lightbox) {

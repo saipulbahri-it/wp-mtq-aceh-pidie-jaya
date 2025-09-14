@@ -518,12 +518,13 @@ h6 {
   padding: 10px;
   border-radius: 50%;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease, transform 0.2s ease;
   z-index: 1002;
 }
 
 .image-modal-close:hover {
   background: rgba(255, 255, 255, 0.2);
+  transform: scale(1.1);
 }
 
 .image-modal-body {
@@ -532,6 +533,7 @@ h6 {
   align-items: center;
   max-width: 100%;
   max-height: 100%;
+  overflow: hidden;
 }
 
 .image-modal-body img {
@@ -539,6 +541,9 @@ h6 {
   max-height: 80vh;
   border-radius: 8px;
   box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+  transition: transform 0.3s ease;
+  user-select: none;
+  cursor: zoom-in;
 }
 
 .image-modal-caption {
@@ -550,11 +555,69 @@ h6 {
   backdrop-filter: blur(10px);
 }
 
+/* Enhanced Modal Controls */
+.modal-nav {
+  transition: all 0.3s ease;
+  backdrop-filter: blur(5px);
+}
+
+.modal-nav:hover {
+  background-color: rgba(0, 0, 0, 0.8) !important;
+  transform: scale(1.1);
+}
+
+.modal-nav:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.modal-controls {
+  backdrop-filter: blur(5px);
+}
+
+.modal-controls button {
+  transition: all 0.3s ease;
+}
+
+.modal-controls button:hover {
+  background-color: rgba(0, 0, 0, 0.8) !important;
+  transform: scale(1.1);
+}
+
+.modal-counter {
+  backdrop-filter: blur(5px);
+  font-family: monospace;
+  font-weight: 500;
+}
+
+/* Zoom and Pan States */
+.image-modal-body img.zoomed {
+  cursor: grab;
+  max-width: none;
+  max-height: none;
+}
+
+.image-modal-body img.zoomed:active {
+  cursor: grabbing;
+}
+
+/* Fullscreen Mode */
+.image-modal:fullscreen {
+  background: rgba(0, 0, 0, 0.95);
+}
+
+.image-modal:fullscreen .image-modal-body img {
+  max-width: 100vw;
+  max-height: 100vh;
+}
+
+/* Loading Animation Enhancement */
 .modal-loading {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  animation: pulse 1.5s ease-in-out infinite;
 }
 
 .loading-spinner {
@@ -563,7 +626,7 @@ h6 {
   border: 4px solid rgba(255, 255, 255, 0.3);
   border-top: 4px solid #ffffff;
   border-radius: 50%;
-  animation: spin 1s linear infinite;
+  animation: spin 1s linear infinite, glow 2s ease-in-out infinite alternate;
 }
 
 @keyframes spin {
@@ -571,7 +634,20 @@ h6 {
   100% { transform: rotate(360deg); }
 }
 
-/* Arena Image Gallery Enhancements */
+/* Pulse Animation for Controls */
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+
+.modal-nav:focus,
+.modal-controls button:focus {
+  outline: 2px solid rgba(59, 130, 246, 0.8);
+  outline-offset: 2px;
+  animation: pulse 1.5s infinite;
+}
+
+/* Gallery Item Enhancements */
 .image-gallery-item:hover img {
   transform: scale(1.05);
   transition: transform 0.3s ease;
@@ -580,6 +656,7 @@ h6 {
 .image-gallery-item {
   position: relative;
   overflow: hidden;
+  cursor: pointer;
 }
 
 .image-gallery-item::after {
@@ -602,6 +679,27 @@ h6 {
   opacity: 1;
 }
 
+/* Keyboard Navigation Indicator */
+.keyboard-hint {
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+  background: rgba(0, 0, 0, 0.6);
+  color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-family: monospace;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.image-modal:hover .keyboard-hint {
+  opacity: 0.8;
+}
+
+/* Touch Gesture Indicators for Mobile */
 @media (max-width: 768px) {
   .image-modal-close {
     top: -40px;
@@ -619,6 +717,71 @@ h6 {
     padding: 12px 20px;
   }
   
+  .modal-nav {
+    width: 48px;
+    height: 48px;
+    padding: 12px;
+  }
+  
+  .modal-controls {
+    top: 8px;
+    right: 8px;
+    gap: 8px;
+  }
+  
+  .modal-controls button {
+    width: 40px;
+    height: 40px;
+    padding: 8px;
+  }
+  
+  .modal-counter {
+    bottom: 8px;
+    font-size: 12px;
+    padding: 4px 8px;
+  }
+  
+  /* Touch-friendly spacing */
+  .modal-nav-prev {
+    left: 8px;
+  }
+  
+  .modal-nav-next {
+    right: 8px;
+  }
+}
+
+/* High DPI Display Optimizations */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .modal-controls button,
+  .modal-nav,
+  .image-modal-close {
+    backdrop-filter: blur(8px);
+  }
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+  .image-modal,
+  .image-modal-body img,
+  .modal-nav,
+  .modal-controls button {
+    transition: none;
+  }
+  
+  .loading-spinner {
+    animation: none;
+    border: 4px solid rgba(255, 255, 255, 0.5);
+  }
+}
+
+/* Print Styles */
+@media print {
+  .image-modal {
+    display: none;
+  }
+}
+  
   .loading-spinner {
     width: 30px;
     height: 30px;
@@ -627,5 +790,178 @@ h6 {
   .image-gallery-item::after {
     font-size: 12px;
     padding: 6px 10px;
+}
+
+/* Enhanced Gallery Styles */
+.mtq-gallery-grid {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+.mtq-gallery-item-wrapper {
+  animation: fadeInScale 0.4s ease-out forwards;
+  animation-delay: calc(var(--item-index, 0) * 0.1s);
+  opacity: 0;
+}
+
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
   }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.mtq-gallery-image-item {
+  will-change: transform;
+  backface-visibility: hidden;
+}
+
+.mtq-gallery-image-item:hover {
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+}
+
+.mtq-gallery-image-item img {
+  will-change: transform;
+  backface-visibility: hidden;
+}
+
+/* Gallery overlay improvements */
+.mtq-gallery-image-item .absolute.inset-0 {
+  backdrop-filter: blur(1px);
+}
+
+.mtq-gallery-image-item:hover .absolute.inset-0 {
+  backdrop-filter: blur(0px);
+}
+
+/* Modal enhancements */
+.image-modal.open {
+  animation: modalFadeIn 0.3s ease;
+}
+
+@keyframes modalFadeIn {
+  from {
+    opacity: 0;
+    backdrop-filter: blur(0px);
+  }
+  to {
+    opacity: 1;
+    backdrop-filter: blur(5px);
+  }
+}
+
+.image-modal-content {
+  animation: modalContentSlide 0.3s ease;
+}
+
+@keyframes modalContentSlide {
+  from {
+    transform: scale(0.9) translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1) translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Navigation arrows styling */
+.image-modal button[onclick*="navigateGallery"] {
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+.image-modal button[onclick*="navigateGallery"]:hover {
+  background-color: rgba(0, 0, 0, 0.6) !important;
+  transform: scale(1.1);
+}
+
+.image-modal button[onclick*="navigateGallery"]:active {
+  transform: scale(0.95);
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+@keyframes glow {
+  from {
+    box-shadow: 0 0 5px rgba(59, 130, 246, 0.5);
+  }
+  to {
+    box-shadow: 0 0 20px rgba(59, 130, 246, 0.8);
+  }
+}
+
+/* Responsive gallery improvements */
+@media (max-width: 768px) {
+  .mtq-gallery-grid {
+    gap: 1rem;
+  }
+  
+  .mtq-gallery-image-item img {
+    height: 200px;
+  }
+  
+  .image-modal button[onclick*="navigateGallery"] {
+    width: 40px;
+    height: 40px;
+    font-size: 1.2rem;
+  }
+  
+  .image-modal-caption {
+    padding: 10px 15px;
+    margin-top: 10px;
+  }
+  
+  .image-modal-caption h3 {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .mtq-gallery-image-item img {
+    height: 160px;
+  }
+  
+  .image-modal button[onclick*="navigateGallery"] {
+    left: 8px;
+    right: 8px;
+  }
+}
+
+/* Ensure navigation buttons are unique and properly positioned */
+.image-modal-content button[onclick*="navigateGallery"] {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 1003;
+  pointer-events: auto;
+}
+
+.image-modal-content button[onclick*="navigateGallery('prev')"] {
+  left: 1rem;
+}
+
+.image-modal-content button[onclick*="navigateGallery('next')"] {
+  right: 1rem;
 }
