@@ -19,6 +19,7 @@ if (!defined('ABSPATH')) {
 		
 		<!-- Featured Image Hero -->
 		<?php if (has_post_thumbnail()) : ?>
+			<section class="pt-28 pb-16">
 			<div class="relative h-72 md:h-80 lg:h-96 overflow-hidden">
 				<?php the_post_thumbnail('full', [
 					'class' => 'w-full h-full object-cover transition-transform duration-700 hover:scale-105',
@@ -38,7 +39,7 @@ if (!defined('ABSPATH')) {
 							Halaman Resmi MTQ
 						</div>
 						
-						<h1 class="text-3xl md:text-4xl lg:text-5xl font-bold text-white leading-tight mb-4">
+						<h1 class="text-4xl md:text-6xl font-bold text-white leading-tight mb-4">
 							<?php the_title(); ?>
 						</h1>
 						
@@ -69,8 +70,10 @@ if (!defined('ABSPATH')) {
 					</header>
 				</div>
 			</div>
+			</section>
 		<?php else : ?>
 			<!-- Enhanced No Featured Image Header -->
+			<section class="pt-28 pb-16">
 			<div class="relative bg-gradient-to-br from-blue-600 via-blue-700 to-indigo-800 overflow-hidden">
 				<!-- Sophisticated Background Pattern -->
 				<div class="absolute inset-0 opacity-10">
@@ -91,7 +94,7 @@ if (!defined('ABSPATH')) {
 					</svg>
 				</div>
 				
-				<div class="relative px-6 py-20 md:px-8 md:py-24 lg:px-12 lg:py-28 text-center">
+		<div class="relative px-6 md:px-8 lg:px-12 text-center">
 					<header class="entry-header max-w-4xl mx-auto">
 						<div class="inline-flex items-center px-4 py-2 rounded-full text-sm font-medium bg-white/20 text-blue-100 backdrop-blur-sm mb-6">
 							<svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
@@ -100,7 +103,7 @@ if (!defined('ABSPATH')) {
 							Halaman Resmi MTQ Aceh Pidie Jaya
 						</div>
 						
-						<h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight mb-6">
+			<h1 class="text-4xl md:text-6xl font-bold text-white leading-tight mb-6">
 							<?php the_title(); ?>
 						</h1>
 						
@@ -130,6 +133,7 @@ if (!defined('ABSPATH')) {
 					</header>
 				</div>
 			</div>
+			</section>
 		<?php endif; ?>
 
 		<!-- Enhanced Content Body -->
