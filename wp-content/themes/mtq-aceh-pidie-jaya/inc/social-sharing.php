@@ -146,24 +146,74 @@ function mtq_social_sharing_shortcode($atts) {
 add_shortcode('mtq_social_sharing', 'mtq_social_sharing_shortcode');
 
 function mtq_add_opengraph_meta() {
-	if (is_single() || is_page()) {
-		global $post;
-		$title = get_the_title();
-		$description = get_the_excerpt() ?: wp_trim_words(strip_tags($post->post_content), 20);
-		$url = get_permalink();
-		$image = get_the_post_thumbnail_url($post->ID, 'large');
-		$site_name = get_bloginfo('name');
-		echo "\n<!-- Open Graph Meta Tags by MTQ Theme -->\n";
-		echo '<meta property="og:title" content="' . esc_attr($title) . '">\n';
-		echo '<meta property="og:description" content="' . esc_attr($description) . '">\n';
-		echo '<meta property="og:url" content="' . esc_url($url) . '">\n';
-		echo '<meta property="og:type" content="article">\n';
-		echo '<meta property="og:site_name" content="' . esc_attr($site_name) . '">\n';
-		if ($image) { echo '<meta property="og:image" content="' . esc_url($image) . '">\n<meta property="og:image:width" content="1200">\n<meta property="og:image:height" content="630">\n'; }
-		echo '<meta name="twitter:card" content="summary_large_image">\n<meta name="twitter:title" content="' . esc_attr($title) . '">\n<meta name="twitter:description" content="' . esc_attr($description) . '">\n';
-		if ($image) { echo '<meta name="twitter:image" content="' . esc_url($image) . '">\n'; }
-		echo '<meta name="description" content="' . esc_attr($description) . '">\n<!-- End Open Graph Meta Tags -->\n\n';
+	// Allow disabling via filter; skip if common SEO plugins handle OG
+	$enabled = apply_filters('mtq_enable_og_meta', true);
+	if (!$enabled || class_exists('WPSEO_Frontend') || defined('RANK_MATH_VERSION') || defined('SEOPRESS_VERSION')) { return; }
+
+	if (!is_singular()) { return; }
+
+	global $post;
+	if (!$post) { return; }
+
+	$title = get_the_title($post);
+	$raw_desc = get_the_excerpt($post) ?: wp_strip_all_tags($post->post_content);
+	// Trim description safely to ~200 chars
+	$description = trim( wp_html_excerpt( $raw_desc, 200, '…' ) );
+	$url = get_permalink($post);
+
+	// Determine image with fallbacks
+	$image = get_the_post_thumbnail_url($post->ID, 'full');
+	if (!$image) {
+		$site_icon = get_site_icon_url(512);
+		if ($site_icon) { $image = $site_icon; }
+		else {
+			$theme_default = get_theme_file_uri('assets/images/og-default.jpg');
+			if ($theme_default && $theme_default !== get_theme_file_uri()) { $image = $theme_default; }
+		}
 	}
+
+	// Context-aware type
+	$type = (is_front_page() || is_home()) ? 'website' : (is_singular() ? 'article' : 'website');
+
+	$site_name = get_bloginfo('name');
+	$locale = get_locale();
+
+	echo "\n<!-- Open Graph Meta Tags by MTQ Theme -->\n";
+	echo '<meta property="og:locale" content="' . esc_attr($locale) . '" />' . "\n";
+	echo '<meta property="og:site_name" content="' . esc_attr($site_name) . '" />' . "\n";
+	echo '<meta property="og:type" content="' . esc_attr($type) . '" />' . "\n";
+	echo '<meta property="og:title" content="' . esc_attr($title) . '" />' . "\n";
+	echo '<meta property="og:description" content="' . esc_attr($description) . '" />' . "\n";
+	echo '<meta property="og:url" content="' . esc_url($url) . '" />' . "\n";
+	if ($image) {
+		echo '<meta property="og:image" content="' . esc_url($image) . '" />' . "\n";
+		echo '<meta property="og:image:alt" content="' . esc_attr($title) . '" />' . "\n";
+		// Common default dimensions for large images; actual size may vary
+		echo '<meta property="og:image:width" content="1200" />' . "\n";
+		echo '<meta property="og:image:height" content="630" />' . "\n";
+	}
+
+	// Article-specific meta
+	if ($type === 'article') {
+		$published = get_the_date('c', $post);
+		$modified  = get_the_modified_date('c', $post);
+		echo '<meta property="article:published_time" content="' . esc_attr($published) . '" />' . "\n";
+		echo '<meta property="article:modified_time" content="' . esc_attr($modified) . '" />' . "\n";
+		$author_url = get_author_posts_url($post->post_author);
+		if ($author_url) { echo '<meta property="article:author" content="' . esc_url($author_url) . '" />' . "\n"; }
+	}
+
+	// Twitter Card
+	echo '<meta name="twitter:card" content="summary_large_image" />' . "\n";
+	echo '<meta name="twitter:title" content="' . esc_attr($title) . '" />' . "\n";
+	echo '<meta name="twitter:description" content="' . esc_attr($description) . '" />' . "\n";
+	if ($image) { echo '<meta name="twitter:image" content="' . esc_url($image) . '" />' . "\n"; }
+	$twitter_site = apply_filters('mtq_twitter_site', ''); // e.g. @yourhandle
+	if (!empty($twitter_site)) { echo '<meta name="twitter:site" content="' . esc_attr($twitter_site) . '" />' . "\n"; }
+
+	// Also update standard meta description as a fallback for crawlers
+	echo '<meta name="description" content="' . esc_attr($description) . '" />' . "\n";
+	echo "<!-- End Open Graph Meta Tags -->\n\n";
 }
 add_action('wp_head', 'mtq_add_opengraph_meta');
 
