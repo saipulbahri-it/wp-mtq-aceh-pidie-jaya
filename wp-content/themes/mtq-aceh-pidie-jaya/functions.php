@@ -259,6 +259,29 @@ function mtq_aceh_pidie_jaya_content_width()
 add_action('after_setup_theme', 'mtq_aceh_pidie_jaya_content_width', 0);
 
 /**
+ * Allow SVG upload for administrators only, with basic file type check.
+ */
+add_filter('upload_mimes', function($mimes) {
+	if (current_user_can('manage_options')) {
+		$mimes['svg'] = 'image/svg+xml';
+	}
+	return $mimes;
+});
+
+add_filter('wp_check_filetype_and_ext', function($data, $file, $filename, $mimes, $real_mime = null) {
+	$ext = pathinfo($filename, PATHINFO_EXTENSION);
+	if (strtolower($ext) === 'svg') {
+		if (!current_user_can('manage_options')) {
+			return array('ext' => false, 'type' => false, 'proper_filename' => false);
+		}
+		// Force correct type; WordPress 5.1+ adds $real_mime
+		$data['ext'] = 'svg';
+		$data['type'] = 'image/svg+xml';
+	}
+	return $data;
+}, 10, 5);
+
+/**
  * Register widget area.
  *
  * @link https://developer.wordpress.org/themes/functionality/sidebars/#registering-a-sidebar

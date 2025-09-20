@@ -14,11 +14,13 @@ class MTQ_Cabang_Lomba_CPT {
     const META_ICON   = '_mtq_cabang_icon_path';
     const META_COLOR  = '_mtq_cabang_color_classes';
     const META_URL    = '_mtq_cabang_custom_url';
+    const META_ICON_MEDIA = '_mtq_cabang_icon_media_id';
 
     public function __construct() {
         add_action('init', [$this, 'register_post_type']);
-        add_action('add_meta_boxes', [$this, 'register_meta_boxes']);
+    add_action('add_meta_boxes', [$this, 'register_meta_boxes']);
         add_action('save_post_' . self::POST_TYPE, [$this, 'save_meta']);
+    add_action('admin_enqueue_scripts', [$this, 'enqueue_admin_assets']);
 
         // Register post meta for REST and sanitization
         add_action('init', [$this, 'register_post_meta']);
@@ -70,6 +72,14 @@ class MTQ_Cabang_Lomba_CPT {
             'sanitize_callback' => [$this, 'sanitize_icon_path'],
             'auth_callback' => function() { return current_user_can('edit_posts'); },
         ]);
+        register_post_meta(self::POST_TYPE, self::META_ICON_MEDIA, [
+            'show_in_rest'  => true,
+            'single'        => true,
+            'type'          => 'integer',
+            'default'       => 0,
+            'sanitize_callback' => 'absint',
+            'auth_callback' => function() { return current_user_can('edit_posts'); },
+        ]);
         register_post_meta(self::POST_TYPE, self::META_COLOR, [
             'show_in_rest'  => true,
             'single'        => true,
@@ -104,7 +114,24 @@ class MTQ_Cabang_Lomba_CPT {
         $icon  = get_post_meta($post->ID, self::META_ICON, true);
         $color = get_post_meta($post->ID, self::META_COLOR, true);
         $url   = get_post_meta($post->ID, self::META_URL, true);
+        $icon_media_id = (int) get_post_meta($post->ID, self::META_ICON_MEDIA, true);
+        $icon_media_url = $icon_media_id ? wp_get_attachment_url($icon_media_id) : '';
         ?>
+        <p>
+            <label><strong><?php _e('Ikon (Media Library)', 'mtq-aceh-pidie-jaya'); ?></strong></label><br>
+            <input type="hidden" id="mtq_cabang_icon_media_id" name="mtq_cabang_icon_media_id" value="<?php echo esc_attr($icon_media_id ?: 0); ?>">
+            <div id="mtq-cabang-icon-preview" style="margin:8px 0; min-height:40px;">
+                <?php if ($icon_media_url): ?>
+                    <img src="<?php echo esc_url($icon_media_url); ?>" alt="" style="max-width:64px; max-height:64px;" />
+                <?php endif; ?>
+            </div>
+            <button type="button" class="button" id="mtq-cabang-icon-upload"><?php _e('Pilih/Upload Ikon', 'mtq-aceh-pidie-jaya'); ?></button>
+            <button type="button" class="button" id="mtq-cabang-icon-remove" style="margin-left:8px;<?php echo $icon_media_id ? '' : 'display:none;'; ?>"><?php _e('Hapus', 'mtq-aceh-pidie-jaya'); ?></button>
+            <small style="display:block; margin-top:4px;">
+                <?php _e('Dukungan PNG/JPG/SVG. Jika ikon media diisi, maka akan diprioritaskan dibandingkan SVG Path di bawah.', 'mtq-aceh-pidie-jaya'); ?>
+            </small>
+        </p>
+        <hr>
         <p>
             <label for="mtq_cabang_icon_path"><strong><?php _e('SVG Icon Path (atribut d)', 'mtq-aceh-pidie-jaya'); ?></strong></label><br>
             <textarea id="mtq_cabang_icon_path" name="mtq_cabang_icon_path" rows="2" style="width:100%;" placeholder="M12 6.042A8.967 ..."><?php echo esc_textarea($icon); ?></textarea>
@@ -137,12 +164,40 @@ class MTQ_Cabang_Lomba_CPT {
         if (isset($_POST['mtq_cabang_icon_path'])) {
             update_post_meta($post_id, self::META_ICON, $this->sanitize_icon_path($_POST['mtq_cabang_icon_path']));
         }
+        if (isset($_POST['mtq_cabang_icon_media_id'])) {
+            update_post_meta($post_id, self::META_ICON_MEDIA, absint($_POST['mtq_cabang_icon_media_id']));
+        }
         if (isset($_POST['mtq_cabang_color_classes'])) {
             update_post_meta($post_id, self::META_COLOR, sanitize_text_field($_POST['mtq_cabang_color_classes']));
         }
         if (isset($_POST['mtq_cabang_custom_url'])) {
             update_post_meta($post_id, self::META_URL, esc_url_raw($_POST['mtq_cabang_custom_url']));
         }
+    }
+
+    public function enqueue_admin_assets($hook) {
+        // Only enqueue on Cabang Lomba edit/add screens
+        $screen = function_exists('get_current_screen') ? get_current_screen() : null;
+        if (!$screen || $screen->post_type !== self::POST_TYPE) {
+            return;
+        }
+        // Media for uploader
+        wp_enqueue_media();
+        // Admin JS
+        wp_enqueue_script(
+            'mtq-cabang-meta',
+            get_template_directory_uri() . '/assets/admin/cabang-meta.js',
+            array('jquery'),
+            defined('_S_VERSION') ? _S_VERSION : '1.0.0',
+            true
+        );
+        // Admin CSS (optional minimal)
+        wp_enqueue_style(
+            'mtq-cabang-meta',
+            get_template_directory_uri() . '/assets/admin/cabang-meta.css',
+            array(),
+            defined('_S_VERSION') ? _S_VERSION : '1.0.0'
+        );
     }
 
     public function sanitize_icon_path($value) {
@@ -177,12 +232,14 @@ function mtq_get_cabang_lomba_from_cpt() {
         $title = get_the_title();
         $desc  = has_excerpt() ? get_the_excerpt() : wp_strip_all_tags(wp_trim_words(get_the_content(null, false, $id), 25));
         $icon  = get_post_meta($id, MTQ_Cabang_Lomba_CPT::META_ICON, true);
+        $icon_media_id = (int) get_post_meta($id, MTQ_Cabang_Lomba_CPT::META_ICON_MEDIA, true);
         $color = get_post_meta($id, MTQ_Cabang_Lomba_CPT::META_COLOR, true);
         $url   = get_post_meta($id, MTQ_Cabang_Lomba_CPT::META_URL, true);
         if (empty($url)) { $url = get_permalink($id); }
         $items[sanitize_key($title) . '-' . $id] = [
             'nama'       => $title,
             'icon'       => $icon ?: 'M12 6.042A8.967 8.967 0 006 3.75...',
+            'icon_media_id' => $icon_media_id,
             'deskripsi'  => $desc,
             'warna'      => $color ?: 'text-blue-600 bg-blue-100',
             'url'        => $url,
@@ -190,4 +247,46 @@ function mtq_get_cabang_lomba_from_cpt() {
     }
     wp_reset_postdata();
     return $items;
+}
+
+/**
+ * Helper: Inline sanitized SVG from attachment ID (restrict allowed tags/attrs).
+ */
+function mtq_inline_svg_attachment($attachment_id) {
+    $attachment_id = absint($attachment_id);
+    if (!$attachment_id) return '';
+    $mime = get_post_mime_type($attachment_id);
+    if ($mime !== 'image/svg+xml') return '';
+    $path = get_attached_file($attachment_id);
+    if (!$path || !file_exists($path)) return '';
+    $svg = file_get_contents($path);
+    if ($svg === false) return '';
+    // Sanitize SVG with strict whitelist
+    $allowed_tags = array(
+        'svg'  => array(
+            'xmlns' => true,
+            'viewBox' => true,
+            'width' => true,
+            'height' => true,
+            'fill' => true,
+            'stroke' => true,
+            'stroke-width' => true,
+            'class' => true,
+        ),
+        'g'    => array('fill'=>true, 'stroke'=>true, 'class'=>true),
+        'title'=> array(),
+        'path' => array(
+            'd' => true,
+            'fill' => true,
+            'stroke' => true,
+            'stroke-width' => true,
+            'stroke-linecap' => true,
+            'stroke-linejoin' => true,
+            'class' => true,
+        ),
+    );
+    $svg = wp_kses($svg, $allowed_tags);
+    // Ensure no script/style sneaks in
+    $svg = preg_replace('#<\/(?:script|style)>#i', '', $svg);
+    return $svg;
 }
