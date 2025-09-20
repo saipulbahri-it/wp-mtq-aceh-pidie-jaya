@@ -8,7 +8,7 @@
   "keywords": ["mtq", "cabang", "grid"],
   "textdomain": "mtq-aceh-pidie-jaya",
   "style": "file:./style.css",
-  "editorScript": "file:./index.js",
+  "editorScript": "mtq-cabang-grid-editor",
   "render": "file:./render.php",
   "attributes": {
     "columns": {"type": "number", "default": 3},

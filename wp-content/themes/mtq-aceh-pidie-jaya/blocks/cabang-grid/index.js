@@ -1,7 +1,9 @@
 (function(){
+  if (typeof wp === 'undefined' || !wp.blocks) { return; }
   const { registerBlockType } = wp.blocks;
   const { __ } = wp.i18n;
-  const { InspectorControls } = wp.blockEditor || wp.editor;
+  const { InspectorControls } = (wp.blockEditor || wp.editor);
+  const ServerSideRender = wp.serverSideRender || wp.components.ServerSideRender;
   const { PanelBody, RangeControl, SelectControl } = wp.components;
 
   registerBlockType('mtq/cabang-grid', {
@@ -37,9 +39,14 @@
               })
             )
           ),
-          wp.element.createElement('div', { className: 'mtq-cabang-grid-placeholder' },
-            __('Cabang Lomba Grid (pratinjau di front-end)', 'mtq-aceh-pidie-jaya')
-          )
+          ServerSideRender
+            ? wp.element.createElement(ServerSideRender, {
+                block: 'mtq/cabang-grid',
+                attributes: { columns, gap }
+              })
+            : wp.element.createElement('div', { className: 'mtq-cabang-grid-placeholder' },
+                __('Cabang Lomba Grid (pratinjau editor membutuhkan wp-server-side-render)', 'mtq-aceh-pidie-jaya')
+              )
         )
       );
     },
