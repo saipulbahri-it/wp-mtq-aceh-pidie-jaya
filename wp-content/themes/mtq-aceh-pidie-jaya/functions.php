@@ -21,11 +21,22 @@ require get_template_directory() . '/inc/translation.php';
 require get_template_directory() . '/inc/widgets.php';
 require get_template_directory() . '/inc/shortcodes.php';
 require get_template_directory() . '/inc/cabang-lomba.php';
+require get_template_directory() . '/inc/cabang-lomba-cpt.php';
 require get_template_directory() . '/inc/social-analytics-dashboard.php';
 require get_template_directory() . '/inc/countdown-admin.php';
 require get_template_directory() . '/inc/youtube-live-admin.php';
 require get_template_directory() . '/inc/youtube-live-display.php';
 require get_template_directory() . '/inc/menus.php';
+require get_template_directory() . '/inc/blocks/cabang-grid.php';
+
+// Register custom pattern category for MTQ page patterns
+add_action('init', function(){
+	if ( function_exists('register_block_pattern_category') ) {
+		register_block_pattern_category('mtq-pages', array(
+			'label' => __('MTQ Pages', 'mtq-aceh-pidie-jaya'),
+		));
+	}
+});
 
 // Include gallery system files
 require get_template_directory() . '/inc/gallery-post-type.php';
@@ -218,6 +229,10 @@ if (! function_exists('mtq_aceh_pidie_jaya_setup')) :
 				'flex-height' => true,
 			)
 		);
+
+		// Load theme styles inside block editor so previews match frontend (Tailwind utilities, etc.)
+		add_theme_support('editor-styles');
+		add_editor_style('dist/app.css');
 	}
 endif;
 add_action('after_setup_theme', 'mtq_aceh_pidie_jaya_setup');
@@ -255,6 +270,54 @@ function mtq_aceh_pidie_jaya_content_width()
 	$GLOBALS['content_width'] = apply_filters('mtq_aceh_pidie_jaya_content_width', 640);
 }
 add_action('after_setup_theme', 'mtq_aceh_pidie_jaya_content_width', 0);
+
+/**
+ * Allow SVG upload for administrators only, with basic file type check.
+ */
+add_filter('upload_mimes', function($mimes) {
+	if (current_user_can('manage_options')) {
+		$mimes['svg'] = 'image/svg+xml';
+	}
+	return $mimes;
+});
+
+add_filter('wp_check_filetype_and_ext', function($data, $file, $filename, $mimes, $real_mime = null) {
+	$ext = pathinfo($filename, PATHINFO_EXTENSION);
+	if (strtolower($ext) === 'svg') {
+		if (!current_user_can('manage_options')) {
+			return array('ext' => false, 'type' => false, 'proper_filename' => false);
+		}
+		// Force correct type; WordPress 5.1+ adds $real_mime
+		$data['ext'] = 'svg';
+		$data['type'] = 'image/svg+xml';
+	}
+	return $data;
+}, 10, 5);
+
+/**
+ * Load theme styles (Tailwind dist) in block editor for Page Cabang Lomba only,
+ * so the server-side preview mirrors frontend look & feel.
+ */
+add_action('enqueue_block_editor_assets', function() {
+	if (!function_exists('get_current_screen')) return;
+	$screen = get_current_screen();
+	if (!$screen || $screen->base !== 'post' || $screen->post_type !== 'page') return;
+	// Resolve current post ID
+	$post_id = isset($_GET['post']) ? intval($_GET['post']) : (isset($_POST['post_ID']) ? intval($_POST['post_ID']) : 0);
+	if (!$post_id) return;
+	$template = get_page_template_slug($post_id);
+	if ($template !== 'page-cabang-lomba.php') return;
+	// Enqueue compiled theme CSS so Tailwind utilities work in editor preview
+	$css_rel = '/dist/app.css';
+	$css_path = get_template_directory() . $css_rel;
+	$ver = file_exists($css_path) ? filemtime($css_path) : (defined('_S_VERSION') ? _S_VERSION : '1.0.0');
+	wp_enqueue_style(
+		'mtq-editor-tailwind',
+		get_template_directory_uri() . $css_rel,
+		array('wp-edit-blocks'),
+		$ver
+	);
+});
 
 /**
  * Register widget area.

@@ -31,9 +31,20 @@
                     <div class="flex items-center gap-3 mb-4">
                         <div class="flex-shrink-0">
                             <div class="p-3 rounded-lg <?php echo esc_attr($cabang['warna']); ?>">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="<?php echo esc_attr($cabang['icon']); ?>" />
-                                </svg>
+                                <?php
+                                    $icon_media_id = isset($cabang['icon_media_id']) ? absint($cabang['icon_media_id']) : 0;
+                                    if ($icon_media_id) {
+                                        $mime = get_post_mime_type($icon_media_id);
+                                        if ($mime === 'image/svg+xml' && function_exists('mtq_inline_svg_attachment')) {
+                                            echo mtq_inline_svg_attachment($icon_media_id);
+                                        } else {
+                                            echo wp_get_attachment_image($icon_media_id, 'thumbnail', false, array('class' => 'w-6 h-6'));
+                                        }
+                                    } else { ?>
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" />
+                                    </svg>
+                                <?php } ?>
                             </div>
                         </div>
                         <h3 class="text-xl font-semibold text-slate-800"><?php echo esc_html($cabang['nama']); ?></h3>

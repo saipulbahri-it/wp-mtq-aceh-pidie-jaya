@@ -1,0 +1,18 @@
+/* Editor-only tweaks to align with Gutenberg block spacing */
+
+/* Ensure the block wrapper itself gets standard block margins in editor */
+.wp-block-mtq-cabang-grid {
+  margin-top: var(--wp--style--block-gap, 1.5rem);
+  margin-bottom: var(--wp--style--block-gap, 1.5rem);
+}
+
+/* Ensure inner grid doesn’t stick to edges in editor canvas */
+.wp-block[data-type="mtq/cabang-grid"] .glass-card {
+  border-radius: 0.75rem;
+}
+
+/* Improve visibility of glass-card in editor (subtle only in editor) */
+.is-editor .glass-card,
+.block-editor-writing-flow .glass-card {
+  box-shadow: 0 1px 2px rgba(0,0,0,.04), 0 4px 12px rgba(0,0,0,.06);
+}

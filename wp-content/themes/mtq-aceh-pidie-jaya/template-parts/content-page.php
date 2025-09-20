@@ -60,7 +60,7 @@ if (!defined('ABSPATH')) {
 
 	<!-- Enhanced Content Body -->
 	<section class="py-16 section-animate">
-			<div class="max-w-4xl mx-auto">
+			<div class="max-w-4xl mx-auto px-6 pb-8">
 				<!-- Content with Better Typography -->
 				<div class="entry-content prose prose-lg prose-slate max-w-none">
 					<div class="text-slate-700 leading-relaxed">
