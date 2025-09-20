@@ -45,12 +45,13 @@ add_action('init', function() {
                 'columns' => array('type' => 'number', 'default' => 3),
                 'gap'     => array('type' => 'string', 'default' => 'gap-6'),
             ),
-            'render_callback' => function($attributes = array()) use ($block_dir) {
+            'render_callback' => function($attributes = array(), $content = '', $block = null) use ($block_dir) {
                 $attributes = wp_parse_args($attributes, array('columns' => 3, 'gap' => 'gap-6'));
-                // Isolasi variabel agar render.php bisa pakai $attributes
-                ob_start();
-                include $block_dir . '/render.php';
-                return ob_get_clean();
+                $cb = include $block_dir . '/render.php';
+                if (is_callable($cb)) {
+                    return call_user_func($cb, $attributes, $content, $block);
+                }
+                return '';
             },
         ));
     }
