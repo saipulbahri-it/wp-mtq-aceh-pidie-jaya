@@ -22,8 +22,22 @@ add_action('init', function() {
             defined('_S_VERSION') ? _S_VERSION : '1.0.0',
             true
         );
-        // Register from metadata (block.json)
-        register_block_type($block_dir);
+        // Register from metadata and override render_callback to support callable or string
+        register_block_type($block_dir, array(
+            'editor_script' => 'mtq-cabang-grid-editor',
+            'render_callback' => function($attributes = array(), $content = '', $block = null) use ($block_dir) {
+                $attributes = wp_parse_args($attributes, array('columns' => 3, 'gap' => 'gap-6'));
+                $result = include $block_dir . '/render.php';
+                if (is_callable($result)) {
+                    return call_user_func($result, $attributes, $content, $block);
+                }
+                // If render.php returns string markup, just return it
+                if (is_string($result)) {
+                    return $result;
+                }
+                return '';
+            },
+        ));
         return;
     }
 

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Template Name: Cabang Lomba
  * Description: Halaman khusus yang menampilkan daftar cabang lomba MTQ.
@@ -52,7 +53,11 @@ get_header();
 
     <!-- Cabang Lomba Section (content) -->
     <?php if (function_exists('has_block') && has_block('mtq/cabang-grid')) : ?>
-        <?php echo apply_filters('the_content', get_the_content()); ?>
+        <section class="py-20 bg-gradient-to-br from-blue-50 to-indigo-50 section-animate" id="blocks_cabang-grid-render">
+            <div class="max-w-6xl mx-auto px-4">
+                <?php echo apply_filters('the_content', get_the_content()); ?>
+            </div>
+        </section>
     <?php else : ?>
         <!-- Fallback inline grid when block not used -->
         <section id="cabang" class="py-20 bg-gradient-to-br from-blue-50 to-indigo-50 section-animate">
@@ -68,29 +73,29 @@ get_header();
                         $card_close = $card_url ? '</a>' : '</div>';
                         echo $card_open;
                         ?>
-                            <div class="flex items-center gap-3 mb-4">
-                                <div class="flex-shrink-0">
-                                    <div class="p-3 rounded-lg <?php echo esc_attr($cabang['warna']); ?>">
-                                        <?php
-                                            $icon_media_id = isset($cabang['icon_media_id']) ? absint($cabang['icon_media_id']) : 0;
-                                            if ($icon_media_id) {
-                                                $mime = get_post_mime_type($icon_media_id);
-                                                if ($mime === 'image/svg+xml' && function_exists('mtq_inline_svg_attachment')) {
-                                                    echo mtq_inline_svg_attachment($icon_media_id);
-                                                } else {
-                                                    echo wp_get_attachment_image($icon_media_id, 'thumbnail', false, array('class' => 'w-6 h-6'));
-                                                }
-                                            } else {
-                                        ?>
-                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                                                <path stroke-linecap="round" stroke-linejoin="round" d="<?php echo esc_attr($cabang['icon']); ?>" />
-                                            </svg>
-                                        <?php } ?>
-                                    </div>
+                        <div class="flex items-center gap-3 mb-4">
+                            <div class="flex-shrink-0">
+                                <div class="p-3 rounded-lg <?php echo esc_attr($cabang['warna']); ?>">
+                                    <?php
+                                    $icon_media_id = isset($cabang['icon_media_id']) ? absint($cabang['icon_media_id']) : 0;
+                                    if ($icon_media_id) {
+                                        $mime = get_post_mime_type($icon_media_id);
+                                        if ($mime === 'image/svg+xml' && function_exists('mtq_inline_svg_attachment')) {
+                                            echo mtq_inline_svg_attachment($icon_media_id);
+                                        } else {
+                                            echo wp_get_attachment_image($icon_media_id, 'thumbnail', false, array('class' => 'w-6 h-6'));
+                                        }
+                                    } else {
+                                    ?>
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="<?php echo esc_attr($cabang['icon']); ?>" />
+                                        </svg>
+                                    <?php } ?>
                                 </div>
-                                <h3 class="text-xl font-semibold text-slate-800"><?php echo esc_html($cabang['nama']); ?></h3>
                             </div>
-                            <p class="text-sm text-slate-600"><?php echo esc_html($cabang['deskripsi']); ?></p>
+                            <h3 class="text-xl font-semibold text-slate-800"><?php echo esc_html($cabang['nama']); ?></h3>
+                        </div>
+                        <p class="text-sm text-slate-600"><?php echo esc_html($cabang['deskripsi']); ?></p>
                         <?php echo $card_close; ?>
                     <?php endforeach; ?>
                 </div>
