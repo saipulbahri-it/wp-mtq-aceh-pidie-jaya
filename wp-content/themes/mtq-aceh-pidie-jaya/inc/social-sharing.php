@@ -65,17 +65,30 @@ function mtq_cleanup_old_social_stats() {
 }
 
 function mtq_get_social_sharing_stats($post_id) {
+	$platforms = array('facebook','twitter','whatsapp','telegram','linkedin','pinterest','email','copy');
 	$stats = array(
 		'total_shares' => intval(get_post_meta($post_id, '_social_shares_count', true)),
-		'facebook' => intval(get_post_meta($post_id, '_social_shares_Facebook', true)),
-		'twitter' => intval(get_post_meta($post_id, '_social_shares_Twitter', true)),
-		'whatsapp' => intval(get_post_meta($post_id, '_social_shares_WhatsApp', true)),
-		'telegram' => intval(get_post_meta($post_id, '_social_shares_Telegram', true)),
-		'linkedin' => intval(get_post_meta($post_id, '_social_shares_LinkedIn', true)),
-		'pinterest' => intval(get_post_meta($post_id, '_social_shares_Pinterest', true)),
-		'email' => intval(get_post_meta($post_id, '_social_shares_Email', true)),
-		'copy_link' => intval(get_post_meta($post_id, '_social_shares_Copy_Link', true))
 	);
+	foreach ($platforms as $p) {
+		$stats[$p] = intval(get_post_meta($post_id, '_social_shares_' . $p, true));
+	}
+	// Back-compat: if legacy mixed-case keys exist, include their values
+	$legacy_map = array(
+		'Facebook' => 'facebook',
+		'Twitter' => 'twitter',
+		'WhatsApp' => 'whatsapp',
+		'Telegram' => 'telegram',
+		'LinkedIn' => 'linkedin',
+		'Pinterest' => 'pinterest',
+		'Email' => 'email',
+		'Copy_Link' => 'copy'
+	);
+	foreach ($legacy_map as $legacy => $norm) {
+		$val = intval(get_post_meta($post_id, '_social_shares_' . $legacy, true));
+		if ($val > 0 && $stats[$norm] === 0) {
+			$stats[$norm] = $val;
+		}
+	}
 	return $stats;
 }
 
