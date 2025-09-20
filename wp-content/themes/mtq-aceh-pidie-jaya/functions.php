@@ -38,23 +38,26 @@ function mtq_init_gallery_system() {
     new MTQ_Gallery_Shortcodes();
     
     // Check if we need to flush permalinks
-    $permalinks_flushed = get_option('mtq_gallery_permalinks_flushed');
-    $theme_version = get_option('mtq_theme_version', '1.0.0');
+	$permalinks_flushed = get_option('mtq_gallery_permalinks_flushed');
+	// Use actual theme version for comparison to avoid stale constants
+	$current_theme = wp_get_theme();
+	$current_theme_version = $current_theme ? $current_theme->get('Version') : '1.0.0';
+	$stored_theme_version = get_option('mtq_theme_version', '');
     
     // Force flush if:
     // 1. Never flushed before
     // 2. Theme version changed
     // 3. Gallery post type not working (emergency check)
-    if ($permalinks_flushed !== 'yes' || 
-        $theme_version !== '1.1.0' || 
-        !get_post_type_archive_link('mtq_gallery')) {
+	if ($permalinks_flushed !== 'yes' || 
+		$stored_theme_version !== $current_theme_version || 
+		!get_post_type_archive_link('mtq_gallery')) {
         
         flush_rewrite_rules(true);
         update_option('mtq_gallery_permalinks_flushed', 'yes');
-        update_option('mtq_theme_version', '1.1.0');
+		update_option('mtq_theme_version', $current_theme_version);
         
         // Log the flush for debugging
-        if (WP_DEBUG) {
+		if (defined('WP_DEBUG') && WP_DEBUG) {
             error_log('MTQ Gallery: Permalinks flushed at ' . current_time('mysql'));
         }
     }
@@ -229,15 +232,16 @@ add_action('after_setup_theme', 'mtq_aceh_pidie_jaya_setup');
  */
 add_filter('get_custom_logo', function ($html) {
 	if (empty($html)) return $html;
-	// Sisipkan kelas tambahan pada <img ...>
-	$html = preg_replace(
-		'/<img(\s+[^>]*class=\"[^\"]*)\"/i',
-		'<img$1 logo-img h-16 transition-all duration-300"',
-		$html,
-		1
-	);
-	// Jika tidak ada class sama sekali
-	if (strpos($html, 'class=') === false) {
+	// Tambahkan kelas tambahan ke atribut class yang sudah ada
+	if (strpos($html, 'class=') !== false) {
+		$html = preg_replace(
+			'/class="([^"]*)"/i',
+			'class="$1 logo-img h-16 transition-all duration-300"',
+			$html,
+			1
+		);
+	} else {
+		// Jika tidak ada atribut class sama sekali, tambahkan baru
 		$html = str_replace('<img', '<img class="logo-img h-16 transition-all duration-300"', $html);
 	}
 	return $html;

@@ -167,15 +167,17 @@ class MTQ_Gallery_Shortcodes {
         $enable_lightbox = $enable_lightbox === 'no' ? false : true; // Default to true
     $show_header = $show_header === 'no' ? false : true; // Default to true
         
-        // Debug logging
-        error_log('Gallery shortcode settings: ' . json_encode([
-            'layout' => $layout,
-            'columns' => $columns,
-            'show_captions' => $show_captions,
-            'enable_lightbox' => $enable_lightbox,
-            'gallery_id' => $gallery_post->ID,
-            'show_header' => $show_header
-        ]));
+        // Debug logging (only when WP_DEBUG is enabled)
+        if (defined('WP_DEBUG') && WP_DEBUG) {
+            error_log('Gallery shortcode settings: ' . json_encode([
+                'layout' => $layout,
+                'columns' => $columns,
+                'show_captions' => $show_captions,
+                'enable_lightbox' => $enable_lightbox,
+                'gallery_id' => $gallery_post->ID,
+                'show_header' => $show_header
+            ]));
+        }
         
         $output = '<div class="mtq-gallery-container" data-gallery-id="' . $gallery_post->ID . '">';
         

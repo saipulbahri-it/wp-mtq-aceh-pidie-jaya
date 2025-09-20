@@ -88,9 +88,14 @@ if (!defined('ABSPATH')) {
 							echo '<a href="' . esc_url( get_home_url() ) . '" class="nav-link">Beranda</a>';
 							echo '<a href="' . esc_url( get_home_url() ) . '#tentang" class="nav-link">Tentang</a>';
 							echo '<a href="' . esc_url( get_home_url() ) . '#cabang" class="nav-link">Cabang Lomba</a>';
-							echo '<a href="' . get_permalink( get_page_by_path( 'arena-dan-lokasi' ) ) . '" class="nav-link">Arena & Lokasi</a>';
-							echo '<a href="' . get_post_type_archive_link('mtq_gallery') . '" class="nav-link">Galeri</a>';
-							echo '<a href="' . get_permalink( get_page_by_path( 'berita' ) ) . '" class="nav-link">Berita</a>';
+							$arena_page = get_page_by_path( 'arena-dan-lokasi' );
+							$arena_url = $arena_page ? get_permalink( $arena_page ) : home_url('/arena-dan-lokasi/');
+							$gallery_url = get_post_type_archive_link('mtq_gallery');
+							$berita_page = get_page_by_path( 'berita' );
+							$berita_url = $berita_page ? get_permalink( $berita_page ) : home_url('/berita/');
+							echo '<a href="' . esc_url( $arena_url ) . '" class="nav-link">Arena & Lokasi</a>';
+							echo '<a href="' . esc_url( $gallery_url ) . '" class="nav-link">Galeri</a>';
+							echo '<a href="' . esc_url( $berita_url ) . '" class="nav-link">Berita</a>';
 							echo '<a href="' . esc_url( get_home_url() ) . '#live-stream" class="nav-link text-orange-600 font-bold flex items-center gap-1"><span class="relative flex items-center"><span class="live-dot animate-pulse"></span><svg class="w-4 h-4 ml-1 text-orange-500" fill="currentColor" viewBox="0 0 20 20"><circle cx="10" cy="10" r="6" fill="currentColor"></circle></svg></span>Live</a>';
 						},
 						'link_before' => '<span class="nav-link">',
@@ -119,9 +124,14 @@ if (!defined('ABSPATH')) {
 							echo '<a href="' . esc_url( get_home_url() ) . '" class="nav-link">Beranda</a>';
 							echo '<a href="' . esc_url( get_home_url() ) . '#tentang" class="nav-link">Tentang</a>';
 							echo '<a href="' . esc_url( get_home_url() ) . '#cabang" class="nav-link">Cabang Lomba</a>';
-							echo '<a href="' . get_permalink( get_page_by_path( 'arena-dan-lokasi' ) ) . '" class="nav-link">Arena & Lokasi</a>';
-							echo '<a href="' . get_post_type_archive_link('mtq_gallery') . '" class="nav-link">Galeri</a>';
-							echo '<a href="' . get_permalink( get_page_by_path( 'berita' ) ) . '" class="nav-link">Berita</a>';
+							$arena_page = get_page_by_path( 'arena-dan-lokasi' );
+							$arena_url = $arena_page ? get_permalink( $arena_page ) : home_url('/arena-dan-lokasi/');
+							$gallery_url = get_post_type_archive_link('mtq_gallery');
+							$berita_page = get_page_by_path( 'berita' );
+							$berita_url = $berita_page ? get_permalink( $berita_page ) : home_url('/berita/');
+							echo '<a href="' . esc_url( $arena_url ) . '" class="nav-link">Arena & Lokasi</a>';
+							echo '<a href="' . esc_url( $gallery_url ) . '" class="nav-link">Galeri</a>';
+							echo '<a href="' . esc_url( $berita_url ) . '" class="nav-link">Berita</a>';
 							echo '<a href="' . esc_url( get_home_url() ) . '#live-stream" class="nav-link text-orange-600 font-bold flex items-center gap-1"><span class="relative flex items-center"><span class="live-dot animate-pulse"></span><svg class="w-4 h-4 ml-1 text-orange-500" fill="currentColor" viewBox="0 0 20 20"><circle cx="10" cy="10" r="6" fill="currentColor"></circle></svg></span>Live</a>';
 						},
 						'link_before' => '<span class="nav-link">',

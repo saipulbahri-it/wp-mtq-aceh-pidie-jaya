@@ -523,8 +523,12 @@ class MTQ_Gallery_Post_Type {
         wp_enqueue_media();
         wp_enqueue_script('jquery-ui-sortable');
         
-        // Add admin CSS
-        wp_add_inline_style('wp-admin', '
+        // Add admin CSS via a dedicated handle to ensure printing
+        if (!wp_style_is('mtq-gallery-admin', 'registered')) {
+            wp_register_style('mtq-gallery-admin', false);
+        }
+        wp_enqueue_style('mtq-gallery-admin');
+        wp_add_inline_style('mtq-gallery-admin', '
             .mtq-gallery-item, .mtq-gallery-video-item {
                 position: relative;
                 display: inline-block;
@@ -612,7 +616,7 @@ class MTQ_Gallery_Post_Type {
                 margin: 0 0 10px 0;
                 color: white;
             }
-        ');
+    ');
         
         
         wp_add_inline_script('jquery', '
