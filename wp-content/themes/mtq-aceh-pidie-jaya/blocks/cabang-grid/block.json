@@ -1,0 +1,21 @@
+{
+  "apiVersion": 3,
+  "name": "mtq/cabang-grid",
+  "title": "Cabang Lomba Grid",
+  "category": "widgets",
+  "icon": "awards",
+  "description": "Grid dinamis cabang lomba MTQ dari CPT.",
+  "keywords": ["mtq", "cabang", "grid"],
+  "textdomain": "mtq-aceh-pidie-jaya",
+  "style": "file:./style.css",
+  "editorScript": "file:./index.js",
+  "render": "file:./render.php",
+  "attributes": {
+    "columns": {"type": "number", "default": 3},
+    "gap": {"type": "string", "default": "gap-6"}
+  },
+  "supports": {
+    "html": false,
+    "anchor": true
+  }
+}

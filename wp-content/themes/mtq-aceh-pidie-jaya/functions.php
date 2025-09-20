@@ -27,6 +27,7 @@ require get_template_directory() . '/inc/countdown-admin.php';
 require get_template_directory() . '/inc/youtube-live-admin.php';
 require get_template_directory() . '/inc/youtube-live-display.php';
 require get_template_directory() . '/inc/menus.php';
+require get_template_directory() . '/inc/blocks/cabang-grid.php';
 
 // Include gallery system files
 require get_template_directory() . '/inc/gallery-post-type.php';
