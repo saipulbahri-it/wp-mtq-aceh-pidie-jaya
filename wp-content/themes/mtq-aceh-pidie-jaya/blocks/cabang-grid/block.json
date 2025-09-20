@@ -8,14 +8,19 @@
   "keywords": ["mtq", "cabang", "grid"],
   "textdomain": "mtq-aceh-pidie-jaya",
   "style": "file:./style.css",
+  "editorStyle": "file:./editor.css",
   "editorScript": "mtq-cabang-grid-editor",
   "render": "file:./render.php",
   "attributes": {
     "columns": {"type": "number", "default": 3},
-    "gap": {"type": "string", "default": "gap-6"}
+    "gap": {"type": "string", "default": "gap-6"},
+    "showWrapper": {"type": "boolean", "default": false}
   },
   "supports": {
     "html": false,
-    "anchor": true
+    "anchor": true,
+    "spacing": {
+      "margin": true
+    }
   }
 }

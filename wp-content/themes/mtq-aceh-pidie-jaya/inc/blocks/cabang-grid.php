@@ -58,9 +58,10 @@ add_action('init', function() {
             'attributes'     => array(
                 'columns' => array('type' => 'number', 'default' => 3),
                 'gap'     => array('type' => 'string', 'default' => 'gap-6'),
+                'showWrapper' => array('type' => 'boolean', 'default' => false),
             ),
             'render_callback' => function($attributes = array(), $content = '', $block = null) use ($block_dir) {
-                $attributes = wp_parse_args($attributes, array('columns' => 3, 'gap' => 'gap-6'));
+                $attributes = wp_parse_args($attributes, array('columns' => 3, 'gap' => 'gap-6', 'showWrapper' => false));
                 $cb = include $block_dir . '/render.php';
                 if (is_callable($cb)) {
                     return call_user_func($cb, $attributes, $content, $block);

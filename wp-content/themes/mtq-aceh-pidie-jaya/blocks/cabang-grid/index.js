@@ -4,7 +4,7 @@
   const { __ } = wp.i18n;
   const { InspectorControls } = (wp.blockEditor || wp.editor);
   const ServerSideRender = wp.serverSideRender || wp.components.ServerSideRender;
-  const { PanelBody, RangeControl, SelectControl } = wp.components;
+  const { PanelBody, RangeControl, SelectControl, ToggleControl } = wp.components;
 
   registerBlockType('mtq/cabang-grid', {
     title: __('Cabang Lomba Grid', 'mtq-aceh-pidie-jaya'),
@@ -12,10 +12,11 @@
     category: 'widgets',
     attributes: {
       columns: { type: 'number', default: 3 },
-      gap: { type: 'string', default: 'gap-6' }
+      gap: { type: 'string', default: 'gap-6' },
+      showWrapper: { type: 'boolean', default: false }
     },
     edit: (props) => {
-      const { attributes: { columns, gap }, setAttributes } = props;
+  const { attributes: { columns, gap, showWrapper }, setAttributes } = props;
       return (
         wp.element.createElement('div', {},
           wp.element.createElement(InspectorControls, {},
@@ -36,13 +37,18 @@
                   { label: 'Besar (gap-8)', value: 'gap-8' }
                 ],
                 onChange: (val) => setAttributes({ gap: val })
+              }),
+              wp.element.createElement(ToggleControl, {
+                label: __('Tampilkan wrapper section (pratinjau seperti frontend)', 'mtq-aceh-pidie-jaya'),
+                checked: !!showWrapper,
+                onChange: (val) => setAttributes({ showWrapper: !!val })
               })
             )
           ),
           ServerSideRender
             ? wp.element.createElement(ServerSideRender, {
                 block: 'mtq/cabang-grid',
-                attributes: { columns, gap }
+                attributes: { columns, gap, showWrapper }
               })
             : wp.element.createElement('div', { className: 'mtq-cabang-grid-placeholder' },
                 __('Cabang Lomba Grid (pratinjau editor membutuhkan wp-server-side-render)', 'mtq-aceh-pidie-jaya')

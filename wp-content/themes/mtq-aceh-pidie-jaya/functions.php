@@ -220,6 +220,10 @@ if (! function_exists('mtq_aceh_pidie_jaya_setup')) :
 				'flex-height' => true,
 			)
 		);
+
+		// Load theme styles inside block editor so previews match frontend (Tailwind utilities, etc.)
+		add_theme_support('editor-styles');
+		add_editor_style('dist/app.css');
 	}
 endif;
 add_action('after_setup_theme', 'mtq_aceh_pidie_jaya_setup');
@@ -280,6 +284,31 @@ add_filter('wp_check_filetype_and_ext', function($data, $file, $filename, $mimes
 	}
 	return $data;
 }, 10, 5);
+
+/**
+ * Load theme styles (Tailwind dist) in block editor for Page Cabang Lomba only,
+ * so the server-side preview mirrors frontend look & feel.
+ */
+add_action('enqueue_block_editor_assets', function() {
+	if (!function_exists('get_current_screen')) return;
+	$screen = get_current_screen();
+	if (!$screen || $screen->base !== 'post' || $screen->post_type !== 'page') return;
+	// Resolve current post ID
+	$post_id = isset($_GET['post']) ? intval($_GET['post']) : (isset($_POST['post_ID']) ? intval($_POST['post_ID']) : 0);
+	if (!$post_id) return;
+	$template = get_page_template_slug($post_id);
+	if ($template !== 'page-cabang-lomba.php') return;
+	// Enqueue compiled theme CSS so Tailwind utilities work in editor preview
+	$css_rel = '/dist/app.css';
+	$css_path = get_template_directory() . $css_rel;
+	$ver = file_exists($css_path) ? filemtime($css_path) : (defined('_S_VERSION') ? _S_VERSION : '1.0.0');
+	wp_enqueue_style(
+		'mtq-editor-tailwind',
+		get_template_directory_uri() . $css_rel,
+		array('wp-edit-blocks'),
+		$ver
+	);
+});
 
 /**
  * Register widget area.

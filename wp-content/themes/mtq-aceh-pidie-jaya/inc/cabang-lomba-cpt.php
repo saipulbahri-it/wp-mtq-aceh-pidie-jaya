@@ -11,7 +11,6 @@ if (!defined('ABSPATH')) {
 
 class MTQ_Cabang_Lomba_CPT {
     const POST_TYPE = 'mtq_cabang';
-    const META_ICON   = '_mtq_cabang_icon_path';
     const META_COLOR  = '_mtq_cabang_color_classes';
     const META_URL    = '_mtq_cabang_custom_url';
     const META_ICON_MEDIA = '_mtq_cabang_icon_media_id';
@@ -64,14 +63,6 @@ class MTQ_Cabang_Lomba_CPT {
     }
 
     public function register_post_meta() {
-        register_post_meta(self::POST_TYPE, self::META_ICON, [
-            'show_in_rest'  => true,
-            'single'        => true,
-            'type'          => 'string',
-            'default'       => '',
-            'sanitize_callback' => [$this, 'sanitize_icon_path'],
-            'auth_callback' => function() { return current_user_can('edit_posts'); },
-        ]);
         register_post_meta(self::POST_TYPE, self::META_ICON_MEDIA, [
             'show_in_rest'  => true,
             'single'        => true,
@@ -111,7 +102,6 @@ class MTQ_Cabang_Lomba_CPT {
 
     public function render_meta_box($post) {
         wp_nonce_field('mtq_cabang_save_meta', 'mtq_cabang_meta_nonce');
-        $icon  = get_post_meta($post->ID, self::META_ICON, true);
         $color = get_post_meta($post->ID, self::META_COLOR, true);
         $url   = get_post_meta($post->ID, self::META_URL, true);
         $icon_media_id = (int) get_post_meta($post->ID, self::META_ICON_MEDIA, true);
@@ -128,14 +118,8 @@ class MTQ_Cabang_Lomba_CPT {
             <button type="button" class="button" id="mtq-cabang-icon-upload"><?php _e('Pilih/Upload Ikon', 'mtq-aceh-pidie-jaya'); ?></button>
             <button type="button" class="button" id="mtq-cabang-icon-remove" style="margin-left:8px;<?php echo $icon_media_id ? '' : 'display:none;'; ?>"><?php _e('Hapus', 'mtq-aceh-pidie-jaya'); ?></button>
             <small style="display:block; margin-top:4px;">
-                <?php _e('Dukungan PNG/JPG/SVG. Jika ikon media diisi, maka akan diprioritaskan dibandingkan SVG Path di bawah.', 'mtq-aceh-pidie-jaya'); ?>
+                <?php _e('Dukungan PNG/JPG/SVG melalui Media Library.', 'mtq-aceh-pidie-jaya'); ?>
             </small>
-        </p>
-        <hr>
-        <p>
-            <label for="mtq_cabang_icon_path"><strong><?php _e('SVG Icon Path (atribut d)', 'mtq-aceh-pidie-jaya'); ?></strong></label><br>
-            <textarea id="mtq_cabang_icon_path" name="mtq_cabang_icon_path" rows="2" style="width:100%;" placeholder="M12 6.042A8.967 ..."><?php echo esc_textarea($icon); ?></textarea>
-            <small><?php _e('Hanya path (nilai atribut d) dari elemen <path>.', 'mtq-aceh-pidie-jaya'); ?></small>
         </p>
         <p>
             <label for="mtq_cabang_color_classes"><strong><?php _e('Warna/Classes', 'mtq-aceh-pidie-jaya'); ?></strong></label><br>
@@ -161,9 +145,6 @@ class MTQ_Cabang_Lomba_CPT {
             return;
         }
 
-        if (isset($_POST['mtq_cabang_icon_path'])) {
-            update_post_meta($post_id, self::META_ICON, $this->sanitize_icon_path($_POST['mtq_cabang_icon_path']));
-        }
         if (isset($_POST['mtq_cabang_icon_media_id'])) {
             update_post_meta($post_id, self::META_ICON_MEDIA, absint($_POST['mtq_cabang_icon_media_id']));
         }
@@ -200,13 +181,6 @@ class MTQ_Cabang_Lomba_CPT {
         );
     }
 
-    public function sanitize_icon_path($value) {
-        $value = trim((string)$value);
-        // Allow only safe characters typical for SVG path data.
-        // Remove any HTML tags just in case.
-        $value = wp_kses($value, []);
-        return $value;
-    }
 }
 
 // Initialize
@@ -231,14 +205,12 @@ function mtq_get_cabang_lomba_from_cpt() {
         $id    = get_the_ID();
         $title = get_the_title();
         $desc  = has_excerpt() ? get_the_excerpt() : wp_strip_all_tags(wp_trim_words(get_the_content(null, false, $id), 25));
-        $icon  = get_post_meta($id, MTQ_Cabang_Lomba_CPT::META_ICON, true);
         $icon_media_id = (int) get_post_meta($id, MTQ_Cabang_Lomba_CPT::META_ICON_MEDIA, true);
         $color = get_post_meta($id, MTQ_Cabang_Lomba_CPT::META_COLOR, true);
         $url   = get_post_meta($id, MTQ_Cabang_Lomba_CPT::META_URL, true);
         if (empty($url)) { $url = get_permalink($id); }
         $items[sanitize_key($title) . '-' . $id] = [
             'nama'       => $title,
-            'icon'       => $icon ?: 'M12 6.042A8.967 8.967 0 006 3.75...',
             'icon_media_id' => $icon_media_id,
             'deskripsi'  => $desc,
             'warna'      => $color ?: 'text-blue-600 bg-blue-100',

@@ -37,12 +37,20 @@ return function ($attributes = array(), $content = '', $block = null) {
     }
 
     $colClass = 'lg:grid-cols-' . max(1, min(4, $columns));
+    $showWrapper = !empty($attributes['showWrapper']);
 
     ob_start();
+    // Add standard block wrapper so spacing supports apply
+    $wrapper_attributes = function_exists('get_block_wrapper_attributes')
+        ? get_block_wrapper_attributes(array('class' => ''))
+        : 'class="wp-block-mtq-cabang-grid"';
     ?>
-    <!-- <section class="py-20 bg-gradient-to-br from-blue-50 to-indigo-50 section-animate" id="blocks_cabang-grid-render">
-        <div class="max-w-6xl mx-auto px-4"> -->
-            <div class="grid md:grid-cols-2 <?php echo esc_attr($colClass . ' ' . $gap); ?>">
+    <div <?php echo $wrapper_attributes; ?>>
+    <?php if ($showWrapper): ?>
+        <section class="py-20 bg-gradient-to-br from-blue-50 to-indigo-50 section-animate" id="blocks_cabang-grid-render">
+            <div class="max-w-6xl mx-auto px-4">
+    <?php endif; ?>
+                <div class="grid md:grid-cols-2 <?php echo esc_attr($colClass . ' ' . $gap); ?>">
                 <?php foreach ($items as $key => $cabang):
                     $url = isset($cabang['url']) ? esc_url($cabang['url']) : '';
                     $open = $url ? '<a href="' . $url . '" class="block glass-card p-6 fade-in hover:scale-105 transition-transform duration-300">' : '<div class="glass-card p-6 fade-in hover:scale-105 transition-transform duration-300">';
@@ -65,11 +73,12 @@ return function ($attributes = array(), $content = '', $block = null) {
                                         }
                                     }
                                 } else {
-                                ?>
+                                    // Generic default icon (book)
+                                    ?>
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="<?php echo esc_attr($cabang['icon']); ?>" />
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" />
                                     </svg>
-                                <?php
+                                    <?php
                                 }
                                 ?>
                             </div>
@@ -79,9 +88,12 @@ return function ($attributes = array(), $content = '', $block = null) {
                     <p class="text-sm text-slate-600"><?php echo esc_html($cabang['deskripsi']); ?></p>
                     <?php echo $close; ?>
                 <?php endforeach; ?>
+                </div>
+    <?php if ($showWrapper): ?>
             </div>
-        <!-- </div>
-    </section> -->
+        </section>
+    <?php endif; ?>
+    </div>
 <?php
     return ob_get_clean();
 };
