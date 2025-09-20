@@ -59,7 +59,12 @@ get_header();
                 $cabang_lomba = mtq_get_cabang_lomba();
                 foreach ($cabang_lomba as $key => $cabang) :
                 ?>
-                    <div class="glass-card p-6 fade-in hover:scale-105 transition-transform duration-300">
+                    <?php
+                    $card_url = isset($cabang['url']) ? esc_url($cabang['url']) : '';
+                    $card_open = $card_url ? '<a href="' . $card_url . '" class="block glass-card p-6 fade-in hover:scale-105 transition-transform duration-300">' : '<div class="glass-card p-6 fade-in hover:scale-105 transition-transform duration-300">';
+                    $card_close = $card_url ? '</a>' : '</div>';
+                    echo $card_open;
+                    ?>
                         <div class="flex items-center gap-3 mb-4">
                             <div class="flex-shrink-0">
                                 <div class="p-3 rounded-lg <?php echo esc_attr($cabang['warna']); ?>">
@@ -71,7 +76,7 @@ get_header();
                             <h3 class="text-xl font-semibold text-slate-800"><?php echo esc_html($cabang['nama']); ?></h3>
                         </div>
                         <p class="text-sm text-slate-600"><?php echo esc_html($cabang['deskripsi']); ?></p>
-                    </div>
+                    <?php echo $card_close; ?>
                 <?php endforeach; ?>
             </div>
         </div>

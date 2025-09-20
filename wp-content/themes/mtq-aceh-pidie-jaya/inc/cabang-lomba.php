@@ -12,6 +12,13 @@ if (!function_exists('mtq_get_cabang_lomba')) :
      * @return array Daftar cabang lomba dengan detailnya
      */
     function mtq_get_cabang_lomba() {
+        // Prefer items from CPT if present
+        if (function_exists('mtq_get_cabang_lomba_from_cpt')) {
+            $from_cpt = mtq_get_cabang_lomba_from_cpt();
+            if (!empty($from_cpt)) {
+                return $from_cpt;
+            }
+        }
         return array(
             'tilawah' => array(
                 'nama' => __('Tilawah Al-Qur\'an', 'mtq-aceh-pidie-jaya'),

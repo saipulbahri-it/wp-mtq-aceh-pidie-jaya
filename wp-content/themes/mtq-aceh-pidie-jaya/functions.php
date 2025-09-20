@@ -21,6 +21,7 @@ require get_template_directory() . '/inc/translation.php';
 require get_template_directory() . '/inc/widgets.php';
 require get_template_directory() . '/inc/shortcodes.php';
 require get_template_directory() . '/inc/cabang-lomba.php';
+require get_template_directory() . '/inc/cabang-lomba-cpt.php';
 require get_template_directory() . '/inc/social-analytics-dashboard.php';
 require get_template_directory() . '/inc/countdown-admin.php';
 require get_template_directory() . '/inc/youtube-live-admin.php';
