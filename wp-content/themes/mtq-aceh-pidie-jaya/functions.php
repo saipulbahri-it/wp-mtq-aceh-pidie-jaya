@@ -29,6 +29,15 @@ require get_template_directory() . '/inc/youtube-live-display.php';
 require get_template_directory() . '/inc/menus.php';
 require get_template_directory() . '/inc/blocks/cabang-grid.php';
 
+// Register custom pattern category for MTQ page patterns
+add_action('init', function(){
+	if ( function_exists('register_block_pattern_category') ) {
+		register_block_pattern_category('mtq-pages', array(
+			'label' => __('MTQ Pages', 'mtq-aceh-pidie-jaya'),
+		));
+	}
+});
+
 // Include gallery system files
 require get_template_directory() . '/inc/gallery-post-type.php';
 require get_template_directory() . '/inc/gallery-shortcodes.php';
